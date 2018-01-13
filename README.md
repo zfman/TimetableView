@@ -1,6 +1,11 @@
 # TimetableView
 一个非常漂亮的课程表控件，支持课程颜色、星期高亮、周日期显示、周次选择等功能
 
+### 说明
+由于前一段时间对TimetableView进行了修改，所以以下的API可能会有些许差异，暂时没有时间修改，如果有问题请发邮件至1193600556@qq.com.
+维护计划：2018/1/25日左右我会加上核心代码的注释
+最后，感谢你的支持。
+
 ### 运行效果
 ![课表](https://github.com/zfman/TimetableView/blob/master/extras/image/img1.png)
 
