@@ -19,6 +19,7 @@ import android.view.ViewStub;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
@@ -28,7 +29,7 @@ import android.view.View.OnClickListener;
  * @author Administrator
  * 
  */
-public class TimetableView extends LinearLayout implements OnClickListener {
+public class TimetableView extends LinearLayout{
 
 	// 存储一周内的每天的课程数据以及每天的Layout
 	private List<SubjectBean>[] data = new ArrayList[7];
@@ -60,30 +61,11 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 	//是否显示 最大节次，默认10节
 	private boolean isMax = false;
 
-	// 头部View
-	private LinearLayout contentLinearLayout;
-	private LinearLayout headLayout;
-	TextView headText;
-	TextView termText;
-	// 头部左右布局
-	private LinearLayout leftLayout;
-	private LinearLayout rightLayout;
-	private TextView leftTextView;
-	private ImageView rightImageView;
-	private String leftText = "工具";
-
 	// 当前周
 	private int curWeek = 1;
 	private SubjectUIModel subjectUIModel;
 	private Context context;
 	private String curTerm = "大三 春季学期";
-
-	// 周次选择布局
-	LinearLayout chooseLayout;
-	LinearLayout containerLayout;
-	List<String> list = new ArrayList<>();
-	List<LinearLayout> layouts = new ArrayList<>();
-	HorizontalScrollView scrollView;
 
 	// 课程数据源
 	private List<SubjectBean> dataSource = null;
@@ -96,10 +78,12 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 	private boolean isShowDashlayer = true;
 	private boolean isChooseLayoutShowing=false;
 	
+	private ScrollView scrollView;
+	private TextView titleTextView;
+	
 	// 课表item事件监听器
 	private OnSubjectItemClickListener onSubjectItemClickListener;
-	private OnSubjectMenuListener onSubjectMenuListener;
-	private OnSubjectHeaderListener onSubjectHeaderListener;
+	private OnSubjectBindViewListener onSubjectBindViewListener;
 
 	public TimetableView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -113,14 +97,15 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 		}
 
 		initView(context);
-		initEvents();
+		initWeekDateInfo();
+		weekLightHight();
 	}
 
 	public TimetableView setCurWeek(int curWeek) {
 		if(curWeek<1) this.curWeek=1;
 		else if(curWeek>20) this.curWeek=20;
 		else this.curWeek = curWeek;
-		headText.setText("第" + curWeek + "周");
+		onBind();
 		return this;
 	}
 
@@ -130,6 +115,7 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 			setCurWeek(1);
 		else
 			setCurWeek(week);
+		onBind();
 		return this;
 	}
 
@@ -139,7 +125,7 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 
 	public TimetableView setCurTerm(String curTerm) {
 		this.curTerm = curTerm;
-		termText.setText(curTerm);
+		onBind();
 		return this;
 	}
 
@@ -149,26 +135,10 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 
 	public TimetableView setDataSource(List<SubjectBean> dataSource) {
 		this.dataSource = dataSource;
-		return this;
-	}
-
-	public TimetableView setOnSubjectHeaderListener(OnSubjectHeaderListener onSubjectHeaderListener) {
-		this.onSubjectHeaderListener = onSubjectHeaderListener;
+		onBind();
 		return this;
 	}
 	
-	public TimetableView setObjectSource(List<Object> objectSource,
-			OnSubjectTransformListener onSubjectTransformListener) {
-		if (this.dataSource == null)
-			this.dataSource = new ArrayList<>();
-		else
-			this.dataSource.clear();
-		for (int i = 0; i < objectSource.size(); i++)
-			this.dataSource.add(onSubjectTransformListener
-					.onTransform(objectSource.get(i)));
-		return this;
-	}
-
 	public TimetableView setOnSubjectItemClickListener(
 			OnSubjectItemClickListener onSubjectItemClickListener) {
 		this.onSubjectItemClickListener = onSubjectItemClickListener;
@@ -184,18 +154,7 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 		}
 		return this;
 	}
-
-	public TimetableView setOnSubjectMenuClickListener(
-			OnSubjectMenuListener onSubjectMenuListener) {
-		this.onSubjectMenuListener = onSubjectMenuListener;
-		return this;
-	}
-
-	public TimetableView setLeftText(String leftText) {
-		this.leftText = leftText;
-		return this;
-	}
-
+	
 	public TimetableView setMax(boolean isMax) {
 		this.isMax = isMax;
 		if (this.isMax) {
@@ -212,6 +171,26 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 		return this;
 	}
 
+	public TimetableView bindTitleView(TextView titleTextView){
+		this.titleTextView=titleTextView;
+		return this;
+	}
+	
+	public TimetableView setOnSubjectBindViewListener(OnSubjectBindViewListener onSubjectBindViewListener) {
+		this.onSubjectBindViewListener = onSubjectBindViewListener;
+		return this;
+	}
+	
+	
+	public ScrollView getScrollView() {
+		return scrollView;
+	}
+	
+	private void onBind(){
+		if(onSubjectBindViewListener!=null&&titleTextView!=null){
+			onSubjectBindViewListener.onBindTitleView(titleTextView, curWeek, curTerm,dataSource);
+		}
+	}
 	private void initWeekDateInfo() {
 		// List<String> weekDays=DateTools.getWeekDays();
 		List<String> weekDays = SubjectUtils.getWeekDate();
@@ -230,6 +209,8 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 
 	public void initView(Context context) {
 		LayoutInflater.from(context).inflate(R.layout.timetable_layout, this);
+		scrollView=(ScrollView) findViewById(R.id.id_scrollview);
+		
 		week1 = (LinearLayout) findViewById(R.id.id_week1);
 		week2 = (LinearLayout) findViewById(R.id.id_week2);
 		week3 = (LinearLayout) findViewById(R.id.id_week3);
@@ -246,24 +227,8 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 		dateTextView5 = (TextView) findViewById(R.id.id_week_date5);
 		dateTextView6 = (TextView) findViewById(R.id.id_week_date6);
 		dateTextView7 = (TextView) findViewById(R.id.id_week_date7);
-
-		contentLinearLayout=(LinearLayout) findViewById(R.id.id_content_linearlayout);
-		headLayout = (LinearLayout) findViewById(R.id.id_course_headlayout);
-		headText = (TextView) findViewById(R.id.id_course_head_text);
-		termText = (TextView) findViewById(R.id.id_course_head_term);
-
-		// containerLayout：选择周次的滚动布局的子元素，也是周次的列表项的父元素
-		// chooseLayout：选择周次的布局
-		// scrollView：滚动布局
-		containerLayout = (LinearLayout) findViewById(R.id.id_container);
-		chooseLayout = (LinearLayout) findViewById(R.id.id_maintab_chooseweek_layout);
-		scrollView = (HorizontalScrollView) findViewById(R.id.id_maintab_scrollview);
-
+		
 		dashLayer = (LinearLayout) findViewById(R.id.id_dashlayer);
-		leftLayout = (LinearLayout) findViewById(R.id.id_head_left_layout);
-		rightLayout = (LinearLayout) findViewById(R.id.id_head_right_layout);
-		leftTextView = (TextView) findViewById(R.id.id_head_left_textview);
-		rightImageView = (ImageView) findViewById(R.id.id_head_right_imageview);
 		
 		start11TextView = (TextView) findViewById(R.id.id_start11_textview);
 		start12TextView = (TextView) findViewById(R.id.id_start12_textview);
@@ -276,15 +241,6 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 			data[i] = new ArrayList<>();
 		}
 
-		// 初始化周次数据集合
-		for (int i = 1; i <= 20; i++)
-			list.add("第" + i + "周");
-	}
-
-	public void initEvents() {
-		headLayout.setOnClickListener(this);
-		leftLayout.setOnClickListener(this);
-		rightLayout.setOnClickListener(this);
 	}
 	
 	/**
@@ -341,82 +297,9 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 		}
 	}
 
-	/**
-	 * 创建选择周次布局
-	 */
-	@SuppressLint("NewApi")
-	private void createWeekLayout() {
-		if (containerLayout != null)
-			containerLayout.removeAllViews();
-		layouts.clear();
-		for (int i = 0; i < list.size(); i++) {
-			final int temp = i;
-			View view = inflater.inflate(R.layout.chooseweek_item_layout, null,
-					false);
-			TextView week = (TextView) view
-					.findViewById(R.id.id_choose_week_item_week);
-			final LinearLayout choose = (LinearLayout) view
-					.findViewById(R.id.id_choose_week_layout);
-			layouts.add(choose);
-			week.setText(list.get(i));
-			if (curWeek == (i + 1))
-				choose.setBackground(getResources().getDrawable(
-						R.drawable.week_oval_press_style));
-			choose.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View arg0) {
-					initWeekLayout();
-					choose.setBackground(getResources().getDrawable(
-							R.drawable.week_oval_press_style));
-
-					scrollToTarget(temp + 1, true);
-					changeWeek(temp + 1, false);
-				}
-			});
-			containerLayout.addView(view);
-		}
-	}
-
-	public void scrollToTarget(final int i, boolean isSmooth) {
-		if (isSmooth)
-			scrollView.post(new Runnable() {
-				@Override
-				public void run() {
-					scrollView.smoothScrollTo(OtherUtils.dip2px(context, 70) * (i - 1)
-							- OtherUtils.dip2px(context, 140), 0);
-				}
-			});
-			
-		else
-			scrollView.post(new Runnable() {
-				@Override
-				public void run() {
-					scrollView.scrollTo(OtherUtils.dip2px(context, 70) * (i - 1)
-							- OtherUtils.dip2px(context, 140), 0);
-				}
-			});
-			
-	}
-
-	/**
-	 * 初始化选择周次的列表项，设为普通颜色
-	 */
-	@SuppressLint("NewApi")
-	protected void initWeekLayout() {
-		for (int i = 0; i < containerLayout.getChildCount(); i++) {
-			View view = containerLayout.getChildAt(i);
-			LinearLayout choose = (LinearLayout) view
-					.findViewById(R.id.id_choose_week_layout);
-			choose.setBackground(getResources().getDrawable(
-					R.drawable.week_oval_style));
-		}
-	}
-
 	public void notifyDataSourceChanged() {
-		for (int i = 0; i < data.length; i++)
-			data[i].clear();
-		showSubjectView();
+		showTimetableView();
+		onBind();
 	}
 
 	private void prepre() {
@@ -427,11 +310,7 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 
 		initWeekDateInfo();
 		weekLightHight();
-		createWeekLayout();
 		setShowDashLayer(isShowDashlayer);
-		setCurWeek(curWeek);
-		setCurTerm(curTerm);
-		leftTextView.setText(leftText);
 		for(int i=0;i<7;i++){
 			data[i].clear();
 		}
@@ -440,8 +319,9 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 	/**
 	 * 显示课程
 	 */
-	public void showSubjectView() {
+	public void showTimetableView() {
 		prepre();
+		if(dataSource==null) return;
 		for (int i = 0; i < dataSource.size(); i++) {
 			SubjectBean bean = dataSource.get(i);
 			if (bean.getDay() != -1)
@@ -453,67 +333,12 @@ public class TimetableView extends LinearLayout implements OnClickListener {
 			panels[i].removeAllViews();
 			subjectUIModel.addSubjectLayout(panels[i], data[i], curWeek);
 		}
-		// 初始化
-//		for (int i = 0; i < panels.length; i++) {
-//			data[i] = new ArrayList<>();
-//		}
 	}
 
 	public void changeWeek(int week, boolean isCurWeek) {
 		subjectUIModel.changeWeek(panels, data, week);
 		if (isCurWeek || week == curWeek) {
 			setCurWeek(week);
-			headText.setTextColor(textColor);
-			termText.setTextColor(textColor);
-		} else {
-			headText.setText("第" + week + "周");
-			headText.setTextColor(Color.RED);
-			termText.setTextColor(Color.RED);
-		}
-
-	}
-
-	@SuppressLint("NewApi")
-	@Override
-	public void onClick(View arg0) {
-		int id = arg0.getId();
-		if (id == R.id.id_course_headlayout) {
-			
-			if (isChooseLayoutShowing) {
-				if(onSubjectHeaderListener!=null) onSubjectHeaderListener.onCloseHeader();
-				ObjectAnimator
-				.ofFloat(contentLinearLayout, "translationY", OtherUtils.dip2px(context, 50),0)
-				.setDuration(400).start();
-				isChooseLayoutShowing=false;
-				setCurWeek(curWeek);
-				changeWeek(curWeek, true);
-				
-			} else {
-				if(onSubjectHeaderListener!=null) onSubjectHeaderListener.onShowHeader();
-				ObjectAnimator
-				.ofFloat(contentLinearLayout, "translationY", 0,OtherUtils.dip2px(context, 50))
-				.setDuration(400).start();
-				isChooseLayoutShowing=true;
-				initWeekLayout();
-				if (curWeek <= layouts.size()) {
-					LinearLayout choose = layouts.get(curWeek - 1);
-					choose.setBackground(context.getResources().getDrawable(
-							R.drawable.week_oval_press_style));
-				}
-				
-				scrollToTarget(curWeek, false);
-				
-			}
-		}
-
-		if (id == R.id.id_head_left_layout) {
-			if (onSubjectMenuListener != null)
-				onSubjectMenuListener.onLeftClick(arg0);
-		}
-
-		if (id == R.id.id_head_right_layout) {
-			if (onSubjectMenuListener != null)
-				onSubjectMenuListener.onRightClick(arg0);
 		}
 	}
 }

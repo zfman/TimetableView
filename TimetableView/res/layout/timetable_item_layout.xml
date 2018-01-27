@@ -18,9 +18,9 @@
             android:padding="3dp"/>
         <TextView 
             android:id="@+id/id_course_item_count"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:textSize="14sp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:textSize="12sp"
             android:background="@drawable/course_redpoint_style"
             android:visibility="gone"
             android:layout_gravity="right|top"

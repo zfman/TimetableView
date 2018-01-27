@@ -69,14 +69,6 @@ public class SubjectUIModel {
 		for (int i = 0; i < data.size(); i++) {
 			final SubjectBean subject = data.get(i);
 			boolean isIgnore = filterSubject(subject, pre, i, curWeek);
-			// if(arr[subject.getStart()-1]==-1){
-			// for(int
-			// m=subject.getStart();m<(subject.getStart()+subject.getStep());m++){
-			// arr[m]=i;
-			// }
-			// }else{
-			// isIgnore=true;
-			// }
 			if (!isIgnore) {
 				View view = inflater.inflate(R.layout.timetable_item_layout, null, false);
 
