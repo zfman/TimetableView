@@ -1,4 +1,5 @@
 # TimetableView
+
 一个非常漂亮的课程表控件，支持课程颜色、星期高亮、周日期显示、周次选择等功能
 
 ### 运行效果
@@ -8,20 +9,24 @@
 [下载Demo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/TimetableSample.apk)
 
 ### ChangeLog
+
 - 2018/1/27 删除头部与周次选择；完善demo
 
 ### 简单使用
+
 第一步：添加项目依赖
+
 - 将本项目下载到本地上，解压会有两个子文件夹
 
->TimetableView：TimetableView`项目源码
+>TimetableView：TimetableView项目源码
+
 >TimetableSample：本项目的一个Demo
 
-- 把`TimetableView`作为项目导入到Eclipse中，并将项目设置为libary
+- 把`TimetableView`作为项目导入到`Eclipse`中，并将项目设置为`libary`
 
-- 将TimetableView添加为自己的项目的libary
+- 将`TimetableView`添加为自己的项目的`libary`
 
-第二步：引入TimetableView控件
+第二步：引入`TimetableView`控件
 ```xml
     <!-- XML CODE -->
     <com.zhuangfei.timetable.core.TimetableView 
@@ -33,12 +38,12 @@
 ```
 
 第三步：初始化控件、设置
+
 ```java
 mTimetableView=(TimetableView) findViewById(R.id.id_timetableView);
 mTimetableView.setDataSource(subjectBeans)
 	.setCurTerm("大三上学期")
 	.setCurWeek(curWeek)
-	.setOnSubjectBindViewListener(this)
 	.setOnSubjectItemClickListener(this)
 	.showTimetableView();
 		
@@ -52,7 +57,9 @@ mTimetableView.changeWeek(curWeek, true);
 大功告成！简单吧!
 
 ### 高级使用
-先看下timetableView可以设置哪些属性
+
+先看下`timetableView`可以设置哪些属性
+
 ```java
 mTimetableView.setDataSource(List<SubjectBean>)
 	.setCurTerm(String)//设置学期
@@ -85,7 +92,13 @@ protected void addSubject() {
 timetableView.changeWeek(2,true);
 ```
 
-**注意的地方**
-1.在调用showTimetableView()后需要调用一次changeWeek()，因为我在showTimetableView()里没有处理课程重叠的问题，当课程重叠或者有交叉且该课程在本周上时，会在课程的右上方义小红点+数字的形式提示。
+### 注意的地方
+
+1.在调用`showTimetableView()`后需要调用一次`changeWeek()`，因为我在`showTimetableView()`里没有处理课程重叠的问题，当课程重叠或者有交叉且该课程在本周上时，会在课程的右上方义小红点+数字的形式提示。
+
 2.红点的出现时机：在同一时刻且在本周有课的课程数大于等于2时
+
+### 最后
+
+各个接口、方法的详细用法在TimetableSample项目中，你可以参考那个demo
 
