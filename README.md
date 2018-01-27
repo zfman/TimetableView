@@ -1,6 +1,21 @@
 # TimetableView
 
-一个非常漂亮的课程表控件，支持课程颜色、星期高亮、周日期显示、周次选择等功能
+一个非常漂亮的Android课程表控件，该控件支持的功能：
+
+- 设置数据源
+
+- 颜色设置，控件内置17种颜色
+
+- 触感反馈，那种内置颜色都有对应的三个样式
+
+- 日期显示与高亮
+
+- 课表Item点击事件处理
+
+- 解决课程重叠、交叉的问题，解决的效果同超级课程表
+
+- 高效的切换周次
+
 
 ### 运行效果
 ![课表](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/image/img1.png)
