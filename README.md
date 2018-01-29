@@ -3,19 +3,12 @@
 一个非常漂亮的`Android`课程表控件，该控件支持的功能：
 
 - 设置数据源
-
 - 颜色设置，控件内置17种颜色
-
 - 触感反馈，每种内置颜色都有对应的三个样式
-
 - 日期显示与高亮
-
 - 课表Item点击事件处理
-
 - 解决课程重叠、交叉的问题，解决的效果同超级课程表
-
 - 高效的切换周次
-
 
 ### 运行效果
 ![课表](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/image/img1.png)
@@ -25,13 +18,21 @@
 
 ### ChangeLog
 
-- 2018/1/27 删除头部与周次选择；完善demo
+- 2018/1/29 v1.0.0正式版
+1.上传一个AndroidStudio版本的，以后将重点维护AndroidStudio的版本
+
+2.将项目上传到了jcenter
+
+- 2018/1/27 v1.0.0测试版
+删除头部与周次选择；完善demo
 
 ### 简单使用
 
 第一步：添加项目依赖
 
-- 将本项目下载到本地上，解压会有两个子文件夹
+**Eclipse**
+
+- 将本项目下载到本地上，解压后`eclipse`下有两个子文件夹
 
 >TimetableView：TimetableView项目源码
 
@@ -40,6 +41,11 @@
 - 把`TimetableView`作为项目导入到`Eclipse`中，并将项目设置为`libary`
 
 - 将`TimetableView`添加为自己的项目的`libary`
+
+**Android Studio**
+
+使用方法待定
+
 
 第二步：引入`TimetableView`控件
 ```xml
