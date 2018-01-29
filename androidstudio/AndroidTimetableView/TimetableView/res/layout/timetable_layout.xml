@@ -1,0 +1,459 @@
+<!-- 课表布局 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_white"
+    android:orientation="vertical" >
+            <LinearLayout
+                android:id="@+id/id_maintab_centerlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/app_white"
+                android:orientation="vertical" >
+
+            
+                <!-- 表头 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/app_course_bg_gray"
+                    android:baselineAligned="false"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/id_week_month"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/headHeight"
+                        android:layout_weight="0.5"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/id_week1"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/headHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周一"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/id_week_date1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/id_week2"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/headHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周二"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/id_week_date2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/id_week3"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/headHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周三"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/id_week_date3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/id_week4"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/headHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周四"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/id_week_date4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/id_week5"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/headHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周五"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/id_week_date5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/id_week6"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/headHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周六"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/id_week_date6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/id_week7"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/headHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周日"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/id_week_date7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/app_course_line" />
+
+                <ScrollView
+                    android:id="@+id/id_scrollview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none" >
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <LinearLayout
+                            android:id="@+id/id_dashlayer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="3dp"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/lineItemMar1"
+                                android:background="@drawable/line_dash_style"
+                                android:layerType="software" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/lineItemMar2"
+                                android:background="@drawable/line_dash_style"
+                                android:layerType="software" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/lineItemMar2"
+                                android:background="@drawable/line_dash_style"
+                                android:layerType="software" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/lineItemMar2"
+                                android:background="@drawable/line_dash_style"
+                                android:layerType="software" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/lineItemMar2"
+                                android:background="@drawable/line_dash_style"
+                                android:layerType="software" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/lineItemMar2"
+                                android:background="@drawable/line_dash_style"
+                                android:layerType="software" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/lineItemMar2"
+                                android:background="@drawable/line_dash_style"
+                                android:layerType="software" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/lineItemMar2"
+                                android:background="@drawable/line_dash_style"
+                                android:layerType="software" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/lineItemMar2"
+                                android:background="@drawable/line_dash_style"
+                                android:layerType="software" />
+
+                            <TextView
+                                android:id="@+id/id_dashlayer_start11"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/lineItemMar2"
+                                android:background="@drawable/line_dash_style"
+                                android:layerType="software"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/id_dashlayer_start12"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/lineItemMar2"
+                                android:background="@drawable/line_dash_style"
+                                android:layerType="software"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/contentPanel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/weekPanel_0"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@color/app_white2"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="1" />
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="2" />
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="3" />
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="4" />
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="5" />
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="6" />
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="7" />
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="8" />
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="9" />
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="10" />
+
+                                <TextView
+                                    android:id="@+id/id_start11_textview"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="11"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/id_start12_textview"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/weekItemHeight"
+                                    android:layout_marginTop="@dimen/weekItemMarTop"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:text="12"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+                            <!-- 周一到周日的排列 -->
+
+                            <LinearLayout
+                                android:id="@+id/weekPanel_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.0"
+                                android:orientation="vertical" >
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/weekPanel_2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.0"
+                                android:orientation="vertical" >
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/weekPanel_3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.0"
+                                android:orientation="vertical" >
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/weekPanel_4"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.0"
+                                android:orientation="vertical" >
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/weekPanel_5"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.0"
+                                android:orientation="vertical" >
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/weekPanel_6"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.0"
+                                android:orientation="vertical" >
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/weekPanel_7"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.0"
+                                android:orientation="vertical" >
+                            </LinearLayout>
+                        </LinearLayout>
+                    </FrameLayout>
+                </ScrollView>
+            </LinearLayout>
+        
+
+</LinearLayout>
