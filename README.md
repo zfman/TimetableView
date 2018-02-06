@@ -9,6 +9,7 @@
 - 课表Item点击事件处理
 - 解决课程重叠、交叉的问题，解决的效果同超级课程表
 - 高效的切换周次
+- **获取某天要上的课程**（v1.0.1添加)
 
 ### 运行效果
 [Demo运行效果](https://github.com/zfman/TimetableView/wiki/Demo%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C)
@@ -18,6 +19,9 @@
 
 ### ChangeLog
 
+- 2018/2/6 v1.0.1
+	- 上在SubjectUtils添加了几个获取某天课程的工具方法
+	
 - 2018/1/29 v1.0.0正式版
 
 	- 上传一个AndroidStudio版本的，以后将重点维护AndroidStudio的版本
@@ -55,7 +59,7 @@
 
 在build.gradle文件中添加以下代码
 ```
-compile 'com.zhuangfei:TimetableView:1.0.0'
+compile 'com.zhuangfei:TimetableView:1.0.1'
 ```
 
 
@@ -119,6 +123,7 @@ protected void addSubject() {
 ```
 
 **切换周次**
+
 当数据源发生的变化不大时，切换周次的效率非常高，当数据源发生的变化很大时，该算法与清空布局重建的效率相当，该算法只是尽可能的不去清空布局。
 ```java
 //第二个参数为：是否强制将第一个参数设置为当前周
@@ -126,6 +131,7 @@ timetableView.changeWeek(2,true);
 ```
 
 **获取某天的课程**
+
 以下方法在v1.0.1的Android Studio版本中添加,Eclipse版本暂时不维护
 
 调用SubjectUtils的方法：
