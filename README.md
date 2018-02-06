@@ -11,7 +11,7 @@
 - 高效的切换周次
 
 ### 运行效果
-![课表](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/image/img1.png)
+[Demo运行效果](https://github.com/zfman/TimetableView/wiki/Demo%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C)
 
 ### Demo下载
 [下载Demo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/TimetableSample.apk)
@@ -19,18 +19,24 @@
 ### ChangeLog
 
 - 2018/1/29 v1.0.0正式版
-1.上传一个AndroidStudio版本的，以后将重点维护AndroidStudio的版本
 
-2.将项目上传到了jcenter
+	- 上传一个AndroidStudio版本的，以后将重点维护AndroidStudio的版本
+
+	- 将项目上传到了jcenter
 
 - 2018/1/27 v1.0.0测试版
-删除头部与周次选择；完善demo
+
+	- 删除头部与周次选择
+ 
+	- 完善demo
 
 ### 简单使用
 
-第一步：添加项目依赖
+**第一步：添加项目依赖**
 
 **Eclipse**
+
+注：使用Android Studio的忽略
 
 - 将本项目下载到本地上，解压后`eclipse`下有两个子文件夹
 
@@ -42,12 +48,18 @@
 
 - 将`TimetableView`添加为自己的项目的`libary`
 
+
 **Android Studio**
 
-使用方法待定
+注：推荐使用该方式
+
+在build.gradle文件中添加以下代码
+```
+compile 'com.zhuangfei:TimetableView:1.0.0'
+```
 
 
-第二步：引入`TimetableView`控件
+**第二步：引入`TimetableView`控件**
 ```xml
     <!-- XML CODE -->
     <com.zhuangfei.timetable.core.TimetableView 
@@ -58,7 +70,7 @@
     </com.zhuangfei.timetable.core.TimetableView>
 ```
 
-第三步：初始化控件、设置
+**第三步：初始化控件、设置**
 
 ```java
 mTimetableView=(TimetableView) findViewById(R.id.id_timetableView);
@@ -122,4 +134,7 @@ timetableView.changeWeek(2,true);
 ### 最后
 
 各个接口、方法的详细用法在TimetableSample项目中，你可以参考那个demo
+
+如有需要可查看[更详细的文档 wiki-api](https://github.com/zfman/TimetableView/wiki/API)
+
 
