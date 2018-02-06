@@ -12,50 +12,18 @@
 - **获取某天要上的课程**（v1.0.1添加)
 
 ### 运行效果
-[Demo运行效果](https://github.com/zfman/TimetableView/wiki/Demo%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C)
+[Demo运行效果](https://github.com/zfman/TimetableView/wiki/Demo%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C)  [下载Demo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/TimetableSample.apk)
 
-### Demo下载
-[下载Demo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/TimetableSample.apk)
 
-### ChangeLog
+### ChangeLog[更多](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
 
-- 2018/2/6 v1.0.1
-	- 上在SubjectUtils添加了几个获取某天课程的工具方法
-	
-- 2018/1/29 v1.0.0正式版
+**v1.0.1**
 
-	- 上传一个AndroidStudio版本的，以后将重点维护AndroidStudio的版本
-
-	- 将项目上传到了jcenter
-
-- 2018/1/27 v1.0.0测试版
-
-	- 删除头部与周次选择
- 
-	- 完善demo
+1.在工具类中增加了获取某天课程的方法 
 
 ### 简单使用
 
-**第一步：添加项目依赖**
-
-**Eclipse**
-
-注：使用Android Studio的忽略
-
-- 将本项目下载到本地上，解压后`eclipse`下有两个子文件夹
-
->TimetableView：TimetableView项目源码
-
->TimetableSample：本项目的一个Demo
-
-- 把`TimetableView`作为项目导入到`Eclipse`中，并将项目设置为`libary`
-
-- 将`TimetableView`添加为自己的项目的`libary`
-
-
-**Android Studio**
-
-注：推荐使用该方式
+**Step 1：添加项目依赖**
 
 在build.gradle文件中添加以下代码
 ```
@@ -63,7 +31,7 @@ compile 'com.zhuangfei:TimetableView:1.0.1'
 ```
 
 
-**第二步：引入`TimetableView`控件**
+**Step 2：引入`TimetableView`控件**
 ```xml
     <!-- XML CODE -->
     <com.zhuangfei.timetable.core.TimetableView 
@@ -74,7 +42,7 @@ compile 'com.zhuangfei:TimetableView:1.0.1'
     </com.zhuangfei.timetable.core.TimetableView>
 ```
 
-**第三步：初始化控件、设置**
+**Step 3：初始化控件、设置**
 
 ```java
 mTimetableView=(TimetableView) findViewById(R.id.id_timetableView);
@@ -91,12 +59,9 @@ mTimetableView.changeWeek(curWeek, true);
 
 ```
 
-大功告成！简单吧!
-
-### 高级使用
+### 属性
 
 先看下`timetableView`可以设置哪些属性
-
 ```java
 mTimetableView.setDataSource(List<SubjectBean>)
 	.setCurTerm(String)//设置学期
@@ -110,32 +75,34 @@ mTimetableView.setDataSource(List<SubjectBean>)
 					  
 ```
 
-**动态更新课表**
+### 动态更新课表
 
-不管删除还是添加，只要更改数据源，最后要调用notifyDataSourceChanged()来通知UI界面同步即可。
+不管删除还是添加，只需要更改数据源，最后调用notifyDataSourceChanged()来通知UI界面同步即可。
 ```java
-//添加课程
-protected void addSubject() {
-	int pos=(int)(Math.random()*subjectBeans.size());
-	subjectBeans.add(subjectBeans.get(pos));
-	mTimetableView.notifyDataSourceChanged();
-}
+//删除课程
+    protected void deleteSubject() {
+        int pos = (int) (Math.random() * subjectBeans.size());
+        if (subjectBeans.size() > 0) {
+            subjectBeans.remove(pos);
+            mTimetableView.notifyDataSourceChanged();
+        } else {
+            Toast.makeText(this, "没有课程啦！", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 ```
 
-**切换周次**
+### 切换周次
 
-当数据源发生的变化不大时，切换周次的效率非常高，当数据源发生的变化很大时，该算法与清空布局重建的效率相当，该算法只是尽可能的不去清空布局。
+切换周次的效率非常高，你可以使用以下代码切换周次：
 ```java
 //第二个参数为：是否强制将第一个参数设置为当前周
 timetableView.changeWeek(2,true);
 ```
 
-**获取某天的课程**
+### 获取某天的课程(要求版本>=v1.0.1)
 
-以下方法在v1.0.1的Android Studio版本中添加,Eclipse版本暂时不维护
-
-调用SubjectUtils的方法：
-
+SubjectUtils是课程的工具类，调用其方法获取课程，示例如下：
 ```java
 //显示周一课程
     protected void showTodaySubjects() {
@@ -153,16 +120,64 @@ timetableView.changeWeek(2,true);
     }
 ```
 
+### 绑定TextView
+
+当curWeek、数据源、curTerm任一发生变化，系统根据自己定义的规则对绑定的TextView进行文字同步，示例如下：
+```java
+	mTimetableView.setDataSource(subjectBeans)
+                .setCurTerm("大三上学期")
+                .setCurWeek(curWeek)
+                .bindTitleView(mTitleTextView)//这句话绑定View
+                .setOnSubjectBindViewListener(this)//这句话实现接口，在接口中定义规则
+                .setOnSubjectItemClickListener(this)
+                .setOnSubjectItemLongClickListener(this)
+                .showTimetableView();
+				
+	@Override
+    public void onBindTitleView(TextView titleTextView, int curWeek, String curTerm, List<SubjectBean> subjectBeans) {
+        String text = "第" + curWeek + "周" + ",共" + subjectBeans.size() + "门课";
+		//填充
+        titleTextView.setText(text);
+		
+		//同步当前周次
+        this.curWeek=curWeek;
+    }
+	
+```
+
 ### 注意的地方
 
 1.在调用`showTimetableView()`后需要调用一次`changeWeek()`，因为我在`showTimetableView()`里没有处理课程重叠的问题，当课程重叠或者有交叉且该课程在本周上时，会在课程的右上方义小红点+数字的形式提示。
 
 2.红点的出现时机：在同一时刻且在本周有课的课程数大于等于2时
 
-### 最后
+### 资源
 
 各个接口、方法的详细用法在TimetableSample项目中，你可以参考那个demo
 
-如有需要可查看[更详细的文档 wiki-api](https://github.com/zfman/TimetableView/wiki/API)
+[wiki-api](https://github.com/zfman/TimetableView/wiki/API)
 
+### License
+
+MIT License
+
+Copyright (c) 2017 壮飞
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
