@@ -1,5 +1,9 @@
 package com.zhuangfei.timetable.core;
 
+import android.widget.LinearLayout;
+
+import com.zhuangfei.android_timetableview.sample.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,13 +11,46 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.security.auth.Subject;
+
 /**
  * Subject工具包
  * @author Administrator
  *
  */
 public class SubjectUtils {
-	
+
+	public static List<SubjectBean>[] getSubjectInitial(List<SubjectBean> dataSource){
+		List<SubjectBean>[] data = new ArrayList[7];
+		if(dataSource==null) return data;
+		for (int i = 0; i < data.length; i++) {
+			data[i] = new ArrayList<>();
+		}
+		for (int i = 0; i < dataSource.size(); i++) {
+			SubjectBean bean = dataSource.get(i);
+			if (bean.getDay() != -1)
+				data[bean.getDay() - 1].add(bean);
+		}
+		SubjectUtils.sortList(data);
+		return data;
+	}
+
+	public static  List<SubjectBean> getTodaySubjects(List<SubjectBean> subjectBeans,int curWeek,int day){
+		List<SubjectBean> subjectBeanList=getTodayAllSubjects(subjectBeans, day);
+		List<SubjectBean> result=new ArrayList<>();
+		for(SubjectBean bean:subjectBeanList){
+			if(SubjectUtils.isThisWeek(bean,curWeek)){
+				result.add(bean);
+			}
+		}
+		return result;
+	}
+
+	public static  List<SubjectBean> getTodayAllSubjects(List<SubjectBean> subjectBeans,int day){
+		List<SubjectBean> subjectBeanList=getSubjectInitial(subjectBeans)[day];
+		return subjectBeanList;
+	}
+
 	/**
 	 * 在data中查找与subject的start相同的课程集合
 	 * @param subject

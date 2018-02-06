@@ -11,5 +11,9 @@
 	    android:title="恢复初始状态"/>
 	<item android:id="@+id/top4"
 	    android:title="随机切换周次"/>
+	<item android:id="@+id/top5"
+	android:title="获取周一要上的课程"/>
+	<item android:id="@+id/top6"
+		android:title="获取周一所有的课程"/>
 	
 </menu>
