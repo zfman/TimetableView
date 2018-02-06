@@ -153,7 +153,7 @@ SubjectUtils是课程的工具类，调用其方法获取课程，示例如下�
 
 ### 资源
 
-各个接口、方法的详细用法在TimetableSample项目中，你可以参考那个demo
+各个接口、方法的详细用法在androidstudio/app中
 
 [wiki-api](https://github.com/zfman/TimetableView/wiki/API)
 
