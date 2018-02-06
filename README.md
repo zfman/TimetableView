@@ -125,6 +125,28 @@ protected void addSubject() {
 timetableView.changeWeek(2,true);
 ```
 
+**获取某天的课程**
+以下方法在v1.0.1的Android Studio版本中添加,Eclipse版本暂时不维护
+
+调用SubjectUtils的方法：
+
+```java
+//显示周一课程
+    protected void showTodaySubjects() {
+        //0表示周一，依次类推，6代表周日
+        List<SubjectBean> beans = SubjectUtils.getTodaySubjects(subjectBeans, curWeek, 0);
+        String subjectStr=showSubjects(beans);
+        Toast.makeText(this, "周一有" + beans.size() + "门课要上\n\n" + subjectStr, Toast.LENGTH_SHORT).show();
+    }
+
+    //显示周一所有课程
+    protected void showTodayAllSubjects() {
+        List<SubjectBean> beans = SubjectUtils.getTodayAllSubjects(subjectBeans, 0);
+        String subjectStr=showSubjects(beans);
+        Toast.makeText(this, "周一共有" + beans.size() + "门课\n\n" + subjectStr, Toast.LENGTH_SHORT).show();
+    }
+```
+
 ### 注意的地方
 
 1.在调用`showTimetableView()`后需要调用一次`changeWeek()`，因为我在`showTimetableView()`里没有处理课程重叠的问题，当课程重叠或者有交叉且该课程在本周上时，会在课程的右上方义小红点+数字的形式提示。
