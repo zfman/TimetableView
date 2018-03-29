@@ -12,14 +12,22 @@
 - **获取某天要上的课程**（v1.0.1添加)
 
 ### 运行效果
-[Demo运行效果](https://github.com/zfman/TimetableView/wiki/Demo%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C)  [下载Demo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/TimetableSample.apk)
+- [Demo运行效果](https://github.com/zfman/TimetableView/wiki/Demo%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C)
+
+- [下载Demo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/TimetableSample.apk)
 
 
-### ChangeLog[更多](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
+### ChangeLog
+
+[More Log](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
+
+**v1.0.2**
+
+修复在特定情况下课程角标计算错误的问题
 
 **v1.0.1**
 
-1.在工具类中增加了获取某天课程的方法 
+在工具类中增加了获取某天课程的方法 
 
 ### 简单使用
 
