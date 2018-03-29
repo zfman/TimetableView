@@ -119,7 +119,6 @@ public class SubjectUtils {
 	
 	/**
 	 * 判断该课是否为本周的
-	 * @param course
 	 * @param cur_week
 	 * @return
 	 */
@@ -137,18 +136,32 @@ public class SubjectUtils {
 	 */
 	public static int[] getCount(List<SubjectBean> data,int curWeek){
 		int[] count=new int[12];
-		boolean[] isHandle=new boolean[data.size()];
 		for(int i=0;i<data.size();i++){
-			isHandle[i]=false;
-		}
-		for(int i=0;i<count.length;i++) count[i]=0;
-		for(int i=0;i<data.size();i++){
-			List<SubjectBean> result = findThisWeekSubjects(data.get(i), data, curWeek);
-			if(!isHandle[i]){
-				count[data.get(i).getStart()-1]=result.size();
-				isHandle[i]=true;
+			List<SubjectBean> result = findSubjects(data.get(i), data);
+			int num=0;
+			for(SubjectBean bean:result){
+				if(isThisWeek(bean,curWeek)){
+					num++;
+				}
+			}
+			if(data.get(i).getStart()>=1&&data.get(i).getStart()<=12){
+				count[data.get(i).getStart()-1]=num;
 			}
 		}
+
+//		int[] count=new int[12];
+//		boolean[] isHandle=new boolean[data.size()];
+//		for(int i=0;i<data.size();i++){
+//			isHandle[i]=false;
+//		}
+//		for(int i=0;i<count.length;i++) count[i]=0;
+//		for(int i=0;i<data.size();i++){
+//			List<SubjectBean> result = findThisWeekSubjects(data.get(i), data, curWeek);
+//			if(!isHandle[i]){
+//				count[data.get(i).getStart()-1]=result.size();
+//				isHandle[i]=true;
+//			}
+//		}
 //		
 //		for(int i=0;i<data.size();i++){
 //			if(isThisWeek(data.get(i), curWeek)){
