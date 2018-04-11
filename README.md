@@ -9,25 +9,13 @@
 - 课表Item点击事件处理
 - 解决课程重叠、交叉的问题，解决的效果同超级课程表
 - 高效的切换周次
-- **获取某天要上的课程**（v1.0.1添加)
+- 获取某天要上的课程
 
-### 运行效果
+### Resource
+- [Document WIKI](https://github.com/zfman/TimetableView/wiki)
 - [Demo运行效果](https://github.com/zfman/TimetableView/wiki/Demo%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C)
-
-- [下载Demo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/TimetableSample.apk)
-
-
-### ChangeLog
-
-[More Log](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
-
-**v1.0.2**
-
-修复在特定情况下课程角标计算错误的问题
-
-**v1.0.1**
-
-在工具类中增加了获取某天课程的方法 
+- [Demo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/TimetableSample.apk)
+- [Change Log](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
 
 ### 简单使用
 
@@ -37,7 +25,6 @@
 ```
 compile 'com.zhuangfei:TimetableView:1.0.2'
 ```
-
 
 **Step 2：引入`TimetableView`控件**
 ```xml
@@ -52,6 +39,7 @@ compile 'com.zhuangfei:TimetableView:1.0.2'
 
 **Step 3：初始化控件、设置**
 
+设置数据源时，你需要将你的课程数据转化为`List<SubjectBean>`对象，请参考`Demo`的[`MainActivity`](https://github.com/zfman/TimetableView/blob/master/androidstudio/AndroidTimetableView/app/src/main/java/com/zhuangfei/android_timetableview/MainActivity.java)
 ```java
 mTimetableView=(TimetableView) findViewById(R.id.id_timetableView);
 mTimetableView.setDataSource(subjectBeans)
@@ -159,33 +147,4 @@ SubjectUtils是课程的工具类，调用其方法获取课程，示例如下�
 
 2.红点的出现时机：在同一时刻且在本周有课的课程数大于等于2时
 
-### 资源
-
-各个接口、方法的详细用法在androidstudio/app中
-
-[wiki-api](https://github.com/zfman/TimetableView/wiki/API)
-
-### License
-
-MIT License
-
-Copyright (c) 2017 壮飞
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
+3.欢迎start、watch、fork，有问题可以联系我`1193600556@qq.com`
