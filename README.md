@@ -15,8 +15,12 @@
 - [Document WIKI](https://github.com/zfman/TimetableView/wiki)
 - [Demo运行效果](https://github.com/zfman/TimetableView/wiki/Demo%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C)
 - [Demo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/TimetableSample.apk)
+- [河南理工大学课程库API](https://blog.csdn.net/lzhuangfei/article/details/79946997)
 - [Change Log](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
-- [原理篇 : 一起实现一个健壮的课程表控件](https://blog.csdn.net/lzhuangfei/article/details/78243745)
+
+### CSDN
+- [博客主页](https://blog.csdn.net/lzhuangfei)
+- [一起实现一个健壮的课程表控件-原理篇](https://blog.csdn.net/lzhuangfei/article/details/78243745)
 
 ### 简单使用
 
