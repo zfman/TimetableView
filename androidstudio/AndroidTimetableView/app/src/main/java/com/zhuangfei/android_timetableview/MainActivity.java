@@ -66,7 +66,7 @@ public class MainActivity extends Activity implements OnSubjectItemClickListener
         //调用过showSubjectView后需要调用changWeek()
         //第二个参数为true时在改变课表布局的同时也会将第一个参数设置为当前周
         //第二个参数为false时只改变课表布局
-        mTimetableView.changeWeek(curWeek, true);
+//        mTimetableView.changeWeek(curWeek, true);
 
     }
 

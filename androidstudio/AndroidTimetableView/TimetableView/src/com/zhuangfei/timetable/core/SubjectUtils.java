@@ -79,7 +79,6 @@ public class SubjectUtils {
 	
 	/**
 	 * 返回index处的课程，注意他的真实位置可能并不是index
-	 * @param index
 	 * @param curWeek
 	 * @return
 	 */

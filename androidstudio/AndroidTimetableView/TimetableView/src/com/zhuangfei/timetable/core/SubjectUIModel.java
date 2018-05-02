@@ -221,11 +221,12 @@ public class SubjectUIModel {
 
 	/**
 	 * 切换周次，使用该方法只修改课程的背景色，不用removeAllView， 效率可以大大提高
+	 *
+	 * v1.0.3时完善此方法，解决角标计算错误的问题
 	 */
 	public static void changeWeek(LinearLayout[] panels, List<SubjectBean>[] data, int curWeek) {
 		for (int i = 0; i < panels.length; i++) {
 			List<SubjectBean> courses = data[i];
-			int[] countArr = SubjectUtils.getCount(courses, curWeek);
 			boolean isChange=false;
 			for (int j = 0; j < panels[i].getChildCount(); j++) {
 				View view = panels[i].getChildAt(j);
@@ -262,7 +263,13 @@ public class SubjectUIModel {
 					textView.setText(subject.getName());
 					textView.setBackgroundResource(R.drawable.item_corner_style_useless);
 				} else {
-					int count = countArr[subject.getStart() - 1];
+					int count=0;
+					List<SubjectBean> result = SubjectUtils.findSubjects(subject, courses);
+					for(SubjectBean bean:result){
+						if(SubjectUtils.isThisWeek(bean,curWeek)){
+							count++;
+						}
+					}
 					if (count > 1) {
 						countTextView.setVisibility(View.VISIBLE);
 						countTextView.setText(count + "");
