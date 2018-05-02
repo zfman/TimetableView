@@ -30,7 +30,7 @@
 
 在build.gradle文件中添加以下代码
 ```
-compile 'com.zhuangfei:TimetableView:1.0.2'
+compile 'com.zhuangfei:TimetableView:1.0.3'
 ```
 
 **Step 2：引入`TimetableView`控件**
