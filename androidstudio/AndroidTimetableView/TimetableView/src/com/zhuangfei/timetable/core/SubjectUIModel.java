@@ -134,7 +134,7 @@ public class SubjectUIModel {
 		FrameLayout layout = (FrameLayout) view.findViewById(R.id.id_course_item_framelayout);
 		TextView textView = (TextView) view.findViewById(R.id.id_course_item_course);
 		layout.setLayoutParams(lp);
-		layout.setAlpha(0.8f);
+//		layout.setAlpha(0.8f);
 		textView.setText(subject.getName() + "@" + subject.getRoom());
 		textView.setBackgroundResource(getBackgroundByRandom(subject.getColorRandom()));
 		textView.setClickable(true);

@@ -11,8 +11,10 @@ import com.zhuangfei.timetable.core.OnSubjectItemLongClickListener;
 import com.zhuangfei.timetable.core.SubjectBean;
 import com.zhuangfei.timetable.core.SubjectUtils;
 import com.zhuangfei.timetable.core.TimetableView;
+import com.zhuangfei.timetable.core.grid.SubjectGridView;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +56,14 @@ public class MainActivity extends Activity implements OnSubjectItemClickListener
         subjectBeans = transform(MySubjectModel.loadDefaultSubjects());
 
         mTimetableView = (TimetableView) findViewById(id.id_timetableView);
+
+        //使用默认的参数构造一个网格View,默认灰色
+        SubjectGridView gridView=new SubjectGridView(this);
+
+        //以下构造一个红色的网格
+//        SubjectGridView redGridView=new SubjectGridView(this);
+//        redGridView.setLineColor(Color.RED);
+
         mTimetableView.setDataSource(subjectBeans)
                 .setCurTerm("大三上学期")
                 .setCurWeek(curWeek)
@@ -61,6 +71,9 @@ public class MainActivity extends Activity implements OnSubjectItemClickListener
                 .setOnSubjectBindViewListener(this)
                 .setOnSubjectItemClickListener(this)
                 .setOnSubjectItemLongClickListener(this)
+                .setMax(true)
+                .setBottomLayer(gridView)
+//                .setBottomLayer(redGridView)
                 .showTimetableView();
 
         //调用过showSubjectView后需要调用changWeek()

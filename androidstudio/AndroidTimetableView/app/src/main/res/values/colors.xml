@@ -7,4 +7,6 @@
     <color name="theme_dark">#2A3033</color>
     <color name="theme_dark2">#787C7E</color>
     <color name="app_white">#ffffff</color>
+
+    <color name="layer_grid_line">#000000</color>
 </resources>

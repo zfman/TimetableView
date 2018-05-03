@@ -73,6 +73,8 @@ public class TimetableView extends LinearLayout{
 	
 	private ScrollView scrollView;
 	private TextView titleTextView;
+
+	private View bottomLayer=null;
 	
 	// 课表item事件监听器
 	private OnSubjectItemClickListener onSubjectItemClickListener;
@@ -132,7 +134,12 @@ public class TimetableView extends LinearLayout{
 		onBind();
 		return this;
 	}
-	
+
+	public TimetableView setBottomLayer(View bottomLayer) {
+		this.bottomLayer = bottomLayer;
+		return this;
+	}
+
 	public TimetableView setOnSubjectItemClickListener(
 			OnSubjectItemClickListener onSubjectItemClickListener) {
 		this.onSubjectItemClickListener = onSubjectItemClickListener;
@@ -311,6 +318,16 @@ public class TimetableView extends LinearLayout{
 		setShowDashLayer(isShowDashlayer);
 		for(int i=0;i<7;i++){
 			data[i].clear();
+		}
+
+		checkBottomLayer();
+	}
+
+	private void checkBottomLayer(){
+		if(bottomLayer!=null){
+			setShowDashLayer(true);
+			dashLayer.removeAllViews();
+			dashLayer.addView(bottomLayer);
 		}
 	}
 
