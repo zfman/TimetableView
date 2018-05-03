@@ -10,6 +10,7 @@
 - 解决课程重叠、交叉的问题，解决的效果同超级课程表
 - 高效的切换周次
 - 获取某天要上的课程
+- 自定义网格背景图层
 
 ### Resource
 - [Document WIKI](https://github.com/zfman/TimetableView/wiki)
@@ -30,7 +31,7 @@
 
 在build.gradle文件中添加以下代码
 ```
-compile 'com.zhuangfei:TimetableView:1.0.3'
+compile 'com.zhuangfei:TimetableView:1.0.4'
 ```
 
 **Step 2：引入`TimetableView`控件**
@@ -77,6 +78,18 @@ mTimetableView.setDataSource(List<SubjectBean>)
 	.showTimetableView();//显示视图
 					  
 ```
+
+### 自定义背景图层(要求版本>=1.0.4)
+
+`TimetableView`允许用户更改课表的背景，但你应该提供一个`View`
+
+你可以在设置TimetableView的属性时设置这个选项,传入的参数为`View`对象
+
+```java
+mTimetableView.setBottomLayer(gridView)
+```
+
+[详细的自定义背景图层](https://github.com/zfman/TimetableView/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%83%8C%E6%99%AF%E5%9B%BE%E5%B1%82)
 
 ### 动态更新课表
 
