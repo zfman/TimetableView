@@ -1,6 +1,8 @@
 ### 问题
 > 这是在使用[SuperCalender](https://github.com/MagicMashRoom/SuperCalendar)添加Mark时遇到的问题
 
+我引用的版本号：`compile 'com.github.MagicMashRoom:SuperCalendar:1.6'`
+
 例子中给的示例是这样的：
 ```java
 private void initMarkData() {
