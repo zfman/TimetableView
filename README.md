@@ -16,6 +16,7 @@
 - [Document WIKI](https://github.com/zfman/TimetableView/wiki)
 - [Demo运行效果](https://github.com/zfman/TimetableView/wiki/Demo%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C)
 - [Demo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/TimetableSample.apk)
+- [GridDemo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/v1.0.4-网格层.apk)
 - [TimetableAPI](https://github.com/zfman/api-demo/tree/master/timetable)
 - [Change Log](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
 
