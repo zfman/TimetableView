@@ -3,14 +3,15 @@
 一个非常漂亮的`Android`课程表控件，该控件支持的功能：
 
 - 设置数据源
-- 颜色设置，控件内置17种颜色
-- 触感反馈，每种内置颜色都有对应的三个样式
+- 自动分配颜色
+- 触感反馈
 - 日期显示与高亮
-- 课表Item点击事件处理
-- 解决课程重叠、交叉的问题，解决的效果同超级课程表
+- 课表Item点击、长按事件处理
+- 解决课程交叉的问题
 - 高效的切换周次
-- 获取某天要上的课程
+- 丰富的课程工具类
 - 自定义网格背景图层
+- 更多功能等你来发掘...
 
 ### Resource
 - [Document WIKI](https://github.com/zfman/TimetableView/wiki)
@@ -20,13 +21,14 @@
 - [TimetableAPI](https://github.com/zfman/api-demo/tree/master/timetable)
 - [Change Log](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
 
-### CSDN
+### About
 - [博客主页](https://blog.csdn.net/lzhuangfei)
 - [一起实现一个健壮的课程表控件-原理篇](https://blog.csdn.net/lzhuangfei/article/details/78243745)
 - [河南理工大学课程库API](https://blog.csdn.net/lzhuangfei/article/details/79946997)
 
-
 ### 简单使用
+
+> 推荐使用1.0.4或者1.0.4以上版本，1.0.4以下版本在滑动时有明显的卡顿现象
 
 **Step 1：添加项目依赖**
 
