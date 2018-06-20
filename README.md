@@ -7,6 +7,7 @@
 - [v1.x与v2.x的对比](https://github.com/zfman/TimetableView/wiki/v1.x%E4%B8%8Ev2.x%E7%9A%84%E5%AF%B9%E6%AF%94)
 - [下载示例App](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.0.apk)
 - [效果图](https://github.com/zfman/TimetableView/wiki/v2.x%E6%95%88%E6%9E%9C%E5%9B%BE)
+- [课程库API](https://github.com/zfman/api-demo/tree/master/timetable)
 
 ### Get Start
 **Step1：添加依赖**
