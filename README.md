@@ -67,6 +67,7 @@ mTimetableView.setSource(mySubjects)
 ### Get Start 2.x
 你可以跟随以下几个小节进行由简至难的学习：
 
+- [准备数据源](https://github.com/zfman/TimetableView/wiki/%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E5%87%86%E5%A4%87)
 - [基础功能](https://github.com/zfman/TimetableView/wiki/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD)
 - [周次选择栏](https://github.com/zfman/TimetableView/wiki/%E5%91%A8%E6%AC%A1%E9%80%89%E6%8B%A9%E6%A0%8F)
 - [自定义属性](https://github.com/zfman/TimetableView/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
