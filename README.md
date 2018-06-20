@@ -3,6 +3,11 @@
 
 总体来说，v2.x的修改幅度非常大，现在的它很灵活，`v1.x`中为每个内置颜色定义了三个XML样式文件，仅仅是Item的样式就定义了36个样式文件，`v2.x`中删除了36个样式文件，仅保留一个作为模板，并在`v2.x`中引入颜色池的概念，进而使得Item的样式更加丰富
 
+### Resource
+- [v1.x与v2.x的对比](https://github.com/zfman/TimetableView/wiki/v1.x%E4%B8%8Ev2.x%E7%9A%84%E5%AF%B9%E6%AF%94)
+- [下载示例App](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.0.apk)
+- [效果图](https://github.com/zfman/TimetableView/wiki/v2.x%E6%95%88%E6%9E%9C%E5%9B%BE)
+
 ### Get Start
 **Step1：添加依赖**
 
@@ -58,12 +63,6 @@ mTimetableView.setSource(mySubjects)
 至此，课表已经可以显示在视图上了。啊啊啊，怎么没有解释，看不懂呀！
 不要着急，我特意写了大量的例子以及十篇文章来帮助你学习、理解它，如果你感觉它很好用，请帮我点一下右上角的`star`，蟹蟹~
 
-### Resource
-- [v1.x与v2.x的对比](https://github.com/zfman/TimetableView/wiki/v1.x%E4%B8%8Ev2.x%E7%9A%84%E5%AF%B9%E6%AF%94)
-- [下载示例App](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.0.apk)
-- [效果图](https://github.com/zfman/TimetableView/wiki/v2.x%E6%95%88%E6%9E%9C%E5%9B%BE)
-- [Javadoc-v2.0.0](http://www.liuzhuangfei.com/github/timetableview/docs/v2.0.0/)
-
 ### Get Start 2.x
 你可以跟随以下几个小节进行由简至难的学习：
 
@@ -77,8 +76,10 @@ mTimetableView.setSource(mySubjects)
 - [替换滚动布局](https://github.com/zfman/TimetableView/wiki/%E6%9B%BF%E6%8D%A2%E6%BB%9A%E5%8A%A8%E5%B8%83%E5%B1%80)
 - [工具类](https://github.com/zfman/TimetableView/wiki/%E5%B7%A5%E5%85%B7%E7%B1%BB)
 
+或者你可以访问[timetableview/wiki](https://github.com/zfman/TimetableView/wiki)或者[Javadoc-v2.0.0](http://www.liuzhuangfei.com/github/timetableview/docs/v2.0.0/)来了解更多，我的联系方式在最后，也可以联系我
+
 ### About Me
 - [csdn](https://blog.csdn.net/lzhuangfei)
 - [github](https://github.com/zfman)
 - [blog page](http://www.liuzhuangfei.com)
-- 刘壮飞 QQ:1193600556
+- QQ:1193600556
