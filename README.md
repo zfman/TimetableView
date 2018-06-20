@@ -1,173 +1,104 @@
-# TimetableView
+### TimetableView
+[TimetableView](https://github.com/zfman/TimetableView)是一款开源的Android课程表控件，`v2.x`支持的功能很多很灵活
 
-一个非常漂亮的`Android`课程表控件，该控件支持的功能：
+### 差别
 
-- 设置数据源
-- 自动分配颜色
-- 触感反馈
-- 日期显示与高亮
-- 课表Item点击、长按事件处理
-- 解决课程交叉的问题
-- 高效的切换周次
-- 丰富的课程工具类
-- 自定义网格背景图层
-- 更多功能等你来发掘...
+**总体特性**
 
-### Resource
-- [Document WIKI](https://github.com/zfman/TimetableView/wiki)
-- [Demo运行效果](https://github.com/zfman/TimetableView/wiki/Demo%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C)
-- [Demo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/TimetableSample.apk)
-- [GridDemo App](https://raw.githubusercontent.com/zfman/TimetableView/master/extras/v1.0.4-网格层.apk)
-- [TimetableAPI](https://github.com/zfman/api-demo/tree/master/timetable)
-- [Change Log](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
+特性 | v1.x| v2.x
+-|-|-
+设置数据源的难易 | 较繁琐| 易
+分配颜色的方式 | 手动 | 自动 
+是否支持按压效果 | 支持 | 不支持
+Item样式文件数量| 36+ | 1
+课程项颜色数量| 12种 | 无限制
+课程交叉的问题 | 已解决 | 已解决
+切换周次的效率| 较高 | 高
+是否可自定义背景图层| 支持 | 不支持
+是否有丰富的工具类| 较为丰富 | 丰富
+灵活性| 不灵活 | 灵活
 
-### About
-- [博客主页](https://blog.csdn.net/lzhuangfei)
-- [一起实现一个健壮的课程表控件-原理篇](https://blog.csdn.net/lzhuangfei/article/details/78243745)
-- [河南理工大学课程库API](https://blog.csdn.net/lzhuangfei/article/details/79946997)
+**自定义属性**
 
-### 简单使用
+特性 | v1.x| v2.x
+-|-|-
+在xml中对当前周设置 | 否| 是
+在xml中对当前学期设置 | 否| 是
+在xml中对边距、高度设置 | 否| 是
+在xml中对圆角弧度设置 | 否| 是 
+在xml中对最大侧边项数设置 | 否 | 是
+在xml中对非本周课程显示设置 | 否| 是 
+在xml中对数据源设置 | 否 | 是
+在xml中对Item点击监听设置 | 否 | 是
+在xml中对周次改变监听设置 | 否 | 是
 
-> 推荐使用1.0.4或者1.0.4以上版本，1.0.4以下版本在滑动时有明显的卡顿现象
+**颜色池**
 
-**Step 1：添加项目依赖**
+特性 | v1.x| v2.x
+-|-|-
+是否可指定固定颜色 | 否| 是
+是否可修改颜色池 | 否| 是
 
-在build.gradle文件中添加以下代码
-```
-compile 'com.zhuangfei:TimetableView:1.0.4'
-```
+**周次选择栏**
 
-**Step 2：引入`TimetableView`控件**
-```xml
-    <!-- XML CODE -->
-    <com.zhuangfei.timetable.core.TimetableView 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/id_timetableView"
-        android:orientation="vertical">
-    </com.zhuangfei.timetable.core.TimetableView>
-```
+特性 | v1.x| v2.x
+-|-|-
+支持周次选择栏 | 否| 是
+可设置相关监听 | ——| 是
+自定义周次选择栏 | ——| 是
 
-**Step 3：初始化控件、设置**
+**日期栏**
 
-设置数据源时，你需要将你的课程数据转化为`List<SubjectBean>`对象，请参考`Demo`的[`MainActivity`](https://github.com/zfman/TimetableView/blob/master/androidstudio/AndroidTimetableView/app/src/main/java/com/zhuangfei/android_timetableview/MainActivity.java)
-```java
-mTimetableView=(TimetableView) findViewById(R.id.id_timetableView);
-mTimetableView.setDataSource(subjectBeans)
-	.setCurTerm("大三上学期")
-	.setCurWeek(curWeek)
-	.setOnSubjectItemClickListener(this)
-	.showTimetableView();
-		
-//调用过showSubjectView后需要调用changWeek()
-//第二个参数为true时在改变课表布局的同时也会将第一个参数设置为当前周
-//第二个参数为false时只改变课表布局
-mTimetableView.changeWeek(curWeek, true);
+特性 | v1.x| v2.x
+-|-|-
+自动计算日期 | 是| 是
+自动高亮 | 是| 是
+日期刷新 | 否| 是
+自定义日期栏 | 否| 是 
+设置日期栏隐藏 | 否 | 是
 
-```
+**侧边栏**
 
-### 属性
+特性 | v1.x| v2.x
+-|-|-
+支持侧边栏 | 是| 是
+设置节次时间的显示与隐藏 | 否| 是
+设置侧边栏、项的背景颜色 | 否| 是
+设置节次文本的颜色、字号 | 否| 是
+设置时间文本的颜色、字号 | 否| 是
+设置为自定义的侧边栏样式 | 否| 是 
 
-先看下`timetableView`可以设置哪些属性
-```java
-mTimetableView.setDataSource(List<SubjectBean>)
-	.setCurTerm(String)//设置学期
-	.setCurWeek(int)//设置当前周
-	.setMax(boolean)//是否启用最大节次（12节）
-	.setShowDashLayer(boolean)//是否显示虚线层，默认显示
-	.bindTitleView(TextView)//绑定一个TextView当数据变化时同时更新该文本
-	.setOnSubjectBindViewListener(OnSubjectBindViewListener)//指定一个在数据变化时更新文本的规则
-	.setOnSubjectItemClickListener(OnSubjectItemClickListener)//指定一个item被点击的事件处理方式
-	.showTimetableView();//显示视图
-					  
-```
+**滚动布局**
 
-### 自定义背景图层(要求版本>=1.0.4)
+特性 | v1.x| v2.x
+-|-|-
+支持替换ScrollView | 否| 是
+自定义ScrollView无限制 | ——| 是
 
-`TimetableView`允许用户更改课表的背景，但你应该提供一个`View`
+**课程项样式**
 
-你可以在设置TimetableView的属性时设置这个选项,传入的参数为`View`对象
+特性 | v1.x| v2.x
+-|-|-
+支持非本周课程的显示与隐藏 | 否| 是
+设置边距和弧度 | 否| 是
+设置单个弧度弧度 | 否| 是
+设置非本周课程背景 | 否| 是 
+设置课程重叠的样式 | 否 | 是
+自定义文本的显示 | 否| 是 
+拦截课程项的构建 | 否 | 是
+设置Item点击监听 | 是| 是 
+设置Item长按监听 | 是 | 是
+获取Item并进行属性设置 | 否 | 是
 
-```java
-mTimetableView.setBottomLayer(gridView)
-```
+**工具类**
 
-[详细的自定义背景图层](https://github.com/zfman/TimetableView/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%83%8C%E6%99%AF%E5%9B%BE%E5%B1%82)
+特性 | v1.x| v2.x
+-|-|-
+拆分数据源 | 是| 是
+对课程排序 | 是| 是
+获取某日的所有课程 | 否| 是
+获取某日的有课课程 | 否| 是
+模拟分配颜色 | 否| 是
+转换数据源 | 否| 是
 
-### 动态更新课表
-
-不管删除还是添加，只需要更改数据源，最后调用notifyDataSourceChanged()来通知UI界面同步即可。
-```java
-//删除课程
-    protected void deleteSubject() {
-        int pos = (int) (Math.random() * subjectBeans.size());
-        if (subjectBeans.size() > 0) {
-            subjectBeans.remove(pos);
-            mTimetableView.notifyDataSourceChanged();
-        } else {
-            Toast.makeText(this, "没有课程啦！", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-```
-
-### 切换周次
-
-切换周次的效率非常高，你可以使用以下代码切换周次：
-```java
-//第二个参数为：是否强制将第一个参数设置为当前周
-timetableView.changeWeek(2,true);
-```
-
-### 获取某天的课程(要求版本>=v1.0.1)
-
-SubjectUtils是课程的工具类，调用其方法获取课程，示例如下：
-```java
-//显示周一课程
-    protected void showTodaySubjects() {
-        //0表示周一，依次类推，6代表周日
-        List<SubjectBean> beans = SubjectUtils.getTodaySubjects(subjectBeans, curWeek, 0);
-        String subjectStr=showSubjects(beans);
-        Toast.makeText(this, "周一有" + beans.size() + "门课要上\n\n" + subjectStr, Toast.LENGTH_SHORT).show();
-    }
-
-    //显示周一所有课程
-    protected void showTodayAllSubjects() {
-        List<SubjectBean> beans = SubjectUtils.getTodayAllSubjects(subjectBeans, 0);
-        String subjectStr=showSubjects(beans);
-        Toast.makeText(this, "周一共有" + beans.size() + "门课\n\n" + subjectStr, Toast.LENGTH_SHORT).show();
-    }
-```
-
-### 绑定TextView
-
-当curWeek、数据源、curTerm任一发生变化，系统根据自己定义的规则对绑定的TextView进行文字同步，示例如下：
-```java
-	mTimetableView.setDataSource(subjectBeans)
-                .setCurTerm("大三上学期")
-                .setCurWeek(curWeek)
-                .bindTitleView(mTitleTextView)//这句话绑定View
-                .setOnSubjectBindViewListener(this)//这句话实现接口，在接口中定义规则
-                .setOnSubjectItemClickListener(this)
-                .setOnSubjectItemLongClickListener(this)
-                .showTimetableView();
-				
-	@Override
-    public void onBindTitleView(TextView titleTextView, int curWeek, String curTerm, List<SubjectBean> subjectBeans) {
-        String text = "第" + curWeek + "周" + ",共" + subjectBeans.size() + "门课";
-		//填充
-        titleTextView.setText(text);
-		
-		//同步当前周次
-        this.curWeek=curWeek;
-    }
-	
-```
-
-### 注意的地方
-
-1.在调用`showTimetableView()`后需要调用一次`changeWeek()`，因为我在`showTimetableView()`里没有处理课程重叠的问题，当课程重叠或者有交叉且该课程在本周上时，会在课程的右上方义小红点+数字的形式提示。
-
-2.红点的出现时机：在同一时刻且在本周有课的课程数大于等于2时
-
-3.欢迎star、watch、fork，有问题可以联系我`1193600556@qq.com`
+总体来说，v2.x的修改幅度非常大，现在的它很灵活，`v1.x`中为每个内置颜色定义了三个XML样式文件，仅仅是Item的样式就定义了36个样式文件，`v2.x`中删除了36个样式文件，仅保留一个作为模板，并在`v2.x`中引入颜色池的概念，进而使得Item的样式更加丰富

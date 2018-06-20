@@ -1,19 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/theme_dark"
-    android:orientation="vertical">
-    
-    <include layout="@layout/header"/>
-    
-    <com.zhuangfei.timetable.core.TimetableView
-        android:id="@+id/id_timetableView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.zhuangfei.timetable.core.TimetableView>
-    
-    </LinearLayout>
+    android:orientation="vertical"
+    android:padding="15dp">
 
+    <Button
+        android:id="@+id/id_btn1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="基础能力" />
+
+    <Button
+        android:id="@+id/id_btn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义属性" />
+
+    <Button
+        android:id="@+id/id_btn3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="颜色池示例" />
+
+    <Button
+        android:id="@+id/id_btn4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="课程项样式" />
+
+    <Button
+        android:id="@+id/id_btn5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="替换滚动布局" />
+
+    <Button
+        android:id="@+id/id_btn6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="侧边栏样式" />
+
+    <Button
+        android:id="@+id/id_btn7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="日期栏样式" />
+    <Button
+        android:id="@+id/id_btn8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="工具类" />
+
+</LinearLayout>

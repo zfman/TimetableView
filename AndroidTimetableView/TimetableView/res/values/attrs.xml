@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Some Attr with TimetableView-->
+    <declare-styleable name="TimetableView">
+
+        <!--当前周-->
+        <attr name="cur_week" format="integer"/>
+
+        <!--当前学期-->
+        <attr name="cur_term" format="string"/>
+
+        <!--
+            指定一个方法名，该方法符合以下要求：
+            1.返回值为一个集合
+            2.集合中的每个对象都实现了ScheduleEnable接口
+            -->
+        <attr name="source" format="string"/>
+
+        <!--
+            指定一个方法名，该方法符合以下要求：
+            1.返回值为List<Schedule>
+            -->
+        <attr name="data" format="string"/>
+
+        <!--课程项的上边距-->
+        <attr name="mar_top" format="dimension"/>
+
+        <!--左边距-->
+        <attr name="mar_left" format="dimension"/>
+
+        <!--课程项的高度-->
+        <attr name="item_height" format="dimension"/>
+
+        <!--本周课程的圆角弧度-->
+        <attr name="thisweek_corner" format="dimension"/>
+
+        <!--非本周课程的圆角弧度-->
+        <attr name="nonweek_corner" format="dimension"/>
+
+        <!--侧边栏的最大项-->
+        <attr name="max_slide_item" format="integer"/>
+
+        <!--是否显示非本周课程-->
+        <attr name="show_notcurweek" format="boolean"/>
+        
+        <attr name="onWeekChanged" format="string"/>
+        
+        <attr name="onItemClicked" format="string"/>
+    </declare-styleable>
+    
+    <declare-styleable name="PerWeekView">
+        <!--圆点半径-->
+        <attr name="radius" format="dimension"/>
+
+        <!--亮色-->
+        <attr name="light_color" format="color"/>
+
+        <!--暗色-->
+        <attr name="gray_color" format="color"/>
+
+    </declare-styleable>
+</resources>

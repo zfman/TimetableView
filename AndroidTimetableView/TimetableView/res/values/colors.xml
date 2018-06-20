@@ -127,4 +127,6 @@
     
     <color name="app_refresh_black">#333333</color>
     <color name="app_course_chooseweek_bg">#E2F7F6</color>
+ <color name="app_course_chooseweek_bg2">#F1FFFE</color>
+ <color name="app_course_chooseweek_lightbg">#B7F5F2</color>
 </resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+	<item android:id="@+id/top1"
+	    android:title="隐藏非本周课程"/>
+	<item android:id="@+id/top2"
+	    android:title="显示非本周课程"/>
+	<item android:id="@+id/top3"
+	    android:title="边距与弧度设置"/>
+	<item android:id="@+id/top4"
+		android:title="课程项文本"/>
+	<item android:id="@+id/top5"
+		android:title="拦截显示"/>
+	<item android:id="@+id/top6"
+		android:title="单个角弧度设置"/>
+	<item android:id="@+id/top7"
+		android:title="非本周背景设置"/>
+	<item android:id="@+id/top8"
+		android:title="修改课程重叠的样式"/>
+</menu>

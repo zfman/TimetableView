@@ -37,6 +37,16 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
+
+    buildTypes {
+        release {
+            //混淆
+            minifyEnabled false
+
+            //加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 //添加
@@ -45,7 +55,7 @@ publish {
     repoName='Maven'
     groupId = 'com.zhuangfei'//jcenter上的路径
     artifactId = 'TimetableView'//项目名称
-    publishVersion = '1.0.4'//版本号
+    publishVersion = '2.0.0'//版本号
     desc = 'A beautiful Android based curriculum schedule widget'//描述，不重要
     website = 'https://github.com/zfman/TimetableView'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+	<item android:id="@+id/top1"
+		android:title="显示节次时间"/>
+	<item android:id="@+id/top2"
+		android:title="隐藏节次时间"/>
+	<item android:id="@+id/top3"
+		android:title="修改侧边栏背景"/>
+	<item android:id="@+id/top4"
+		android:title="修改侧边项背景"/>
+	<item android:id="@+id/top5"
+		android:title="修改节次文本颜色"/>
+	<item android:id="@+id/top6"
+		android:title="修改时间文本颜色"/>
+	<item android:id="@+id/top7"
+		android:title="自定义侧边栏"/>
+	<item android:id="@+id/top8"
+		android:title="取消自定义侧边栏"/>
+
+
+</menu>

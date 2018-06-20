@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_week_month"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/headHeight"
+    android:gravity="center_vertical|center_horizontal"
+    android:textSize="12sp"
+    android:textStyle="bold" />

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+	<item android:id="@+id/top1"
+	    android:title="隐藏日期栏"/>
+	<item android:id="@+id/top2"
+	    android:title="显示日期栏"/>
+	<item android:id="@+id/top3"
+	    android:title="自定义日期栏"/>
+	<item android:id="@+id/top4"
+		android:title="恢复默认日期栏"/>
+</menu>

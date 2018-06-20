@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+	<item android:id="@+id/top1"
+	    android:title="指定三种颜色"/>
+	<item android:id="@+id/top2"
+	    android:title="默认颜色池"/>
+	<item android:id="@+id/top3"
+	    android:title="扩充颜色池"/>
+</menu>
