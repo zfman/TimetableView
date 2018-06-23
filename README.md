@@ -1,104 +1,87 @@
 ### TimetableView
-[TimetableView](https://github.com/zfman/TimetableView)是一款开源的Android课程表控件，`v2.x`支持的功能很多很灵活
-
-### 差别
-
-**总体特性**
-
-特性 | v1.x| v2.x
--|-|-
-设置数据源的难易 | 较繁琐| 易
-分配颜色的方式 | 手动 | 自动 
-是否支持按压效果 | 支持 | 不支持
-Item样式文件数量| 36+ | 1
-课程项颜色数量| 12种 | 无限制
-课程交叉的问题 | 已解决 | 已解决
-切换周次的效率| 较高 | 高
-是否可自定义背景图层| 支持 | 不支持
-是否有丰富的工具类| 较为丰富 | 丰富
-灵活性| 不灵活 | 灵活
-
-**自定义属性**
-
-特性 | v1.x| v2.x
--|-|-
-在xml中对当前周设置 | 否| 是
-在xml中对当前学期设置 | 否| 是
-在xml中对边距、高度设置 | 否| 是
-在xml中对圆角弧度设置 | 否| 是 
-在xml中对最大侧边项数设置 | 否 | 是
-在xml中对非本周课程显示设置 | 否| 是 
-在xml中对数据源设置 | 否 | 是
-在xml中对Item点击监听设置 | 否 | 是
-在xml中对周次改变监听设置 | 否 | 是
-
-**颜色池**
-
-特性 | v1.x| v2.x
--|-|-
-是否可指定固定颜色 | 否| 是
-是否可修改颜色池 | 否| 是
-
-**周次选择栏**
-
-特性 | v1.x| v2.x
--|-|-
-支持周次选择栏 | 否| 是
-可设置相关监听 | ——| 是
-自定义周次选择栏 | ——| 是
-
-**日期栏**
-
-特性 | v1.x| v2.x
--|-|-
-自动计算日期 | 是| 是
-自动高亮 | 是| 是
-日期刷新 | 否| 是
-自定义日期栏 | 否| 是 
-设置日期栏隐藏 | 否 | 是
-
-**侧边栏**
-
-特性 | v1.x| v2.x
--|-|-
-支持侧边栏 | 是| 是
-设置节次时间的显示与隐藏 | 否| 是
-设置侧边栏、项的背景颜色 | 否| 是
-设置节次文本的颜色、字号 | 否| 是
-设置时间文本的颜色、字号 | 否| 是
-设置为自定义的侧边栏样式 | 否| 是 
-
-**滚动布局**
-
-特性 | v1.x| v2.x
--|-|-
-支持替换ScrollView | 否| 是
-自定义ScrollView无限制 | ——| 是
-
-**课程项样式**
-
-特性 | v1.x| v2.x
--|-|-
-支持非本周课程的显示与隐藏 | 否| 是
-设置边距和弧度 | 否| 是
-设置单个弧度弧度 | 否| 是
-设置非本周课程背景 | 否| 是 
-设置课程重叠的样式 | 否 | 是
-自定义文本的显示 | 否| 是 
-拦截课程项的构建 | 否 | 是
-设置Item点击监听 | 是| 是 
-设置Item长按监听 | 是 | 是
-获取Item并进行属性设置 | 否 | 是
-
-**工具类**
-
-特性 | v1.x| v2.x
--|-|-
-拆分数据源 | 是| 是
-对课程排序 | 是| 是
-获取某日的所有课程 | 否| 是
-获取某日的有课课程 | 否| 是
-模拟分配颜色 | 否| 是
-转换数据源 | 否| 是
+[TimetableView](https://github.com/zfman/TimetableView)是一款开源的Android课程表控件。
 
 总体来说，v2.x的修改幅度非常大，现在的它很灵活，`v1.x`中为每个内置颜色定义了三个XML样式文件，仅仅是Item的样式就定义了36个样式文件，`v2.x`中删除了36个样式文件，仅保留一个作为模板，并在`v2.x`中引入颜色池的概念，进而使得Item的样式更加丰富
+
+### Resource
+- [v1.x与v2.x的对比](https://github.com/zfman/TimetableView/wiki/v1.x%E4%B8%8Ev2.x%E7%9A%84%E5%AF%B9%E6%AF%94)
+- [下载示例App](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.0.apk)
+- [效果图](https://github.com/zfman/TimetableView/wiki/v2.x%E6%95%88%E6%9E%9C%E5%9B%BE)
+- [课程库API](https://github.com/zfman/api-demo/tree/master/timetable)
+
+### Get Start
+**Step1：添加依赖**
+
+Gradle
+```xml
+compile 'com.zhuangfei:TimetableView:2.0.0'
+```
+Maven
+```xml
+<dependency>
+  <groupId>com.zhuangfei</groupId>
+  <artifactId>TimetableView</artifactId>
+  <version>2.0.0</version>
+  <type>pom</type>
+</dependency>
+```
+**Step2：添加控件**
+
+该控件包含的基础组件有日期栏、侧边栏、课表视图，在布局文件中加入如下代码后会包含这三个基础组件
+```xml
+    <com.zhuangfei.timetable.TimetableView
+        android:id="@+id/id_timetableView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.zhuangfei.timetable.TimetableView>
+```
+**Step3：配置属性**
+
+使用如下方式获取到控件
+```java
+   TimetableView mTimetableView = findViewById(R.id.id_timetableView);    
+```
+
+属性的设置分为两类：与课程项构建有关的、与全局有关的，前者的配置在`ScheduleManager`对象中，后者的配置在`TimetableView`中，所有配置信息需要在`showView()`调用前完成，否则无效
+
+以下代码用来监听课程项点击事件：
+```java
+mTimetableView.getScheduleManager()
+                .setOnItemClickListener(new ISchedule.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, List<Schedule> scheduleList) {
+                        display(scheduleList);
+                    }
+                });       
+```
+然后设置它的一些全局属性，最后调用`showView()`用来创建和显示课表视图，代码如下：
+```
+mTimetableView.setSource(mySubjects)
+                .setCurWeek(1)
+                .setCurTerm("大三下学期")
+                .showView();    
+```
+至此，课表已经可以显示在视图上了。啊啊啊，怎么没有解释，看不懂呀！
+不要着急，我特意写了大量的例子以及十篇文章来帮助你学习、理解它，如果你感觉它很好用，请帮我点一下右上角的`star`，蟹蟹~
+
+### Get Start 2.x
+你可以跟随以下几个小节进行由简至难的学习：
+
+- [准备数据源](https://github.com/zfman/TimetableView/wiki/%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E5%87%86%E5%A4%87)
+- [基础功能](https://github.com/zfman/TimetableView/wiki/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD)
+- [周次选择栏](https://github.com/zfman/TimetableView/wiki/%E5%91%A8%E6%AC%A1%E9%80%89%E6%8B%A9%E6%A0%8F)
+- [自定义属性](https://github.com/zfman/TimetableView/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+- [日期栏](https://github.com/zfman/TimetableView/wiki/%E6%97%A5%E6%9C%9F%E6%A0%8F)
+- [侧边栏](https://github.com/zfman/TimetableView/wiki/%E4%BE%A7%E8%BE%B9%E6%A0%8F)
+- [课程项样式](https://github.com/zfman/TimetableView/wiki/%E8%AF%BE%E7%A8%8B%E9%A1%B9%E6%A0%B7%E5%BC%8F)
+- [颜色池](https://github.com/zfman/TimetableView/wiki/%E9%A2%9C%E8%89%B2%E6%B1%A0)
+- [替换滚动布局](https://github.com/zfman/TimetableView/wiki/%E6%9B%BF%E6%8D%A2%E6%BB%9A%E5%8A%A8%E5%B8%83%E5%B1%80)
+- [工具类](https://github.com/zfman/TimetableView/wiki/%E5%B7%A5%E5%85%B7%E7%B1%BB)
+
+或者你可以访问[timetableview/wiki](https://github.com/zfman/TimetableView/wiki)或者[Javadoc-v2.0.0](http://www.liuzhuangfei.com/github/timetableview/docs/v2.0.0/)来了解更多，我的联系方式在最后，也可以联系我
+
+### About Me
+- [csdn](https://blog.csdn.net/lzhuangfei)
+- [github](https://github.com/zfman)
+- [blog page](http://www.liuzhuangfei.com)
+- QQ:1193600556
