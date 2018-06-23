@@ -65,7 +65,13 @@ public class SimpleActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //更新一下，防止因程序在后台时间过长（超过一天）而导致的高亮不准确问题
-        mTimetableView.updateDateView();
+        //第一次调用时会出异常
+        try{
+            mTimetableView.getOnDateBuildListener().onHighLight();
+        }catch (Exception e){
+
+        }
+
     }
 
     /**
@@ -111,8 +117,6 @@ public class SimpleActivity extends AppCompatActivity {
                     public void onWeekChanged(int curWeek) {
                         int size = mTimetableView.getDataSource().size();
                         titleTextView.setText("第" + curWeek + "周,共" + size + "门课");
-                        //同步一下
-                        weekView.setCurWeek(curWeek).updateView();
                     }
                 })
                 .showView();

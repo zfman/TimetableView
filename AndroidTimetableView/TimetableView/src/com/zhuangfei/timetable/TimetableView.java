@@ -284,6 +284,7 @@ public class TimetableView extends LinearLayout{
 	 * @return
 	 */
 	public List<Schedule> getDataSource() {
+		if(dataSource==null) dataSource=new ArrayList<>();
 		return dataSource;
 	}
 

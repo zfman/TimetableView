@@ -69,11 +69,18 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
         }
 
         //高亮
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)-1;
-        if(dayOfWeek<0) dayOfWeek=7;
-        layouts[dayOfWeek].setBackgroundColor(Color.parseColor("#BFF6F4"));
+        Calendar now = Calendar.getInstance();
+        //一周第一天是否为星期天
+        boolean isFirstSunday = (now.getFirstDayOfWeek() == Calendar.SUNDAY);
+        int weekDay = now.get(Calendar.DAY_OF_WEEK);
+        //若一周第一天为星期天，则-1
+        if(isFirstSunday){
+            weekDay = weekDay - 1;
+            if(weekDay == 0){
+                weekDay = 7;
+            }
+        }
+        layouts[weekDay].setBackgroundColor(Color.parseColor("#BFF6F4"));
     }
 
     @Override

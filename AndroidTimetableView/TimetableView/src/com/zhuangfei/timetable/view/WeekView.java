@@ -168,7 +168,6 @@ public class WeekView extends LinearLayout {
      */
     public void showView() {
         Log.d(TAG, "showView: ");
-        isShow(true);
         container.removeAllViews();
         layouts=new ArrayList<>();
         textViews=new ArrayList<>();
@@ -260,7 +259,7 @@ public class WeekView extends LinearLayout {
      * @return
      */
     public boolean isShowing(){
-        if(getVisibility()==GONE) return false;
+        if(root.getVisibility()==GONE) return false;
         return true;
     }
 }

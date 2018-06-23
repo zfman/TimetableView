@@ -65,7 +65,7 @@ public class TimeSlideAdapter implements ISchedule.OnSlideBuildListener {
      */
     @Override
     public void setBackground(LinearLayout layout) {
-        layout.setBackgroundColor(background);
+        if(layout!=null) layout.setBackgroundColor(background);
     }
 
     /**
