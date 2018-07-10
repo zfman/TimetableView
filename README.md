@@ -1,14 +1,31 @@
 ### TimetableView
 [TimetableView](https://github.com/zfman/TimetableView)是一款开源的Android课程表控件。
 
-总体来说，v2.x的修改幅度非常大，现在的它很灵活，`v1.x`中为每个内置颜色定义了三个XML样式文件，仅仅是Item的样式就定义了36个样式文件，`v2.x`中删除了36个样式文件，仅保留一个作为模板，并在`v2.x`中引入颜色池的概念，进而使得Item的样式更加丰富
+- 支持xml设置属性、数据源
+- 提供了默认的周次选择栏（超级课程表效果），支持自定义
+- 提供了默认的日期栏，支持自定义
+- 多项侧边栏配置项，可设置时间的显示与否，支持自定义
+- 多项课程项配置项，可拦截、可修改弧度、可设置非本周是否显示
+- 课程颜色管理：使用颜色池来管理颜色，操作灵活
+- 高效灵活：切换周次高效率、一个样式文件实现了多种课程项样式效果
+- 可替换滚动布局：不将该控件绑死在固有的ScrollView中
+- 无界面操作：你可以使用工具类对课程进行模拟分配颜色、获取有课的课程等
+
+> ![11](https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.x/bg.png)
 
 ### Resource
 - [v1.x与v2.x的对比](https://github.com/zfman/TimetableView/wiki/v1.x%E4%B8%8Ev2.x%E7%9A%84%E5%AF%B9%E6%AF%94)
 - [下载示例App](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.1.apk)
 - [效果图](https://github.com/zfman/TimetableView/wiki/v2.x%E6%95%88%E6%9E%9C%E5%9B%BE)
-- [课程库API](https://github.com/zfman/api-demo/tree/master/timetable)
+- [timetableview/wiki](https://github.com/zfman/TimetableView/wiki)
+- [Javadoc-v2.0.0](http://www.liuzhuangfei.com/github/timetableview/docs/v2.0.0/)
 - [v2.x-ChangeLog](https://github.com/zfman/TimetableView/wiki/v2.x-ChangeLog)
+
+### Others
+> 这个库已经用到了我的两个项目中了，并且这两个项目都已经发布在酷安上了,你可以下载[hpu小课](https://www.coolapk.com/apk/com.zhuangfei.hputimetable)体验
+
+- [课程库API](https://github.com/zfman/api-demo/tree/master/timetable)
+- [hputimetable](https://github.com/zfman/hputimetable)
 
 ### Get Start
 **Step1：添加依赖**
@@ -79,10 +96,7 @@ mTimetableView.setSource(mySubjects)
 - [替换滚动布局](https://github.com/zfman/TimetableView/wiki/%E6%9B%BF%E6%8D%A2%E6%BB%9A%E5%8A%A8%E5%B8%83%E5%B1%80)
 - [工具类](https://github.com/zfman/TimetableView/wiki/%E5%B7%A5%E5%85%B7%E7%B1%BB)
 
-或者你可以访问[timetableview/wiki](https://github.com/zfman/TimetableView/wiki)或者[Javadoc-v2.0.0](http://www.liuzhuangfei.com/github/timetableview/docs/v2.0.0/)来了解更多，我的联系方式在最后，也可以联系我
-
 ### About Me
 - [csdn](https://blog.csdn.net/lzhuangfei)
 - [github](https://github.com/zfman)
-- [blog page](http://www.liuzhuangfei.com)
 - QQ:1193600556
