@@ -5,23 +5,24 @@
 
 ### Resource
 - [v1.x与v2.x的对比](https://github.com/zfman/TimetableView/wiki/v1.x%E4%B8%8Ev2.x%E7%9A%84%E5%AF%B9%E6%AF%94)
-- [下载示例App](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.0.apk)
+- [下载示例App](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.1.apk)
 - [效果图](https://github.com/zfman/TimetableView/wiki/v2.x%E6%95%88%E6%9E%9C%E5%9B%BE)
 - [课程库API](https://github.com/zfman/api-demo/tree/master/timetable)
+- [v2.x-ChangeLog](https://github.com/zfman/TimetableView/wiki/v2.x-ChangeLog)
 
 ### Get Start
 **Step1：添加依赖**
 
 Gradle
 ```xml
-compile 'com.zhuangfei:TimetableView:2.0.0'
+compile 'com.zhuangfei:TimetableView:2.0.1'
 ```
 Maven
 ```xml
 <dependency>
   <groupId>com.zhuangfei</groupId>
   <artifactId>TimetableView</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
   <type>pom</type>
 </dependency>
 ```
