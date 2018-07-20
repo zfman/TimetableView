@@ -241,6 +241,14 @@ public class WeekView extends LinearLayout {
         layouts.get(curWeek-1).setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.weekview_thisweek));
     }
 
+	/**
+	 * 隐藏左侧设置当前周的控件
+	 */
+	public WeekView hideLeftLayout(){
+    	leftlayout.setVisibility(View.GONE);
+    	return this;
+	}
+
     /**
      * 设置控件的可见性
      * @param isShow true:显示，false:隐藏
