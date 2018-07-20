@@ -211,6 +211,7 @@ public class PerWeekView extends View {
             Schedule schedule=getDataSource().get(i);
             start=schedule.getStart();
             end=schedule.getStart()+schedule.getStep()-1;
+            if (end>10) end=10;
             for(int m=start;m<=end;m++){
                 arr[m-1][schedule.getDay()-1]=1;
             }
