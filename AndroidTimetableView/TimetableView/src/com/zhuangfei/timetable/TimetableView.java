@@ -69,6 +69,10 @@ public class TimetableView extends LinearLayout{
 		initView(context);
 	}
 
+	/**
+	 * 初始化自定义属性
+	 * @param attrs
+	 */
 	private void initAttr(AttributeSet attrs) {
 		TypedArray ta=context.obtainStyledAttributes(attrs,R.styleable.TimetableView);
 		int curWeek=ta.getInteger(R.styleable.TimetableView_cur_week,1);

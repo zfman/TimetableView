@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 控件实现的周次选择View
+ * 周次选择栏自定义View.
+ * 每一项均为PerWeekView
  */
 
 public class WeekView extends LinearLayout {

@@ -21,7 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 周次选择的每项View，自定义View显示每周课程的概览，
+ * 周次选择栏的每项自定义View,表示某周的有课情况.
+ * 使用周一至周五、第1-10节的数据进行绘制,绘制的结果是一个5x5的点阵：
+ *
+ * 5列分别表示周一至周五
+ * 5行分别表示1-2节、3-4节、5-6节、7-8节、9-10节的有课情况
+ *
  * 有课的地方用亮色的圆点，没课的地方用暗色的圆点
  */
 
@@ -29,17 +34,25 @@ public class PerWeekView extends View {
 
     private static final String TAG = "PerWeekView";
 
+    //控件宽度
     private int width;
 
+    //圆点半径
     private int radius;
+
+    //亮色画笔
     private Paint lightPaint;
+
+    //暗色画笔
     private Paint grayPaint;
+
+    //亮色
     private int lightColor;
+
+    //暗色
     private int grayColor;
 
-    /**
-     * 数据源
-     */
+    //数据源
     private List<Schedule> dataSource;
 
     /**
@@ -182,6 +195,7 @@ public class PerWeekView extends View {
 
         int[][] tmp=getArray();
 
+        //绘制点
         for(int i=0;i<5;i++){
             for(int j=0;j<5;j++){
                 if(tmp[i][j]==0){
@@ -194,29 +208,39 @@ public class PerWeekView extends View {
     }
 
     /**
-     * 根据此数据源分析出一个二维数组
+     * 根据此数据源分析出一个二维数组.
      * @return
      */
     public int[][] getArray(){
         int[][] arr=new int[10][5];
         int[][] tmp=new int[5][5];
+
+        // 初始化数组
         for(int i=0;i<10;i++){
             for(int j=0;j<5;j++){
                 arr[i][j]=0;
             }
         }
 
+        // 标记上课的位置
+        // 遍历课程集合，将在某课程的上课区间的位置都标记上
         int start,end;
         for(int i=0;i<getDataSource().size();i++){
             Schedule schedule=getDataSource().get(i);
             start=schedule.getStart();
             end=schedule.getStart()+schedule.getStep()-1;
             if (end>10) end=10;
+
+            //标记区间的所有位置
             for(int m=start;m<=end;m++){
                 arr[m-1][schedule.getDay()-1]=1;
             }
         }
 
+        // 合并分组标记
+        // 用到了10小节的数据来标记
+        // 10小节被分为了5组分别来表示5行的上课状态
+        // 每个分组中只要有一个有课，那么该组对外的状态应该为有课
         int t=0;
         for(int i=0;i<10;i+=2){
             for(int j=0;j<5;j++){
@@ -230,13 +254,14 @@ public class PerWeekView extends View {
         }
         return tmp;
     }
+
     /**
      * 画点
      * @param canvas
-     * @param x
-     * @param y
-     * @param radius
-     * @param p
+     * @param x 圆心x
+     * @param y 圆心y
+     * @param radius 半径
+     * @param p 画笔
      */
     public void drawPoint(Canvas canvas,int x,int y,int radius,Paint p){
         canvas.drawCircle(x,y,radius, p);

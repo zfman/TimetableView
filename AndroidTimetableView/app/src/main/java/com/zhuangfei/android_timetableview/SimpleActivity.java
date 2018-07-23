@@ -29,20 +29,25 @@ import java.util.List;
 
 /**
  * 简单示例,展示多项基础能力
- * 最大节次、节次时间、非本周课程、课程动态增删
+ * 点击监听、节次设置、非本周设置、课程动态增删
+ * <p>
+ * 该界面的代码注释会比较详细，建议从此处开始看起
  */
 public class SimpleActivity extends AppCompatActivity {
 
     private static final String TAG = "SimpleActivity";
 
+    //控件
     TimetableView mTimetableView;
     WeekView weekView;
 
+    //其他
     Button moreButton;
     TextView titleTextView;
     List<MySubject> mySubjects;
 
-    int target=-1;
+    //记录切换的周次，不一定是当前周
+    int target = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,17 +66,31 @@ public class SimpleActivity extends AppCompatActivity {
         initTimetableView();
     }
 
+    /**
+     * 更新一下，防止因程序在后台时间过长（超过一天）而导致的日期或高亮不准确问题。
+     * 该操作根据个人情况而定,推荐调用一下
+     * <p>
+     * #注意: 如果使用的TimetableView的版本小于等于v2.0.0,那么需要捕获该异常
+     * // 第一次调用时会出异常
+     * <p>
+     * <pre>
+     *      try{
+     *          mTimetableView.getOnDateBuildListener().onHighLight();
+     *      }catch (Exception e){
+     *      }
+     * </pre>
+     * <p>
+     * <p>
+     * #注意: TimetableView-v2.0.1以及之后的版本就不存在这个问题了,
+     * 直接使用即可,如下:
+     * <pre>
+     *     mTimetableView.getOnDateBuildListener().onHighLight();
+     * </pre>
+     */
     @Override
     protected void onStart() {
         super.onStart();
-        //更新一下，防止因程序在后台时间过长（超过一天）而导致的高亮不准确问题
-        //第一次调用时会出异常
-        try{
-            mTimetableView.getOnDateBuildListener().onHighLight();
-        }catch (Exception e){
-
-        }
-
+        mTimetableView.getOnDateBuildListener().onHighLight();
     }
 
     /**
@@ -80,27 +99,32 @@ public class SimpleActivity extends AppCompatActivity {
     private void initTimetableView() {
         //获取控件
         mTimetableView = findViewById(R.id.id_timetableView);
-        weekView=findViewById(R.id.id_weekview);
+        weekView = findViewById(R.id.id_weekview);
         titleTextView = findViewById(R.id.id_title);
 
         //设置周次选择属性
+        //设置数据源的另外方式
+        //weekView.setData(List<Schedule>)
+        //设置数据源
         weekView.setSource(mySubjects)
                 .setCurWeek(1)
                 .setOnWeekItemClickedListener(new IWeekView.OnWeekItemClickedListener() {
                     @Override
                     public void onWeekClicked(int curWeek) {
+                        //点击之后，切换周次
                         mTimetableView.changeWeekOnly(curWeek);
                     }
                 })
                 .setOnWeekLeftClickedListener(new IWeekView.OnWeekLeftClickedListener() {
                     @Override
                     public void onWeekLeftClicked() {
-                        Log.d(TAG, "onWeekLeftClicked: ");
                         onWeekLeftLayoutClicked();
                     }
                 })
+                .isShow(false)//设置隐藏，默认显示
                 .showView();
 
+        //与构建有关的设置在ScheduleManager中
         mTimetableView.getScheduleManager()
                 .setOnItemClickListener(new ISchedule.OnItemClickListener() {
                     @Override
@@ -109,6 +133,8 @@ public class SimpleActivity extends AppCompatActivity {
                     }
                 });
 
+        //与全局有关的设置在TimetableView中
+        //设置数据源
         mTimetableView.setSource(mySubjects)
                 .setCurWeek(1)
                 .setCurTerm("大三下学期")
@@ -125,28 +151,27 @@ public class SimpleActivity extends AppCompatActivity {
     /**
      * 周次选择布局的左侧被点击时回调
      */
-    protected  void onWeekLeftLayoutClicked(){
+    protected void onWeekLeftLayoutClicked() {
         final String items[] = new String[20];
-        for(int i=0;i<20;i++){
-            items[i]="第"+(i+1)+"周";
+        for (int i = 0; i < 20; i++) {
+            items[i] = "第" + (i + 1) + "周";
         }
-        target=-1;
+        target = -1;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("设置当前周");
         builder.setSingleChoiceItems(items, mTimetableView.getCurWeek() - 1,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        target=i;
+                        target = i;
                     }
                 });
         builder.setPositiveButton("设置为当前周", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.d(TAG, "onClick: "+which);
-                if(target!=-1){
-                    weekView.setCurWeek(target+1).updateView();
-                    mTimetableView.changeWeekForce(target+1);
+                if (target != -1) {
+                    weekView.setCurWeek(target + 1).updateView();
+                    mTimetableView.changeWeekForce(target + 1);
                 }
             }
         });
@@ -222,7 +247,7 @@ public class SimpleActivity extends AppCompatActivity {
 
     /**
      * 随机切换周次
-     *
+     * <p>
      * 周次切换有两种模式：强制、非强制
      * 强制模式下，参数会被设置为当前周，非强制模式下仅仅切换周次
      *
@@ -270,8 +295,8 @@ public class SimpleActivity extends AppCompatActivity {
      * 隐藏非本周课程
      * 修改了内容的显示，所以必须更新全部（性能不高）
      * 建议：在初始化时设置该属性
-     *
-     *  updateView()被调用后，会重新构建课程，课程会回到当前周
+     * <p>
+     * updateView()被调用后，会重新构建课程，课程会回到当前周
      */
     protected void hideNonThisWeek() {
         mTimetableView.getScheduleManager().setShowNotCurWeek(false);
@@ -292,6 +317,7 @@ public class SimpleActivity extends AppCompatActivity {
      * 设置侧边栏最大节次，只影响侧边栏的绘制，对课程内容无影响
      * 最大节次取决于以下两个方法中的最小值，默认值都为12
      * 只修改了侧边栏的属性，所以只更新侧边栏即可（性能高），没有必要更新全部（性能低）
+     *
      * @param num
      * @see com.zhuangfei.timetable.model.ScheduleManager#setMaxSlideItem(int)
      * @see ISchedule.OnSlideBuildListener#getSlideItemSize()
@@ -305,13 +331,14 @@ public class SimpleActivity extends AppCompatActivity {
      * 显示时间
      * 设置侧边栏构建监听，TimeSlideAdapter是控件实现的可显示时间的侧边栏
      * 只修改了侧边栏的属性，所以只更新侧边栏即可（性能高），没有必要更新全部（性能低）
+     *
      * @see TimeSlideAdapter
      */
     protected void showTime() {
         String[] times = new String[]{
                 "8:00", "9:00", "10:10", "11:00",
                 "15:00", "16:00", "17:00", "18:00",
-                "19:30", "20:30","21:30","22:30"
+                "19:30", "20:30", "21:30", "22:30"
         };
         TimeSlideAdapter slideAdapter = new TimeSlideAdapter();
         slideAdapter.setTimes(times);
@@ -332,14 +359,14 @@ public class SimpleActivity extends AppCompatActivity {
     /**
      * 显示WeekView
      */
-    protected void showWeekView(){
+    protected void showWeekView() {
         weekView.isShow(true);
     }
 
     /**
      * 隐藏WeekView
      */
-    protected void hideWeekView(){
+    protected void hideWeekView() {
         weekView.isShow(false);
     }
 }
