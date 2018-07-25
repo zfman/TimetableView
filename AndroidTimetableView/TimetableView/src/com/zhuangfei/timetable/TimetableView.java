@@ -23,13 +23,14 @@ import com.zhuangfei.timetable.model.Schedule;
 import com.zhuangfei.timetable.model.ScheduleEnable;
 import com.zhuangfei.timetable.model.ScheduleManager;
 import com.zhuangfei.timetable.model.ScheduleSupport;
+import com.zhuangfei.timetable.utils.ColorUtils;
 import com.zhuangfei.timetable.utils.ScreenUtils;
 
 /**
  * 课程表控件
  *
  * @author Administrator
- * 
+ *
  */
 public class TimetableView extends LinearLayout{
 
@@ -374,6 +375,17 @@ public class TimetableView extends LinearLayout{
 	 */
 	public TimetableView showDateView(){
 		dateLayout.setVisibility(VISIBLE);
+		return this;
+	}
+
+	/**
+	 * 设置课程区域的透明度
+	 * @param alpha
+	 * @return
+	 */
+	public TimetableView setTransparent(float alpha){
+		int color=ColorUtils.getColorWithAlpha(alpha,Color.WHITE);
+		containerLayout.setBackgroundColor(color);
 		return this;
 	}
 

@@ -1,67 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingBottom="5dp"
     android:id="@+id/contentPanel"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <LinearLayout
+		android:paddingBottom="5dp"
         android:id="@+id/weekPanel_0"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+		android:background="@color/app_white"
         android:layout_weight="1"
         android:orientation="vertical">
     </LinearLayout>
     <!-- 周一到周日的排列 -->
 
     <LinearLayout
+		android:layout_marginBottom="5dp"
         android:id="@+id/weekPanel_1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1.5"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"/>
 
     <LinearLayout
+		android:layout_marginBottom="5dp"
         android:id="@+id/weekPanel_2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1.5"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"/>
 
     <LinearLayout
+		android:layout_marginBottom="5dp"
         android:id="@+id/weekPanel_3"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1.5"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"/>
 
     <LinearLayout
+		android:layout_marginBottom="5dp"
         android:id="@+id/weekPanel_4"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1.5"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"/>
 
     <LinearLayout
+		android:layout_marginBottom="5dp"
         android:id="@+id/weekPanel_5"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1.5"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"/>
 
     <LinearLayout
+		android:layout_marginBottom="5dp"
         android:id="@+id/weekPanel_6"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1.5"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"/>
 
     <LinearLayout
+		android:layout_marginBottom="5dp"
         android:id="@+id/weekPanel_7"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1.5"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"/>
 </LinearLayout>
