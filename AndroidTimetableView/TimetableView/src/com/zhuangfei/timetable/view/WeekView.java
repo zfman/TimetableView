@@ -17,6 +17,7 @@ import com.zhuangfei.timetable.listener.OnWeekLeftClickedAdapter;
 import com.zhuangfei.timetable.model.Schedule;
 import com.zhuangfei.timetable.model.ScheduleEnable;
 import com.zhuangfei.timetable.model.ScheduleSupport;
+import com.zhuangfei.timetable.model.WeekViewEnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import java.util.List;
  * 每一项均为PerWeekView
  */
 
-public class WeekView extends LinearLayout {
+public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
 
     private static final String TAG = "WeekView";
     LayoutInflater mInflate;
@@ -104,7 +105,8 @@ public class WeekView extends LinearLayout {
      * @param curWeek
      * @return
      */
-    public WeekView setCurWeek(int curWeek) {
+    @Override
+    public WeekView curWeek(int curWeek) {
         if(curWeek<1) curWeek=1;
         this.curWeek = curWeek;
         return this;
@@ -115,7 +117,8 @@ public class WeekView extends LinearLayout {
      * @param count
      * @return
      */
-    public WeekView setItemCount(int count) {
+    @Override
+    public WeekView itemCount(int count) {
         if (count <= 0 || count > 25) return this;
         this.itemCount = count;
         return this;
@@ -126,8 +129,9 @@ public class WeekView extends LinearLayout {
      * @param list
      * @return
      */
-    public WeekView setSource(List<? extends ScheduleEnable> list) {
-        setData(ScheduleSupport.transform(list));
+    @Override
+    public WeekView source(List<? extends ScheduleEnable> list) {
+        data(ScheduleSupport.transform(list));
         return this;
     }
 
@@ -136,7 +140,8 @@ public class WeekView extends LinearLayout {
      * @param scheduleList
      * @return
      */
-    public WeekView setData(List<Schedule> scheduleList) {
+    @Override
+    public WeekView data(List<Schedule> scheduleList) {
         if (scheduleList == null) return null;
         this.dataSource = scheduleList;
         return this;
@@ -146,7 +151,8 @@ public class WeekView extends LinearLayout {
      * 获取数据源
      * @return
      */
-    public List<Schedule> getDataSource() {
+    @Override
+    public List<Schedule> dataSource() {
         if (dataSource == null) dataSource = new ArrayList<>();
         return dataSource;
     }
@@ -167,6 +173,7 @@ public class WeekView extends LinearLayout {
     /**
      * 初次构建时调用，显示周次选择布局
      */
+    @Override
     public void showView() {
         Log.d(TAG, "showView: ");
         container.removeAllViews();
@@ -190,7 +197,7 @@ public class WeekView extends LinearLayout {
             weekText.setText("第" + i + "周");
             if(i==curWeek) bottomText.setText("(本周)");
             PerWeekView perWeekView = view.findViewById(R.id.id_perweekview);
-            perWeekView.setData(getDataSource(), i);
+            perWeekView.setData(dataSource(), i);
             perLayout.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -214,6 +221,7 @@ public class WeekView extends LinearLayout {
      * 当前周被改变后可以调用该方式修正一下底部的文本
      * @return
      */
+    @Override
     public WeekView updateView(){
         if(layouts==null||layouts.size()==0) return this;
         if(textViews==null||textViews.size()==0) return this;
@@ -254,6 +262,7 @@ public class WeekView extends LinearLayout {
      * 设置控件的可见性
      * @param isShow true:显示，false:隐藏
      */
+    @Override
     public WeekView isShow(boolean isShow){
         if(isShow){
             root.setVisibility(VISIBLE);
@@ -267,6 +276,7 @@ public class WeekView extends LinearLayout {
      * 判断该控件是否显示
      * @return
      */
+    @Override
     public boolean isShowing(){
         if(root.getVisibility()==GONE) return false;
         return true;

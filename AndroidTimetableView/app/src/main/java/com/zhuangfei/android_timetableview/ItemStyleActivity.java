@@ -12,14 +12,11 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zhuangfei.android_timetableview.R;
 import com.zhuangfei.android_timetableview.model.MySubject;
 import com.zhuangfei.android_timetableview.model.SubjectRepertory;
 import com.zhuangfei.timetable.TimetableView;
-import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.listener.OnItemBuildAdapter;
 import com.zhuangfei.timetable.model.Schedule;
-import com.zhuangfei.timetable.model.ScheduleManager;
 
 import java.util.List;
 

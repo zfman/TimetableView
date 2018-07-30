@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -22,16 +23,19 @@
         <activity android:name=".AttrActivity" />
         <activity android:name=".ElasticActivity" />
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".SlideActivity" />
+        <activity android:name=".DateActivity" />
+        <activity android:name=".ColorPoolActivity" />
+        <activity android:name=".NonViewActivity" />
+        <activity android:name=".NewFeatureActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SlideActivity" />
-        <activity android:name=".DateActivity" />
-        <activity android:name=".ColorPoolActivity" />
-        <activity android:name=".NonViewActivity"></activity>
     </application>
 
 </manifest>

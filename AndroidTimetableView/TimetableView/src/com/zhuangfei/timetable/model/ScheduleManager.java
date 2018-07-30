@@ -3,6 +3,7 @@ package com.zhuangfei.timetable.model;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -337,7 +338,6 @@ public class ScheduleManager {
         right = marLeft / 2;
         bottom = 0;
         top = (subject.getStart() - (pre.getStart() + pre.getStep())) * (itemHeight + marTop) + marTop;
-        ;
 
         if (i != 0 && top < 0) return null;
 
@@ -349,6 +349,7 @@ public class ScheduleManager {
         }
         lp.setMargins(left, top, right, bottom);
 
+        view.setBackgroundColor(Color.TRANSPARENT);
         view.setTag(subject);
         FrameLayout layout = (FrameLayout) view.findViewById(R.id.id_course_item_framelayout);
         TextView textView = (TextView) view.findViewById(R.id.id_course_item_course);

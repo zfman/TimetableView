@@ -3,7 +3,6 @@ package com.zhuangfei.android_timetableview;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.zhuangfei.android_timetableview.model.MySubject;
 import com.zhuangfei.android_timetableview.model.SubjectRepertory;
 import com.zhuangfei.timetable.TimetableView;
 import com.zhuangfei.timetable.listener.ISchedule;
-import com.zhuangfei.timetable.model.ScheduleSupport;
 import com.zhuangfei.timetable.utils.ScreenUtils;
 
 import java.util.Calendar;
@@ -123,7 +121,6 @@ public class DateActivity extends AppCompatActivity {
      * 大部分代码copy的OnDateBuildAapter
      * 你可以决定是否使用该方式，如果不愿使用该方式，
      * 可以隐藏日期栏，自行实现即可
-     * @see com.zhuangfei.timetable.listener.OnDateBuildAapter
      */
     class CustomDateAdapter implements ISchedule.OnDateBuildListener {
 

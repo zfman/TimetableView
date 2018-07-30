@@ -2,6 +2,7 @@ package com.zhuangfei.timetable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.zhuangfei.android_timetableview.sample.R;
@@ -23,6 +25,7 @@ import com.zhuangfei.timetable.model.Schedule;
 import com.zhuangfei.timetable.model.ScheduleEnable;
 import com.zhuangfei.timetable.model.ScheduleManager;
 import com.zhuangfei.timetable.model.ScheduleSupport;
+import com.zhuangfei.timetable.utils.ColorUtils;
 import com.zhuangfei.timetable.utils.ScreenUtils;
 
 /**
@@ -45,6 +48,9 @@ public class TimetableView extends LinearLayout{
 	private ScheduleManager scheduleManager;
 	private Context context;
 	private String curTerm = "大三 春季学期";
+
+	//侧边栏背景颜色
+	private int weekpanelBgcolor;
 
 	// 课程数据源
 	private List<Schedule> dataSource = null;
@@ -139,11 +145,14 @@ public class TimetableView extends LinearLayout{
 	}
 
 	/**
-	 * 反射调用方法
+	 * 反射调用方法.
+	 * 该功能有点累赘，后续版本中可能会删除
+	 *
 	 * @param methodName 方法名
 	 * @param types 参数的类型的class
 	 * @param objs 参数的值
 	 */
+	@Deprecated
 	public void invokeMethodByParams(String methodName,Class<?>[] types,Object[] objs){
 		if(methodName==null) return;
 		Class<?> contextClass=context.getClass();
@@ -166,10 +175,13 @@ public class TimetableView extends LinearLayout{
 
 
 	/**
-	 * 使用反射调用方法，获取返回值
+	 * 使用反射调用方法，获取返回值.
+	 * 该功能有点累赘，后续版本中可能会删除
+	 *
 	 * @param methodName 方法名
 	 * @return
 	 */
+	@Deprecated
 	public Object getInvokeResult(String methodName){
 		if(methodName==null) return null;
 		Class<?> contextClass=context.getClass();
@@ -226,6 +238,11 @@ public class TimetableView extends LinearLayout{
 	 */
 	public TimetableView setOnWeekChangedListener(ISchedule.OnWeekChangedListener onWeekChangedListener) {
 		this.onWeekChangedListener = onWeekChangedListener;
+		return this;
+	}
+
+	public TimetableView setSlideAlpha(float alpha){
+		weekpanelBgcolor=ColorUtils.alphaColor(Color.WHITE,alpha);
 		return this;
 	}
 
@@ -408,7 +425,7 @@ public class TimetableView extends LinearLayout{
 		getScheduleManager().newSlideView(weekPanel);
 	}
 
-	/**
+    /**
 	 * 绘制课程表
 	 */
 	public void showView() {
@@ -427,6 +444,8 @@ public class TimetableView extends LinearLayout{
 			}
 		}
 
+		weekPanel.setBackgroundColor(weekpanelBgcolor);
+
 		//更新日期
 		updateDateView();
 		updateSlideView();
@@ -435,8 +454,8 @@ public class TimetableView extends LinearLayout{
 		for(int i=0;i<7;i++){
 			data[i].clear();
 		}
-		for (int i = 0; i < dataSource.size(); i++) {
-			Schedule bean = dataSource.get(i);
+		for (int i = 0; i < getDataSource().size(); i++) {
+			Schedule bean = getDataSource().get(i);
 			if (bean.getDay() != -1)
 				data[bean.getDay() - 1].add(bean);
 		}

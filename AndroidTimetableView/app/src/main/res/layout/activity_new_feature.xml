@@ -6,18 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/header_simple"/>
-
     <com.zhuangfei.timetable.view.WeekView
         android:id="@+id/id_weekview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.zhuangfei.timetable.TimetableView
-        android:id="@+id/id_timetableView"
+    <com.zhuangfei.timetable.TimetableView2
+        android:id="@+id/id_tableview"
+        android:background="@color/app_white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg">
-    </com.zhuangfei.timetable.TimetableView>
-
+        android:layout_height="match_parent"/>
 </LinearLayout>

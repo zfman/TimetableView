@@ -1,13 +1,14 @@
 package com.zhuangfei.android_timetableview;
 
 import android.content.DialogInterface;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,14 +18,15 @@ import com.zhuangfei.android_timetableview.model.SubjectRepertory;
 import com.zhuangfei.timetable.TimetableView;
 import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.listener.IWeekView;
-import com.zhuangfei.timetable.listener.OnWeekItemClickedAdapter;
+import com.zhuangfei.timetable.listener.OnItemBuildAdapter;
 import com.zhuangfei.timetable.listener.TimeSlideAdapter;
 import com.zhuangfei.timetable.model.Schedule;
+import com.zhuangfei.timetable.model.ScheduleManager;
 import com.zhuangfei.timetable.model.ScheduleSupport;
+import com.zhuangfei.timetable.utils.ColorUtils;
+import com.zhuangfei.timetable.utils.ScreenUtils;
 import com.zhuangfei.timetable.view.WeekView;
 
-import java.lang.invoke.MethodType;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -106,8 +108,8 @@ public class SimpleActivity extends AppCompatActivity {
         //设置数据源的另外方式
         //weekView.setData(List<Schedule>)
         //设置数据源
-        weekView.setSource(mySubjects)
-                .setCurWeek(1)
+        weekView.source(mySubjects)
+                .curWeek(1)
                 .setOnWeekItemClickedListener(new IWeekView.OnWeekItemClickedListener() {
                     @Override
                     public void onWeekClicked(int curWeek) {
@@ -125,13 +127,26 @@ public class SimpleActivity extends AppCompatActivity {
                 .showView();
 
         //与构建有关的设置在ScheduleManager中
-        mTimetableView.getScheduleManager()
-                .setOnItemClickListener(new ISchedule.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View v, List<Schedule> scheduleList) {
-                        display(scheduleList);
-                    }
-                });
+        final ScheduleManager manager = mTimetableView.getScheduleManager();
+        manager.setOnItemClickListener(new ISchedule.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, List<Schedule> scheduleList) {
+                display(scheduleList);
+            }
+        }).setOnItemBuildListener(new OnItemBuildAdapter() {
+            @Override
+            public void onItemUpdate(FrameLayout layout, TextView textView, TextView countTextView, Schedule schedule, GradientDrawable gd) {
+                super.onItemUpdate(layout, textView, countTextView, schedule, gd);
+                int color = manager.getColorPool().getUselessColor();
+                if (ScheduleSupport.isThisWeek(schedule, mTimetableView.getCurWeek())) {
+                    color = manager.getColorPool().getColorAuto(schedule.getColorRandom());
+                }
+                int newcolor = ColorUtils.alphaColor(color, 0.6f);
+                gd.setColor(newcolor);
+            }
+        })
+                .setItemHeight(ScreenUtils.dip2px(this, 40))
+                .setMaxSlideItem(10);
 
         //与全局有关的设置在TimetableView中
         //设置数据源
@@ -145,6 +160,7 @@ public class SimpleActivity extends AppCompatActivity {
                         titleTextView.setText("第" + curWeek + "周,共" + size + "门课");
                     }
                 })
+                .setSlideAlpha(0.6f)
                 .showView();
     }
 
@@ -170,7 +186,7 @@ public class SimpleActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (target != -1) {
-                    weekView.setCurWeek(target + 1).updateView();
+                    weekView.curWeek(target + 1).updateView();
                     mTimetableView.changeWeekForce(target + 1);
                 }
             }
