@@ -1,5 +1,5 @@
 ### TimetableView
-[TimetableView](https://github.com/zfman/TimetableView)是一款开源的Android课程表控件。
+[TimetableView](https://github.com/zfman/TimetableView)是一款开源的Android课程表控件，新版本开发中，你可以切换到[branches-dev](https://github.com/zfman/TimetableView/tree/dev)查看进度
 
 - 支持xml设置属性、数据源
 - 提供了默认的周次选择栏（超级课程表效果），支持自定义
