@@ -21,7 +21,7 @@
 ```xml
     <com.zhuangfei.timetable.TimetableView
         android:id="@+id/id_tableview"
-        android:background="@color/app_white"
+        android:background="@drawable/bg3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 ```
