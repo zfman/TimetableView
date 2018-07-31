@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 
 import com.zhuangfei.android_timetableview.sample.R;
+import com.zhuangfei.timetable.utils.ColorUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +25,7 @@ public class ScheduleColorPool {
 
     public ScheduleColorPool(Context context){
         this.context=context;
-        setUselessColor(Color.parseColor("#E6E6E6"));
+        setUselessColor(Color.rgb(217,231,242));
         reset();
     }
 
@@ -37,6 +38,14 @@ public class ScheduleColorPool {
      */
     public int getUselessColor() {
         return uselessColor;
+    }
+
+    /**
+     * 获取非本周课程颜色
+     * @return
+     */
+    public int getUselessColorWithAlpha(float alpha) {
+        return ColorUtils.alphaColor(uselessColor,alpha);
     }
 
     /**
@@ -56,6 +65,17 @@ public class ScheduleColorPool {
     public List<Integer> getPoolInstance() {
         if(colorPool==null) colorPool=new ArrayList<>();
         return colorPool;
+    }
+
+    /**
+     * 从颜色池中取指定透明度的颜色
+     * @param random
+     * @param alpha
+     * @return
+     */
+    public int getColorAutoWithAlpha(int random,float alpha){
+        if(random<0) return getColorAuto(-random);
+        return ColorUtils.alphaColor(getColor(random%size()),alpha);
     }
 
     /**

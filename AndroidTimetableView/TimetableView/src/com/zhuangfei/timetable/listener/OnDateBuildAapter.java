@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.zhuangfei.android_timetableview.sample.R;
 import com.zhuangfei.timetable.model.ScheduleSupport;
+import com.zhuangfei.timetable.utils.ColorUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,6 +29,25 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     //第一个：月份，之后7个表示周一至周日
     TextView[] textViews=new TextView[8];
     LinearLayout[] layouts=new LinearLayout[8];
+
+    private int background=Color.parseColor("#F4F8F8");
+    private float alpha=1;
+
+    @Override
+    public void setAlpha(float alpha) {
+        this.alpha=alpha;
+    }
+
+    public OnDateBuildAapter setBackground(int background) {
+        this.background = background;
+        return this;
+    }
+
+    @Override
+    public void setBackgroundForLayout(LinearLayout layout) {
+        int alphaColor= ColorUtils.alphaColor(background,alpha);
+        if(layout!=null) layout.setBackgroundColor(alphaColor);
+    }
 
     @Override
     public View[] getDateViews(LayoutInflater mInflate,float perWidth,int height) {
@@ -63,7 +83,7 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     @Override
     public void onHighLight() {
         //初始化背景色
-        int color=Color.parseColor("#F4F8F8");
+        int color=ColorUtils.alphaColor(Color.parseColor("#F4F8F8"),alpha);
         for(int i=1;i<8;i++){
             layouts[i].setBackgroundColor(color);
         }
@@ -80,7 +100,8 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
                 weekDay = 7;
             }
         }
-        layouts[weekDay].setBackgroundColor(Color.parseColor("#BFF6F4"));
+        layouts[weekDay].setBackgroundColor(
+                ColorUtils.alphaColor(Color.parseColor("#BFF6F4"),alpha));
     }
 
     @Override

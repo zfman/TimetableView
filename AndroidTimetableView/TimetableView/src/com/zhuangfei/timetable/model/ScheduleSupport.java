@@ -235,7 +235,6 @@ public class ScheduleSupport {
 	public static int timeTransfrom(String startTime){
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
-
 			long start=sdf.parse(startTime).getTime();
 			long end=new Date().getTime();
 			long seconds=(end-start)/1000;

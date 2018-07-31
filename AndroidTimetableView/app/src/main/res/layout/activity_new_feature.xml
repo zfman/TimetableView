@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.zhuangfei.timetable.TimetableView2
+    <com.zhuangfei.timetable.TimetableView
         android:id="@+id/id_tableview"
         android:background="@color/app_white"
         android:layout_width="match_parent"

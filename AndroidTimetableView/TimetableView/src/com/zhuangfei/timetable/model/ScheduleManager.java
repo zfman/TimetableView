@@ -1,7 +1,6 @@
 package com.zhuangfei.timetable.model;
 
-import java.util.List;
-
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -9,15 +8,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.zhuangfei.android_timetableview.sample.R;
 import com.zhuangfei.timetable.listener.ISchedule;
-import com.zhuangfei.timetable.listener.OnItemBuildAdapter;
-import com.zhuangfei.timetable.listener.OnItemClickAdapter;
-import com.zhuangfei.timetable.listener.OnSlideBuildAdapter;
+import com.zhuangfei.timetable.utils.ColorUtils;
+import com.zhuangfei.timetable.utils.ScreenUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 对课程的功能进行维护
@@ -25,296 +28,30 @@ import com.zhuangfei.timetable.listener.OnSlideBuildAdapter;
 public class ScheduleManager {
 
     private static final String TAG = "ScheduleManager";
-    //上下文
-    private Context context;
-
-    //边距、高度
-    private int marTop;
-    private int marLeft;
-    private int itemHeight;
-
-    //本周、非本周的弧度
-    private int thisWeekCorner;
-    private int nonThisWeekCorner;
-
-    private int width, height;
-    private int left, right, top, bottom;
-
-    //侧边项的最大个数
-    private int maxSlideItem = 12;
-
-    // 课程表item点击监听、构建监听
-    private ISchedule.OnItemClickListener onItemClickListener;
-    private ISchedule.OnItemBuildListener onItemBuildListener;
-
-    //侧边栏构建监听
-    private ISchedule.OnSlideBuildListener onSlideBuildListener;
-
-    //布局转换器
+    
     private LayoutInflater inflater;
+    private ScheduleConfig config;
 
-    //颜色池
-    private ScheduleColorPool colorPool;
-
-    //是否显示非本周课程
-    private boolean isShowNotCurWeek = true;
-
-    public ScheduleManager(Context context) {
-        this.context = context;
-        this.inflater = LayoutInflater.from(context);
-    }
-
-    /**
-     * 设置最大节次
-     *
-     * @param maxSlideItem 最大节次
-     * @return
-     */
-    public ScheduleManager setMaxSlideItem(int maxSlideItem) {
-        this.maxSlideItem = maxSlideItem;
-        return this;
-    }
-
-    /**
-     * 获取最大节次
-     *
-     * @return 最大节次
-     */
-    public int getMaxSlideItem() {
-        return maxSlideItem;
-    }
-
-    /**
-     * 获取Item构建监听器
-     *
-     * @return
-     */
-    public ISchedule.OnItemBuildListener getOnItemBuildListener() {
-        if (onItemBuildListener == null) onItemBuildListener = new OnItemBuildAdapter();
-        return onItemBuildListener;
-    }
-
-    /**
-     * 获取Item点击监听
-     *
-     * @return
-     */
-    public ISchedule.OnItemClickListener getOnItemClickListener() {
-        if (onItemClickListener == null) onItemClickListener = new OnItemClickAdapter();
-        return onItemClickListener;
-    }
-
-    /**
-     * 设置本周课程的弧度
-     *
-     * @param thisWeekCorner 弧度
-     * @return
-     */
-    public ScheduleManager setThisWeekCorner(int thisWeekCorner) {
-        this.thisWeekCorner = thisWeekCorner;
-        return this;
-    }
-
-    /**
-     * 获取本周课程的弧度
-     *
-     * @return
-     */
-    public int getThisWeekCorner() {
-        return thisWeekCorner;
-    }
-
-    /**
-     * 设置非本周课程的弧度
-     *
-     * @param nonThisWeekCorner 弧度
-     * @return
-     */
-    public ScheduleManager setNonThisWeekCorner(int nonThisWeekCorner) {
-        this.nonThisWeekCorner = nonThisWeekCorner;
-        return this;
-    }
-
-    /**
-     * 设置本周、非本周相同的弧度
-     *
-     * @param corner 弧度
-     * @return
-     */
-    public ScheduleManager setCorner(int corner) {
-        setThisWeekCorner(corner);
-        setNonThisWeekCorner(corner);
-        return this;
-    }
-
-    /**
-     * 获取非本周课程的弧度
-     *
-     * @return
-     */
-    public int getNonThisWeekCorner() {
-        return nonThisWeekCorner;
-    }
-
-    /**
-     * 设置是否显示非本周课程
-     *
-     * @param showNotCurWeek 如果为true，将显示非本周，否则隐藏非本周
-     * @return
-     */
-    public ScheduleManager setShowNotCurWeek(boolean showNotCurWeek) {
-        isShowNotCurWeek = showNotCurWeek;
-        return this;
-    }
-
-    /**
-     * 获取侧边栏构建监听
-     *
-     * @return
-     */
-    public ISchedule.OnSlideBuildListener getOnSlideBuildListener() {
-        if (onSlideBuildListener == null) onSlideBuildListener = new OnSlideBuildAdapter();
-        return onSlideBuildListener;
-    }
-
-    /**
-     * 设置侧边栏构建监听器
-     *
-     * @param onSlideBuildListener
-     * @return
-     */
-    public ScheduleManager setOnSlideBuildListener(ISchedule.OnSlideBuildListener onSlideBuildListener) {
-        this.onSlideBuildListener = onSlideBuildListener;
-        return this;
-    }
-
-    /**
-     * 判断是否显示非本周课程
-     *
-     * @return true：显示，false：不显示
-     */
-    public boolean isShowNotCurWeek() {
-        return isShowNotCurWeek;
-    }
-
-    /**
-     * 获取颜色池
-     *
-     * @return ScheduleColorPool
-     * @see ScheduleColorPool
-     */
-    public ScheduleColorPool getColorPool() {
-        if (colorPool == null) colorPool = new ScheduleColorPool(context);
-        return colorPool;
-    }
-
-    /**
-     * dp->px
-     *
-     * @param dp
-     * @return
-     */
-    public int getPx(int dp) {
-        return context.getResources().getDimensionPixelSize(dp);
-    }
-
-    /**
-     * 设置课程项构建监听器
-     *
-     * @param onItemBuildListener
-     * @return
-     */
-    public ScheduleManager setOnItemBuildListener(ISchedule.OnItemBuildListener onItemBuildListener) {
-        this.onItemBuildListener = onItemBuildListener;
-        return this;
-    }
-
-    /**
-     * 设置Item点击监听器
-     *
-     * @param onItemClickListener
-     * @return
-     */
-    public ScheduleManager setOnItemClickListener(ISchedule.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-        return this;
-    }
-
-    /**
-     * 设置上边距值
-     *
-     * @param marTopPx
-     * @return
-     */
-    public ScheduleManager setMarTop(int marTopPx) {
-        this.marTop = marTopPx;
-        return this;
-    }
-
-    /**
-     * 设置左边距值
-     *
-     * @param marLeftPx
-     * @return
-     */
-    public ScheduleManager setMarLeft(int marLeftPx) {
-        this.marLeft = marLeftPx;
-        return this;
-    }
-
-    /**
-     * 设置课程项的高度
-     *
-     * @param itemHeightPx
-     * @return
-     */
-    public ScheduleManager setItemHeight(int itemHeightPx) {
-        this.itemHeight = itemHeightPx;
-        return this;
-    }
-
-    /**
-     * 获取课程项的高度
-     *
-     * @return
-     */
-    public int getItemHeight() {
-        return itemHeight;
-    }
-
-    /**
-     * 获取左边距
-     *
-     * @return
-     */
-    public int getMarLeft() {
-        return marLeft;
-    }
-
-    /**
-     * 获取上边距
-     *
-     * @return
-     */
-    public int getMarTop() {
-        return marTop;
+    public ScheduleManager(ScheduleConfig config, LayoutInflater inflate) {
+        this.config=config;
+        this.inflater = inflate;
     }
 
     /**
      * 构建侧边栏
      *
-     * @param weekPanel0 侧边栏的容器
+     * @param slidelayout 侧边栏的容器
      */
-    public void newSlideView(LinearLayout weekPanel0) {
-        if (weekPanel0 == null) return;
-        weekPanel0.removeAllViews();
+    public void newSlideView(LinearLayout slidelayout) {
+        if (slidelayout == null) return;
+        slidelayout.removeAllViews();
 
-        int size = getOnSlideBuildListener().getSlideItemSize();
-        int border = Math.min(size, getMaxSlideItem());
-        getOnSlideBuildListener().setBackground(weekPanel0);
-        for (int i = 0; i < border; i++) {
-            View view = getOnSlideBuildListener().onBuildSlideItem(i, inflater, itemHeight, marTop);
-            weekPanel0.addView(view);
+        ISchedule.OnSlideBuildListener listener = config.onSlideBuildListener();
+        listener.setAlpha(config.slideAlpha());
+        listener.setBackgroundForLayout(slidelayout);
+        for (int i = 0; i < config.maxSlideItem(); i++) {
+            View view = listener.getView(i, inflater, config.itemHeight(), config.marTop());
+            slidelayout.addView(view);
         }
     }
 
@@ -330,14 +67,13 @@ public class ScheduleManager {
      */
     public View newItemView(final List<Schedule> data, final Schedule subject, Schedule pre, int i, int curWeek) {
         //宽高
-        width = LinearLayout.LayoutParams.MATCH_PARENT;
-        height = itemHeight * subject.getStep() + marTop * (subject.getStep() - 1);
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = config.itemHeight() * subject.getStep() + config.marTop() * (subject.getStep() - 1);
 
         //边距
-        left = marLeft / 2;
-        right = marLeft / 2;
-        bottom = 0;
-        top = (subject.getStart() - (pre.getStart() + pre.getStep())) * (itemHeight + marTop) + marTop;
+        int left = config.marLeft() / 2, right = config.marLeft() / 2;
+        int top = (subject.getStart() - (pre.getStart() + pre.getStep()))
+                * (config.itemHeight() + config.marTop()) + config.marTop();
 
         if (i != 0 && top < 0) return null;
 
@@ -345,26 +81,26 @@ public class ScheduleManager {
         View view = inflater.inflate(R.layout.item_timetable, null, false);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, height);
         if (i == 0) {
-            top = (subject.getStart() - 1) * (itemHeight + marTop) + marTop;
+            top = (subject.getStart() - 1) * (config.itemHeight() + config.marTop()) + config.marTop();
         }
-        lp.setMargins(left, top, right, bottom);
+        lp.setMargins(left, top, right, 0);
 
         view.setBackgroundColor(Color.TRANSPARENT);
         view.setTag(subject);
-        FrameLayout layout = (FrameLayout) view.findViewById(R.id.id_course_item_framelayout);
-        TextView textView = (TextView) view.findViewById(R.id.id_course_item_course);
+        FrameLayout layout = view.findViewById(R.id.id_course_item_framelayout);
+        TextView textView = view.findViewById(R.id.id_course_item_course);
         layout.setLayoutParams(lp);
 
         boolean isThisWeek = ScheduleSupport.isThisWeek(subject, curWeek);
-        textView.setText(getOnItemBuildListener().getItemText(subject, isThisWeek));
+        textView.setText(config.onItemBuildListener().getItemText(subject, isThisWeek));
 
         GradientDrawable gd = new GradientDrawable();
         if (isThisWeek) {
-            gd.setColor(getColorPool().getColorAuto(subject.getColorRandom()));
-            gd.setCornerRadius(thisWeekCorner);
+            gd.setColor(config.colorPool().getColorAuto(subject.getColorRandom()));
+            gd.setCornerRadius(config.corner(true));
         } else {
-            gd.setColor(getColorPool().getUselessColor());
-            gd.setCornerRadius(nonThisWeekCorner);
+            gd.setColor(config.colorPool().getUselessColor());
+            gd.setCornerRadius(config.corner(false));
         }
         textView.setBackgroundDrawable(gd);
 
@@ -372,11 +108,11 @@ public class ScheduleManager {
             @Override
             public void onClick(View v) {
                 List<Schedule> result = ScheduleSupport.findSubjects(subject, data);
-                getOnItemClickListener().onItemClick(v, result);
+                config.onItemClickListener().onItemClick(v, result);
             }
         });
 
-        boolean intercept = getOnItemBuildListener().interceptItemBuild(subject);
+        boolean intercept = config.onItemBuildListener().interceptItemBuild(subject);
         return intercept == false ? view : null;
     }
 
@@ -442,45 +178,47 @@ public class ScheduleManager {
         Schedule subject = ScheduleSupport.findRealSubject(tag.getStart(), curWeek, courses);
 
         boolean isThisWeek = ScheduleSupport.isThisWeek(subject, curWeek);
-        if (!isThisWeek && !isShowNotCurWeek()) {
+        if (!isThisWeek && !config.isShowNotCurWeek()) {
             view.setVisibility(View.INVISIBLE);
         } else {
             view.setVisibility(View.VISIBLE);
         }
 
-        width = LinearLayout.LayoutParams.MATCH_PARENT;
-        height = itemHeight * subject.getStep() + marTop * (subject.getStep() - 1);
-        left = marLeft / 2;
-        right = left;
+        int height = config.itemHeight() * subject.getStep() +
+                config.marTop() * (subject.getStep() - 1);
+        int leftOrRight = config.marLeft() / 2;
+        int top = 0;
 
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, height);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, height);
 
         if (isChange || tag.getStart() != subject.getStart() || tag.getStep() != subject.getStep()) {
             if (j > 0) {
-                Schedule pre= (Schedule) preView.getTag();
-                top = (subject.getStart() - (pre.getStart() + pre.getStep())) * (itemHeight
-                        + marTop) + marTop;
+                Schedule pre = (Schedule) preView.getTag();
+                top = (subject.getStart() - (pre.getStart() + pre.getStep())) * (config.itemHeight()
+                        + config.marTop()) + config.marTop();
             } else {
-                top = (subject.getStart() - 1) * (itemHeight + marTop) + marTop;
+                top = (subject.getStart() - 1) * (config.itemHeight() + config.marTop()) + config.marTop();
             }
-            lp.setMargins(left, top, right, 0);
+            lp.setMargins(leftOrRight, top, leftOrRight, 0);
             layout.setLayoutParams(lp);
             view.setTag(subject);
             isChange = true;
         }
 
-        if(top<0) view.setVisibility(View.GONE);
+        if (top < 0) view.setVisibility(View.GONE);
         TextView textView = (TextView) view.findViewById(R.id.id_course_item_course);
         TextView countTextView = (TextView) view.findViewById(R.id.id_course_item_count);
-        textView.setText(getOnItemBuildListener().getItemText(subject, isThisWeek));
+        textView.setText(config.onItemBuildListener().getItemText(subject, isThisWeek));
 
         countTextView.setText("");
         countTextView.setVisibility(View.GONE);
 
         GradientDrawable gd = new GradientDrawable();
         if (isThisWeek) {
-            gd.setColor(getColorPool().getColorAuto(subject.getColorRandom()));
-            gd.setCornerRadius(thisWeekCorner);
+            textView.setTextColor(config.itemTextColorWithThisWeek());
+            gd.setColor(config.colorPool().getColorAutoWithAlpha(subject.getColorRandom(),config.itemAlpha()));
+            gd.setCornerRadius(config.corner(true));
 
             int count = 0;
             List<Schedule> result = ScheduleSupport.findSubjects(subject, courses);
@@ -494,12 +232,13 @@ public class ScheduleManager {
                 countTextView.setText(count + "");
             }
         } else {
-            gd.setColor(getColorPool().getUselessColor());
-            gd.setCornerRadius(nonThisWeekCorner);
+            textView.setTextColor(config.itemTextColorWithNotThis());
+            gd.setColor(config.colorPool().getUselessColorWithAlpha(config.itemAlpha()));
+            gd.setCornerRadius(config.corner(false));
         }
 
         textView.setBackgroundDrawable(gd);
-        getOnItemBuildListener().onItemUpdate(layout, textView, countTextView, subject, gd);
+        config.onItemBuildListener().onItemUpdate(layout, textView, countTextView, subject, gd);
         return isChange;
     }
 

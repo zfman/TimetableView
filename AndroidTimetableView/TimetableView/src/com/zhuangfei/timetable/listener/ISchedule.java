@@ -82,17 +82,6 @@ public interface ISchedule {
      * 侧边栏构建监听器
      */
     interface OnSlideBuildListener{
-        /**
-         * 设置侧边栏的背景
-         * @param layout
-         */
-        void setBackground(LinearLayout layout);
-
-        /**
-         * 侧边栏的节次数
-         * @return
-         */
-        int getSlideItemSize();
 
         /**
          * 构建每项
@@ -102,7 +91,15 @@ public interface ISchedule {
          * @param marTop 课程项的marTop值
          * @return 构建好的一个侧边项
          */
-        View onBuildSlideItem(int pos, LayoutInflater inflater,int itemHeight,int marTop);
+        View getView(int pos, LayoutInflater inflater,int itemHeight,int marTop);
+
+        /**
+         * 设置侧边栏的背景
+         * @param layout
+         */
+        void setBackgroundForLayout(LinearLayout layout);
+
+        void setAlpha(float alpha);
     }
 
     /**
@@ -121,7 +118,14 @@ public interface ISchedule {
      * 日期构造监听器
      */
     interface  OnDateBuildListener{
-        //
+
+        void setAlpha(float alpha);
+
+        /**
+         * 设置日期栏的背景
+         * @param layout
+         */
+        void setBackgroundForLayout(LinearLayout layout);
 
         /**
          * 获取View数组

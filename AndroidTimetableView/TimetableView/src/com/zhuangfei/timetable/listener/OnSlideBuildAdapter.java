@@ -1,6 +1,6 @@
 package com.zhuangfei.timetable.listener;
 
-import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,34 +8,128 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhuangfei.android_timetableview.sample.R;
-import com.zhuangfei.timetable.model.ScheduleSupport;
-import com.zhuangfei.timetable.utils.ScreenUtils;
+import com.zhuangfei.timetable.utils.ColorUtils;
 
 /**
- * 侧边栏构建监听的默认实现
+ * 控件实现的一个可以显示时间的侧边栏适配器
+ * Created by Liu ZhuangFei on 2018/6/18.
  */
 
 public class OnSlideBuildAdapter implements ISchedule.OnSlideBuildListener {
-    @Override
-    public void setBackground(LinearLayout layout) {
+
+    //时刻，每个元素保存每节课的开始时间
+    private String[] times;
+
+    //节次文本的颜色、字号
+    private int textColor= Color.BLACK;
+    private float textSize=14;
+
+    //时刻文本的颜色、字号
+    private float timeTextSize=12;
+    private int timeTextColor=Color.GRAY;
+
+    //侧边栏背景色
+    private int background=Color.WHITE;
+    private float alpha=1;
+
+    /**
+     * 设置时刻数组
+     * @param times
+     * @return
+     */
+    public OnSlideBuildAdapter setTimes(String[] times) {
+        this.times = times;
+        return this;
+    }
+
+    /**
+     * 获取时刻数组
+     * @return
+     */
+    public String[] getTimes() {
+        return times;
+    }
+
+    /**
+     * 设置侧边栏的背景
+     * @param bgcolor 颜色
+     * @return
+     */
+    public OnSlideBuildAdapter setBackground(int bgcolor){
+        background=bgcolor;
+        return this;
+    }
+
+    /**
+     * 设置节次文本颜色
+     * @param textColor 指定颜色
+     * @return
+     */
+    public OnSlideBuildAdapter setTextColor(int textColor) {
+        this.textColor = textColor;
+        return this;
+    }
+
+    /**
+     * 设置节次文本的大小
+     * @param textSize 指定字号
+     * @return
+     */
+    public OnSlideBuildAdapter setTextSize(float textSize) {
+        this.textSize = textSize;
+        return this;
+    }
+
+    /**
+     * 设置节次时间的文本颜色
+     * @param timeTextColor 颜色
+     * @return
+     */
+    public OnSlideBuildAdapter setTimeTextColor(int timeTextColor) {
+        this.timeTextColor = timeTextColor;
+        return this;
+    }
+
+    /**
+     * 设置节次时间的文本大小
+     * @param timeTextSize 字号
+     * @return
+     */
+    public OnSlideBuildAdapter setTimeTextSize(float timeTextSize) {
+        this.timeTextSize = timeTextSize;
+        return this;
     }
 
     @Override
-    public int getSlideItemSize() {
-        return 12;
-    }
-
-    @Override
-    public View onBuildSlideItem(int pos, LayoutInflater inflater,
-                                 int itemHeight,int marTop) {
-        View view=inflater.inflate(R.layout.item_slide_default,null,false);
-        TextView textView=view.findViewById(R.id.item_slide_textview);
-
+    public View getView(int pos, LayoutInflater inflater, int itemHeight, int marTop) {
+        View view=inflater.inflate(R.layout.item_slide_time,null,false);
+        TextView numberTextView=view.findViewById(R.id.item_slide_number);
+        TextView timeTextView=view.findViewById(R.id.item_slide_time);
         LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 itemHeight);
         lp.setMargins(0,marTop,0,0);
-        textView.setLayoutParams(lp);
-        textView.setText((pos+1)+"");
+        view.setLayoutParams(lp);
+
+        numberTextView.setText((pos+1)+"");
+        numberTextView.setTextSize(textSize);
+        numberTextView.setTextColor(textColor);
+
+        if(times!=null&&pos>=0&&pos<times.length){
+            timeTextView.setText(times[pos]);
+            timeTextView.setTextColor(timeTextColor);
+            timeTextView.setTextSize(timeTextSize);
+        }
         return view;
+    }
+
+    @Override
+    public void setBackgroundForLayout(LinearLayout layout) {
+        int alphaColor=ColorUtils.alphaColor(background,alpha);
+        if(layout!=null) layout.setBackgroundColor(alphaColor);
+    }
+
+    @Override
+    public void setAlpha(float alpha) {
+        this.alpha=alpha;
     }
 }

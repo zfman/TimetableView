@@ -1,9 +1,8 @@
 package com.zhuangfei.timetable.model;
 
 import android.content.Context;
-import android.view.LayoutInflater;
+import android.graphics.Color;
 
-import com.zhuangfei.timetable.TimetableView2;
 import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.listener.OnDateBuildAapter;
 import com.zhuangfei.timetable.listener.OnItemBuildAdapter;
@@ -11,19 +10,20 @@ import com.zhuangfei.timetable.listener.OnItemClickAdapter;
 import com.zhuangfei.timetable.listener.OnScrollViewBuildAdapter;
 import com.zhuangfei.timetable.listener.OnSlideBuildAdapter;
 import com.zhuangfei.timetable.listener.OnWeekChangedAdapter;
-import com.zhuangfei.timetable.view.WeekView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 管理课程配置项的类
+ * <p>
  * Created by Liu ZhuangFei on 2018/7/27.
  */
 
-public class ScheduleConfig extends ToggleEnable{
+public class ScheduleConfig implements ToggleEnable {
+
 
     private Context context;
-    private TimetableView2 tableView;
     private WeekViewEnable weekView;
 
     // 当前周、学期
@@ -42,12 +42,12 @@ public class ScheduleConfig extends ToggleEnable{
 
 
     //上边距、左边距、项高度
-    private int marTop,marLeft,itemHeight;
+    private int marTop, marLeft, itemHeight;
 
     //本周、非本周的弧度
     private int thisWeekCorner;
     private int nonThisWeekCorner;
-    
+
     //侧边项的最大个数
     private int maxSlideItem = 12;
 
@@ -57,26 +57,71 @@ public class ScheduleConfig extends ToggleEnable{
     //是否显示非本周课程
     private boolean isShowNotCurWeek = true;
 
-    public ScheduleConfig(Context context,TimetableView2 tableView){
-        this.context=context;
-        this.tableView=tableView;
+    //课程项、侧边栏、日期栏的透明度
+    private float itemAlpha = 1, slideAlpha = 1, dateAlpha = 1;
+
+    private int itemTextColorWithThisWeek = Color.WHITE;
+    private int itemTextColorWithNotThis = Color.WHITE;
+
+    public ScheduleConfig(Context context) {
+        this.context = context;
     }
 
-    public Context context(){
+    public Context context() {
         return context();
     }
 
-    public <T extends WeekViewEnable> ScheduleConfig bind(T weekView){
-        this.weekView=weekView;
+    public ScheduleConfig itemTextColor(int color,boolean isThisWeek){
+        if(isThisWeek) itemTextColorWithThisWeek=color;
+        else itemTextColorWithNotThis=color;
         return this;
     }
 
-    public <T extends WeekViewEnable> T weekView(Class<T> clazz){
-        T t=(T)weekView;
+    public int itemTextColorWithThisWeek(){
+        return itemTextColorWithThisWeek;
+    }
+
+    public int itemTextColorWithNotThis(){
+        return itemTextColorWithNotThis;
+    }
+
+    public float itemAlpha() {
+        return itemAlpha;
+    }
+
+    public float slideAlpha() {
+        return slideAlpha;
+    }
+
+    public float dateAlpha() {
+        return dateAlpha;
+    }
+
+    public ScheduleConfig alpha(float dateAlpha, float slideAlpha, float itemAlpha) {
+        this.itemAlpha = itemAlpha;
+        this.slideAlpha = slideAlpha;
+        this.dateAlpha = dateAlpha;
+        return this;
+    }
+
+    public ScheduleConfig alpha(float allAlpha) {
+        this.itemAlpha = allAlpha;
+        this.slideAlpha = allAlpha;
+        this.dateAlpha = allAlpha;
+        return this;
+    }
+
+    public <T extends WeekViewEnable> ScheduleConfig bind(T weekView) {
+        this.weekView = weekView;
+        return this;
+    }
+
+    public <T extends WeekViewEnable> T weekView(Class<T> clazz) {
+        T t = (T) weekView;
         return t;
     }
 
-    public WeekViewEnable weekViewInterface(){
+    public WeekViewEnable weekViewInterface() {
         return weekView;
     }
 
@@ -100,8 +145,7 @@ public class ScheduleConfig extends ToggleEnable{
         if (onDateBuildListener == null) onDateBuildListener = new OnDateBuildAapter();
         return onDateBuildListener;
     }
-    
-    
+
 
     /**
      * 获取周次改变监听器
@@ -303,19 +347,19 @@ public class ScheduleConfig extends ToggleEnable{
      * @return
      */
     public ScheduleConfig cornerAll(int cornerValue) {
-        corner(cornerValue,true);
-        corner(cornerValue,false);
+        corner(cornerValue, true);
+        corner(cornerValue, false);
         return this;
     }
 
-    public ScheduleConfig corner(int corner,boolean isThisWeek) {
-        if(isThisWeek) thisWeekCorner=corner;
-        else nonThisWeekCorner=corner;
+    public ScheduleConfig corner(int corner, boolean isThisWeek) {
+        if (isThisWeek) thisWeekCorner = corner;
+        else nonThisWeekCorner = corner;
         return this;
     }
 
     public int corner(boolean isThisWeek) {
-        if(isThisWeek) return thisWeekCorner;
+        if (isThisWeek) return thisWeekCorner;
         return nonThisWeekCorner;
     }
 
@@ -461,5 +505,10 @@ public class ScheduleConfig extends ToggleEnable{
      */
     public int marTop() {
         return marTop;
+    }
+
+    @Override
+    public <T> T toggle(T obj) {
+        return obj;
     }
 }
