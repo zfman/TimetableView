@@ -68,9 +68,9 @@ mTableView.config()
 ### 感谢贡献者
 > 感谢所有参与本项目帮助我一起完善这个项目的开发者~~
 
-用户 | Issues | pull request
-- | :-: | -
-[Mystery00](https://github.com/Mystery00)|[#6.WeekView数组越界](https://github.com/zfman/TimetableView/issues/6) |[修复#6，并添加新功能](https://github.com/zfman/TimetableView/pull/7) 
+|用户 | Issues | pull request|
+| - | :-: | -: | 
+|[Mystery00](https://github.com/Mystery00)|[#6.WeekView数组越界](https://github.com/zfman/TimetableView/issues/6) |[修复#6，并添加新功能](https://github.com/zfman/TimetableView/pull/7)|
 
 ### About Me
 
