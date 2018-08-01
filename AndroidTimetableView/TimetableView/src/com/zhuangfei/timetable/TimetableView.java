@@ -140,11 +140,10 @@ public class TimetableView extends LinearLayout implements ToggleEnable{
 		updateDateView();
 		updateSlideView();
 
-		//拆分数据
+		//清空、拆分数据
 		for (int i = 0; i < 7; i++) {
 			data[i].clear();
 		}
-
 		List<Schedule> source = config.dataSource();
 		for (int i = 0; i < source.size(); i++) {
 			Schedule bean = source.get(i);
@@ -158,7 +157,6 @@ public class TimetableView extends LinearLayout implements ToggleEnable{
 			panels[i].removeAllViews();
 			manager2.addToLayout(panels[i], data[i], config.curWeek());
 		}
-
 		//周次切换，保证重叠时显示角标
 		changeWeek(config.curWeek(), false);
 	}
@@ -170,18 +168,15 @@ public class TimetableView extends LinearLayout implements ToggleEnable{
 		dateLayout.removeAllViews();
 		float perWidth = ScreenUtils.getWidthInPx(context) / 11.5f;
 		int height = context.getResources().getDimensionPixelSize(R.dimen.headHeight);
-
 //		//日期栏
 		ISchedule.OnDateBuildListener listener=config.onDateBuildListener();
-		listener.setAlpha(config.dateAlpha());
-		listener.setBackgroundForLayout(dateLayout);
+		listener.onInit(dateLayout,config.dateAlpha());
 		View[] views = config.onDateBuildListener().getDateViews(inflater, perWidth, height);
 		for (View v : views) {
 			if (v != null) {
 				dateLayout.addView(v);
 			}
 		}
-
 		config.onDateBuildListener().onUpdateDate();
 		config.onDateBuildListener().onHighLight();
 	}

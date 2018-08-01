@@ -29,8 +29,8 @@ public class OnSlideBuildAdapter implements ISchedule.OnSlideBuildListener {
     private int timeTextColor=Color.GRAY;
 
     //侧边栏背景色
-    private int background=Color.WHITE;
-    private float alpha=1;
+    protected int background=Color.WHITE;
+    protected float alpha=1;
 
     /**
      * 设置时刻数组
@@ -50,15 +50,6 @@ public class OnSlideBuildAdapter implements ISchedule.OnSlideBuildListener {
         return times;
     }
 
-    /**
-     * 设置侧边栏的背景
-     * @param bgcolor 颜色
-     * @return
-     */
-    public OnSlideBuildAdapter setBackground(int bgcolor){
-        background=bgcolor;
-        return this;
-    }
 
     /**
      * 设置节次文本颜色
@@ -123,13 +114,9 @@ public class OnSlideBuildAdapter implements ISchedule.OnSlideBuildListener {
     }
 
     @Override
-    public void setBackgroundForLayout(LinearLayout layout) {
+    public void onInit(LinearLayout layout, float alpha) {
+        this.alpha=alpha;
         int alphaColor=ColorUtils.alphaColor(background,alpha);
         if(layout!=null) layout.setBackgroundColor(alphaColor);
-    }
-
-    @Override
-    public void setAlpha(float alpha) {
-        this.alpha=alpha;
     }
 }

@@ -16,10 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 如果需要自定义周次选择栏，请实现该接口
  * Created by Liu ZhuangFei on 2018/7/28.
  */
 
-public interface WeekViewEnable<T> {
+public interface WeekViewEnable<T> extends ToggleEnable {
     /**
      * 设置当前周
      * @param curWeek
@@ -57,7 +58,7 @@ public interface WeekViewEnable<T> {
     /**
      * 初次构建时调用，显示周次选择布局
      */
-    void showView();
+    T showView();
 
     /**
      * 当前周被改变后可以调用该方式修正一下底部的文本

@@ -27,16 +27,15 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     private static final String TAG = "OnDateBuildAapter";
 
     //第一个：月份，之后7个表示周一至周日
-    TextView[] textViews=new TextView[8];
-    LinearLayout[] layouts=new LinearLayout[8];
+    protected TextView[] textViews = new TextView[8];
+    protected LinearLayout[] layouts = new LinearLayout[8];
 
-    private int background=Color.parseColor("#F4F8F8");
-    private float alpha=1;
+    private int background = Color.parseColor("#F4F8F8");
+    private float alpha = 1;
 
-    @Override
-    public void setAlpha(float alpha) {
-        this.alpha=alpha;
-    }
+    protected String[] dateArray;
+    protected List<String> weekDates;
+    protected LinearLayout layout;
 
     public OnDateBuildAapter setBackground(int background) {
         this.background = background;
@@ -44,75 +43,119 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     }
 
     @Override
-    public void setBackgroundForLayout(LinearLayout layout) {
-        int alphaColor= ColorUtils.alphaColor(background,alpha);
-        if(layout!=null) layout.setBackgroundColor(alphaColor);
+    public void onInit(LinearLayout layout, float alpha) {
+        this.alpha = alpha;
+        this.layout=layout;
+        //星期设置
+        dateArray=getStringArray();
+        weekDates = ScheduleSupport.getWeekDate();
+        int alphaColor = ColorUtils.alphaColor(background, alpha);
+        if (layout != null) layout.setBackgroundColor(alphaColor);
     }
 
     @Override
-    public View[] getDateViews(LayoutInflater mInflate,float perWidth,int height) {
-        View[] views=new View[8];
-        View first=mInflate.inflate(R.layout.item_dateview_first,null,false);
-        LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams((int) perWidth,height);
-        List<String> weekDays = ScheduleSupport.getWeekDate();
+    public View[] getDateViews(LayoutInflater mInflate, float perWidth, int height) {
+        View[] views = new View[8];
 
-        //月份设置
-        textViews[0]=first.findViewById(R.id.id_week_month);
-        layouts[0]=null;
-        views[0]=first;
-        int month=Integer.parseInt(weekDays.get(0));
-        first.setLayoutParams(lp);
-        textViews[0].setText(month+"\n月");
+        //月份占1份的宽度
+        views[0] = onBuildMonthLayout(mInflate,(int)perWidth,height);
 
-        //星期设置
-        lp=new LinearLayout.LayoutParams((int)(perWidth*1.5),height);
-        String[] dateArray=new String[]{"","周一","周二","周三","周四","周五","周六","周日"};
-        for(int i=1;i<8;i++){
-            View v=mInflate.inflate(R.layout.item_dateview,null,false);
-            TextView dayTextView=v.findViewById(R.id.id_week_day);
-            textViews[i]=v.findViewById(R.id.id_week_date);
-            layouts[i]=v.findViewById(R.id.id_week_layout);
-            views[i]=v;
-            layouts[i].setLayoutParams(lp);
-            dayTextView.setText(dateArray[i]);
-            textViews[i].setText(weekDays.get(i)+"日");
+        for (int i = 1; i < 8; i++) {
+            views[i]=onBuildDayLayout(mInflate,i,(int)(perWidth*1.5),height);
         }
         return views;
     }
 
     @Override
     public void onHighLight() {
-        //初始化背景色
-        int color=ColorUtils.alphaColor(Color.parseColor("#F4F8F8"),alpha);
-        for(int i=1;i<8;i++){
-            layouts[i].setBackgroundColor(color);
-        }
+        initDateBackground();
 
-        //高亮
+        //获取周几，1->7
         Calendar now = Calendar.getInstance();
         //一周第一天是否为星期天
         boolean isFirstSunday = (now.getFirstDayOfWeek() == Calendar.SUNDAY);
         int weekDay = now.get(Calendar.DAY_OF_WEEK);
         //若一周第一天为星期天，则-1
-        if(isFirstSunday){
+        if (isFirstSunday) {
             weekDay = weekDay - 1;
-            if(weekDay == 0){
+            if (weekDay == 0) {
                 weekDay = 7;
             }
         }
-        layouts[weekDay].setBackgroundColor(
-                ColorUtils.alphaColor(Color.parseColor("#BFF6F4"),alpha));
+
+        activeDateBackground(weekDay);
     }
+
+
 
     @Override
     public void onUpdateDate() {
-        if(textViews==null||textViews.length<8) return;
+        if (textViews == null || textViews.length < 8) return;
 
-        List<String> weekDays = ScheduleSupport.getWeekDate();
-        int month=Integer.parseInt(weekDays.get(0));
-        textViews[0].setText(month+"\n月");
-        for(int i=1;i<8;i++){
-            textViews[i].setText(weekDays.get(i)+"日");
+        weekDates = ScheduleSupport.getWeekDate();
+        int month = Integer.parseInt(weekDates.get(0));
+        textViews[0].setText(month + "\n月");
+        for (int i = 1; i < 8; i++) {
+            if(textViews[i]!=null){
+                textViews[i].setText(weekDates.get(i) + "日");
+            }
         }
+    }
+
+    /**
+     * 构建月份，也就是日期栏的第一格.<br/>
+     * 宽度、高度均为px
+     *
+     * @param mInflate
+     * @param width    宽度
+     * @param height   默认高度
+     * @return
+     */
+    public View onBuildMonthLayout(LayoutInflater mInflate, int width, int height) {
+        View first = mInflate.inflate(R.layout.item_dateview_first, null, false);
+        //月份设置
+        textViews[0] = first.findViewById(R.id.id_week_month);
+        layouts[0] = null;
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, height);
+
+        int month = Integer.parseInt(weekDates.get(0));
+        first.setLayoutParams(lp);
+        textViews[0].setText(month + "\n月");
+        return first;
+    }
+
+    public View onBuildDayLayout(LayoutInflater mInflate,int pos, int width, int height) {
+        View v = mInflate.inflate(R.layout.item_dateview, null, false);
+        TextView dayTextView = v.findViewById(R.id.id_week_day);
+        dayTextView.setText(dateArray[pos]);
+
+        textViews[pos] = v.findViewById(R.id.id_week_date);
+        layouts[pos] = v.findViewById(R.id.id_week_layout);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, height);
+        layouts[pos].setLayoutParams(lp);
+        textViews[pos].setText(weekDates.get(pos) + "日");
+
+        return v;
+    }
+
+    /**
+     * 返回一个长度为8的数组，第0个位置为null
+     * @return
+     */
+    public String[] getStringArray(){
+        return new String[]{null,"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
+    }
+
+    public void initDateBackground(){
+        for (int i = 1; i < 8; i++) {
+            layouts[i].setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
+
+    private void activeDateBackground(int weekDay) {
+        layouts[weekDay].setBackgroundColor(
+                ColorUtils.alphaColor(Color.parseColor("#BFF6F4"), alpha));
     }
 }

@@ -47,8 +47,7 @@ public class ScheduleManager {
         slidelayout.removeAllViews();
 
         ISchedule.OnSlideBuildListener listener = config.onSlideBuildListener();
-        listener.setAlpha(config.slideAlpha());
-        listener.setBackgroundForLayout(slidelayout);
+        listener.onInit(slidelayout,config.slideAlpha());
         for (int i = 0; i < config.maxSlideItem(); i++) {
             View view = listener.getView(i, inflater, config.itemHeight(), config.marTop());
             slidelayout.addView(view);

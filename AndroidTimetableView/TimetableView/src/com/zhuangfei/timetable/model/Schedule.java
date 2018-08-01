@@ -1,10 +1,13 @@
 package com.zhuangfei.timetable.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * 课程实体
+ * 课程实体类<br/>
+ * 1.增加了extras,可以保存一些自己需要的东西<br/>
  * @author Administrator 刘壮飞
  *
  */
@@ -33,36 +36,27 @@ public class Schedule implements Serializable{
 	/**
 	 * 开始上课的节次
 	 */
-	private int start;
+	private int start=0;
 	
 	/**
 	 * 上课节数
 	 */
-	private int step;
+	private int step=0;
 	
 	/**
 	 * 周几上
 	 */
-	private int day;
+	private int day=0;
 	
 	/**
 	 *  一个随机数，用于对应课程的颜色
 	 */
 	private int colorRandom = 0;
 
-	public Schedule(String name, String room, String teacher,
-					List<Integer> weekList, int start, int step, int day,
-					int colorRandom, String time) {
-		super();
-		this.name = name;
-		this.room = room;
-		this.teacher = teacher;
-		this.weekList = weekList;
-		this.start = start;
-		this.step = step;
-		this.day = day;
-		this.colorRandom = colorRandom;
-	}
+	/**
+	 * 额外信息
+	 */
+	private Map<String,Object> extras;
 	
 	public Schedule(String name, String room, String teacher,
 					List<Integer> weekList, int start, int step, int day,
@@ -77,8 +71,6 @@ public class Schedule implements Serializable{
 		this.day = day;
 		this.colorRandom = colorRandom;
 	}
-
-
 
 	public String getName() {
 		return name;
@@ -143,6 +135,7 @@ public class Schedule implements Serializable{
 	public void setColorRandom(int colorRandom) {
 		this.colorRandom = colorRandom;
 	}
+
 	public Schedule() {
 		super();
 	}

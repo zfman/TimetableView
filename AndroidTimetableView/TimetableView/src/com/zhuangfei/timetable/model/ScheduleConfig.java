@@ -16,7 +16,6 @@ import java.util.List;
 
 /**
  * 管理课程配置项的类
- * <p>
  * Created by Liu ZhuangFei on 2018/7/27.
  */
 

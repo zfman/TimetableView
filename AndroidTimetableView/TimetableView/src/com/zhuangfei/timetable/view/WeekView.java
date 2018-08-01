@@ -66,7 +66,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
      * 获取Item点击监听
      * @return
      */
-    public IWeekView.OnWeekItemClickedListener getOnWeekItemClickedListener() {
+    public IWeekView.OnWeekItemClickedListener onWeekItemClickedListener() {
         if(onWeekItemClickedListener==null) onWeekItemClickedListener=new OnWeekItemClickedAdapter();
         return onWeekItemClickedListener;
     }
@@ -76,7 +76,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
      * @param onWeekItemClickedListener
      * @return
      */
-    public WeekView setOnWeekItemClickedListener(IWeekView.OnWeekItemClickedListener onWeekItemClickedListener) {
+    public WeekView callback(IWeekView.OnWeekItemClickedListener onWeekItemClickedListener) {
         this.onWeekItemClickedListener = onWeekItemClickedListener;
         return this;
     }
@@ -85,7 +85,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
      * 获取左侧按钮点击监听
      * @return
      */
-    public IWeekView.OnWeekLeftClickedListener getOnWeekLeftClickedListener() {
+    public IWeekView.OnWeekLeftClickedListener onWeekLeftClickedListener() {
         if(onWeekLeftClickedListener==null) onWeekLeftClickedListener=new OnWeekLeftClickedAdapter();
         return onWeekLeftClickedListener;
     }
@@ -95,7 +95,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
      * @param onWeekLeftClickedListener
      * @return
      */
-    public WeekView setOnWeekLeftClickedListener(IWeekView.OnWeekLeftClickedListener onWeekLeftClickedListener) {
+    public WeekView callback(IWeekView.OnWeekLeftClickedListener onWeekLeftClickedListener) {
         this.onWeekLeftClickedListener = onWeekLeftClickedListener;
         return this;
     }
@@ -174,7 +174,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
      * 初次构建时调用，显示周次选择布局
      */
     @Override
-    public void showView() {
+    public WeekView showView() {
         Log.d(TAG, "showView: ");
         container.removeAllViews();
         layouts=new ArrayList<>();
@@ -183,7 +183,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
         leftlayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                getOnWeekLeftClickedListener().onWeekLeftClicked();
+                onWeekLeftClickedListener().onWeekLeftClicked();
             }
         });
 
@@ -204,7 +204,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
                     resetBackground();
                     preIndex=tmp;
                     perLayout.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.weekview_white));
-                    getOnWeekItemClickedListener().onWeekClicked(tmp);
+                    onWeekItemClickedListener().onWeekClicked(tmp);
                 }
             });
 
@@ -215,6 +215,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
         if(curWeek>0&&curWeek<=layouts.size()){
             layouts.get(curWeek-1).setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.weekview_thisweek));
         }
+        return this;
     }
 
     /**
@@ -280,5 +281,10 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
     public boolean isShowing(){
         if(root.getVisibility()==GONE) return false;
         return true;
+    }
+
+    @Override
+    public <T> T toggle(T obj) {
+        return obj;
     }
 }
