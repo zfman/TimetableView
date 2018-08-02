@@ -72,6 +72,20 @@ public class Schedule implements Serializable{
 		this.colorRandom = colorRandom;
 	}
 
+	public Map<String,Object> getExtras(){
+		if(extras==null) extras=new HashMap<>();
+		return extras;
+	}
+
+	public void setExtras(Map<String,Object> map){
+		this.extras=map;
+	}
+
+	public void putExtras(String key,Object val){
+		getExtras().put(key,val);
+	}
+
+
 	public String getName() {
 		return name;
 	}

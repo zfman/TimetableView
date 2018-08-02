@@ -16,7 +16,7 @@ import java.util.Map;
  * 颜色池，管理课程项可挑选的颜色
  */
 
-public class ScheduleColorPool {
+public class ScheduleColorPool{
 
     Context context;
 

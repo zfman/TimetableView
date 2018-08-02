@@ -20,7 +20,7 @@ import java.util.List;
  * Created by Liu ZhuangFei on 2018/7/28.
  */
 
-public interface WeekViewEnable<T> extends ToggleEnable {
+public interface WeekViewEnable<T> {
     /**
      * 设置当前周
      * @param curWeek
@@ -34,6 +34,12 @@ public interface WeekViewEnable<T> extends ToggleEnable {
      * @return
      */
     T itemCount(int count);
+
+    /**
+     * 获取项数
+     * @return
+     */
+    int itemCount();
 
     /**
      * 设置数据源

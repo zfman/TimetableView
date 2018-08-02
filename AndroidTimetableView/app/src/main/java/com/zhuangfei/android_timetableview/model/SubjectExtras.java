@@ -10,49 +10,49 @@ import java.util.List;
  *
  * @see ScheduleEnable#getSchedule()
  */
-public class MySubject implements ScheduleEnable {
+public class SubjectExtras implements ScheduleEnable {
 
 	public static final String EXTRAS_ID="extras_id";
 
-	private int id=0;
+	private int id;
 
 	/**
 	 * 课程名
 	 */
 	private String name;
-	
+
 	private String time;
-	
+
 	/**
 	 * 教室
 	 */
 	private String room;
-	
+
 	/**
 	 * 教师
 	 */
 	private String teacher;
-	
+
 	/**
 	 * 第几周至第几周上
 	 */
 	private List<Integer> weekList;
-	
+
 	/**
 	 * 开始上课的节次
 	 */
 	private int start;
-	
+
 	/**
 	 * 上课节数
 	 */
 	private int step;
-	
+
 	/**
 	 * 周几上
 	 */
 	private int day;
-	
+
 	private String term;
 
 	/**
@@ -60,27 +60,27 @@ public class MySubject implements ScheduleEnable {
 	 */
 	private int colorRandom = 0;
 
-	public MySubject() {
+	public SubjectExtras() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public void setTime(String time) {
 		this.time = time;
 	}
-	
+
 	public String getTime() {
 		return time;
 	}
-	
+
 	public void setTerm(String term) {
 		this.term = term;
 	}
-	
+
 	public String getTerm() {
 		return term;
 	}
-	
-	public MySubject(String term,String name, String room, String teacher, List<Integer> weekList, int start, int step, int day, int colorRandom,String time) {
+
+	public SubjectExtras(String term, String name, String room, String teacher, List<Integer> weekList, int start, int step, int day, int colorRandom, String time) {
 		super();
 		this.term=term;
 		this.name = name;

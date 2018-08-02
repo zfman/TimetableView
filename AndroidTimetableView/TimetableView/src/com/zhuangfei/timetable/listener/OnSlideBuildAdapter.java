@@ -42,6 +42,11 @@ public class OnSlideBuildAdapter implements ISchedule.OnSlideBuildListener {
         return this;
     }
 
+    public OnSlideBuildAdapter setBackground(int backgroundColor) {
+        this.background=backgroundColor;
+        return this;
+    }
+
     /**
      * 获取时刻数组
      * @return
@@ -105,6 +110,7 @@ public class OnSlideBuildAdapter implements ISchedule.OnSlideBuildListener {
         numberTextView.setTextSize(textSize);
         numberTextView.setTextColor(textColor);
 
+        if(times==null) timeTextView.setText("");
         if(times!=null&&pos>=0&&pos<times.length){
             timeTextView.setText(times[pos]);
             timeTextView.setTextColor(timeTextColor);

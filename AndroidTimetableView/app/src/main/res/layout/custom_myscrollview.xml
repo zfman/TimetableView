@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhuangfei.android_timetableview.ElasticScrollView
+<com.zhuangfei.android_timetableview.views.ElasticScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/id_scrollview"
     android:layout_width="match_parent"
@@ -8,4 +8,4 @@
 
     <include layout="@layout/view_content"/>
 
-</com.zhuangfei.android_timetableview.ElasticScrollView>
+</com.zhuangfei.android_timetableview.views.ElasticScrollView>

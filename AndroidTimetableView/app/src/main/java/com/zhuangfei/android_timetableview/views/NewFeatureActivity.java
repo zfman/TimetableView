@@ -1,4 +1,4 @@
-package com.zhuangfei.android_timetableview;
+package com.zhuangfei.android_timetableview.views;
 
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zhuangfei.android_timetableview.R;
 import com.zhuangfei.android_timetableview.model.MySubject;
 import com.zhuangfei.android_timetableview.model.SubjectRepertory;
 import com.zhuangfei.timetable.TimetableView;
@@ -31,14 +32,11 @@ public class NewFeatureActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        long t1=System.currentTimeMillis();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_feature);
         mTableView=findViewById(R.id.id_tableview);
         mWeekView=findViewById(R.id.id_weekview);
         initTimetableView();
-        long t2=System.currentTimeMillis();
-        Log.d(TAG, "onCreate: "+(t2-t1));
     }
 
     private void initTimetableView() {
@@ -54,10 +52,8 @@ public class NewFeatureActivity extends AppCompatActivity {
                 .isShow(false)
                 .showView();
 
-        mTableView.config()
-                .curWeek(1)
+        mTableView.curWeek(1)
                 .source(source)
-                .bind(mWeekView)
                 .isShowNotCurWeek(false)
                 .alpha(0.1f,0.1f,0.6f)
                 .callback(new ISchedule.OnItemClickListener() {
@@ -75,7 +71,6 @@ public class NewFeatureActivity extends AppCompatActivity {
                 .callback(new OnDateBuildAapter(){
                     @Override
                     public View onBuildDayLayout(LayoutInflater mInflate, int pos, int width, int height) {
-//                        return super.onBuildDayLayout(mInflate, pos, width, height);
                         View v=mInflate.inflate(R.layout.item_custom_dateview,null,false);
                         TextView dayTextView = v.findViewById(R.id.id_week_day);
                         dayTextView.setText(dateArray[pos]);
@@ -87,7 +82,6 @@ public class NewFeatureActivity extends AppCompatActivity {
                         return v;
                     }
                 })
-                .toggle(mTableView)
                 .showView();
     }
 }

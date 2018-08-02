@@ -49,9 +49,9 @@ public class ScheduleSupport {
             calendar.add(Calendar.DAY_OF_MONTH, -1);
         }
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        dateList.add((calendar.get(Calendar.MONTH) + 1) + "月");
+        dateList.add((calendar.get(Calendar.MONTH) + 1)+"");
         for (int i = 0; i < 7; i++) {
-            dateList.add(calendar.get(Calendar.DAY_OF_MONTH) + "日");
+            dateList.add(calendar.get(Calendar.DAY_OF_MONTH)+"");
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         return dateList;

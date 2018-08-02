@@ -10,11 +10,10 @@
         android:id="@+id/id_timetableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/app_white"
         app:cur_week="3"
         app:cur_term="大三上学期"
         app:show_notcurweek="false"
         app:source="getSource"
-        app:max_slide_item="10"
-        app:onWeekChanged="onWeekChanged"
-        app:onItemClicked="onItemClicked"/>
+        app:max_slide_item="10"/>
 </LinearLayout>

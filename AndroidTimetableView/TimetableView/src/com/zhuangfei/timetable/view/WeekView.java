@@ -24,7 +24,8 @@ import java.util.List;
 
 /**
  * 周次选择栏自定义View.
- * 每一项均为PerWeekView
+ * 每一项均为PerWeekView<br/>
+ * 懒加载机制：在使用时再绘制
  */
 
 public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
@@ -54,6 +55,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
 
     //多少项
     private int itemCount = 20;
+    private boolean lazy=false;
 
     private IWeekView.OnWeekItemClickedListener onWeekItemClickedListener;
     private IWeekView.OnWeekLeftClickedListener onWeekLeftClickedListener;
@@ -112,6 +114,11 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
         return this;
     }
 
+    public WeekView lazy(){
+        this.lazy=true;
+        return this;
+    }
+
     /**
      * 设置项数
      * @param count
@@ -119,9 +126,14 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
      */
     @Override
     public WeekView itemCount(int count) {
-        if (count <= 0 || count > 25) return this;
+        if (count <= 0) return this;
         this.itemCount = count;
         return this;
+    }
+
+    @Override
+    public int itemCount() {
+        return itemCount;
     }
 
     /**
@@ -175,7 +187,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
      */
     @Override
     public WeekView showView() {
-        Log.d(TAG, "showView: ");
+        if(lazy) return this;
         container.removeAllViews();
         layouts=new ArrayList<>();
         textViews=new ArrayList<>();
@@ -224,6 +236,10 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
      */
     @Override
     public WeekView updateView(){
+        if(lazy){
+            lazy=false;
+            showView();
+        }
         if(layouts==null||layouts.size()==0) return this;
         if(textViews==null||textViews.size()==0) return this;
 
@@ -267,6 +283,10 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
     public WeekView isShow(boolean isShow){
         if(isShow){
             root.setVisibility(VISIBLE);
+            if(lazy) {
+                lazy=false;
+                showView();
+            }
         }else{
             root.setVisibility(GONE);
         }
@@ -281,10 +301,5 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
     public boolean isShowing(){
         if(root.getVisibility()==GONE) return false;
         return true;
-    }
-
-    @Override
-    public <T> T toggle(T obj) {
-        return obj;
     }
 }

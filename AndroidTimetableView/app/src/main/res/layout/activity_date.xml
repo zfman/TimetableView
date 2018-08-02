@@ -10,6 +10,7 @@
 
     <com.zhuangfei.timetable.TimetableView
         android:id="@+id/id_timetableView"
+        android:background="@color/app_white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </com.zhuangfei.timetable.TimetableView>

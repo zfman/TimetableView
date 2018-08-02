@@ -6,7 +6,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/header_simple"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/app_white_slight">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="课程颜色可视化"
+            android:layout_centerInParent="true"
+            android:textColor="@color/app_course_textcolor_blue"
+            android:textSize="16sp" />
+        <Button
+            android:id="@+id/id_more"
+            android:text="功能"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/app_gold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/id_listview"

@@ -31,7 +31,7 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     protected LinearLayout[] layouts = new LinearLayout[8];
 
     private int background = Color.parseColor("#F4F8F8");
-    private float alpha = 1;
+    protected float alpha = 1;
 
     protected String[] dateArray;
     protected List<String> weekDates;
@@ -89,10 +89,10 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
 
 
     @Override
-    public void onUpdateDate() {
+    public void onUpdateDate(int curWeek,int targetWeek) {
         if (textViews == null || textViews.length < 8) return;
 
-        weekDates = ScheduleSupport.getWeekDate();
+        weekDates = ScheduleSupport.getDateStringFromWeek(curWeek,targetWeek);
         int month = Integer.parseInt(weekDates.get(0));
         textViews[0].setText(month + "\n月");
         for (int i = 1; i < 8; i++) {

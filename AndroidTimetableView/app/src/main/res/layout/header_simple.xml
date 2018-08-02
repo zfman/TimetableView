@@ -2,28 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:gravity="center_vertical"
-    android:background="@color/colorPrimary">
+    android:background="@color/app_white_slight">
 
     <TextView
         android:id="@+id/id_title"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
         android:layout_height="wrap_content"
         android:text="课程表"
-        android:textColor="@color/app_white"
-        android:textSize="18sp" />
+        android:layout_centerInParent="true"
+        android:textColor="@color/app_course_textcolor_blue"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/id_more"
-        android:background="@color/app_qing2"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="10dp"
-        android:textColor="@color/app_white"
-        android:layout_centerVertical="true"
+        android:text="功能"
         android:layout_alignParentRight="true"
-        android:text="功能"/>
+        android:textColor="@color/app_gold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
 </RelativeLayout>

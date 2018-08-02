@@ -151,6 +151,6 @@ public interface ISchedule {
         /**
          * 更新日期时回调
          */
-        void onUpdateDate();
+        void onUpdateDate(int curWeek,int targetWeek);
     }
 }
