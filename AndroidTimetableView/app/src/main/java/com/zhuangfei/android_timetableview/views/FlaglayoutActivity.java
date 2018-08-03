@@ -61,6 +61,14 @@ public class FlaglayoutActivity extends AppCompatActivity {
                         display(scheduleList);
                     }
                 })
+                .callback(new ISchedule.OnItemLongClickListener() {
+                    @Override
+                    public void onLongClick(View v, int day, int start) {
+                        Toast.makeText(FlaglayoutActivity.this,
+                                "长按:周" + day  + ",第" + start + "节",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .callback(new ISchedule.OnFlaglayoutClickListener() {
                     @Override
                     public void onFlaglayoutClick(int day, int start) {

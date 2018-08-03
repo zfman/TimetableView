@@ -131,6 +131,7 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
                         titleTextView.setText("第" + curWeek + "周");
                     }
                 })
+                //旗标布局点击监听
                 .callback(new ISchedule.OnFlaglayoutClickListener() {
                     @Override
                     public void onFlaglayoutClick(int day, int start) {
