@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+	<item android:id="@+id/top0"
+		android:title="点击空白格子试试~"/>
+	<item android:id="@+id/top1"
+	    android:title="修改旗标布局背景"/>
+	<item android:id="@+id/top2"
+	    android:title="重置旗标布局背景"/>
+	<item android:id="@+id/top3"
+		android:title="取消旗标布局"/>
+</menu>

@@ -32,6 +32,57 @@ public interface ISchedule {
     }
 
     /**
+     * 课程项长按事件监听器
+     */
+    interface OnItemLongClickListener {
+        /**
+         * 当课程项被点击时回调
+         *
+         * @param v
+         * @param day 星期，1：周一，7：周日
+         * @param start 节次，从1开始
+         */
+        void onLongClick(View v, int day,int start);
+    }
+
+    /**
+     * 空白格子点击监听器
+     */
+    interface OnSpaceItemClickListener {
+        /**
+         * 当课程项被点击时回调
+         *
+         * @param day 表示周几，0：周一，6：周日
+         * @param start 表示点击空白格子的节次，1：第一节
+         */
+        void onSpaceItemClick(int day,int start);
+
+        /**
+         * 初始化方法
+         * @param flagLayout 一个指示器的布局
+         * @param monthWidth 月份列宽度
+         * @param itemWidth 课程项宽度，itemWidth：是包含了边距的，设置宽度时所以需要减去边距
+         * @param itemHeight 课程项高度
+         * @param marTop 外边距
+         */
+        void onInit(LinearLayout flagLayout,int monthWidth,int itemWidth,
+                    int itemHeight,int marTop,int marLeft);
+    }
+
+    /**
+     * 旗标布局点击监听器
+     */
+    interface OnFlaglayoutClickListener {
+        /**
+         * 当旗标布局被点击时回调
+         *
+         * @param day 表示周几，0：周一，6：周日
+         * @param start 表示点击空白格子的节次，1：第一节
+         */
+        void onFlaglayoutClick(int day,int start);
+    }
+
+    /**
      * 周次改变监听器
      */
     interface OnWeekChangedListener {
@@ -57,16 +108,6 @@ public interface ISchedule {
          * @return
          */
         String getItemText(Schedule schedule, boolean isThisWeek);
-
-        /**
-         * 该接口用于拦截课程项的构建，但它并不是在任何情况下都有效的,
-         * 如果课程项没有通过过滤规则（不会显示），则不会执行该回调,
-         * 返回true表示该构建被拦截，不会添加到视图上
-         *
-         * @param schedule
-         * @return 返回true会拦截课程项的构建
-         */
-        boolean interceptItemBuild(Schedule schedule);
 
         //当changeWeek()调用结束后回调该接口
         //你可以在这里对属性进行二次设置，从而使其符合需求

@@ -36,7 +36,7 @@ public class ElasticActivity extends AppCompatActivity {
          * 1.创建一个xml文件，命名为custom_myscrollview.xml
          * 2.拷贝一段代码至该文件中，具体内容可以参见custom_myscrollview.xml
          * 3.将根布局控件修改为自定义的控件，其他内容无需修改
-         * 4.设置setOnScrollViewBuildListener()并实现其方法，将自定义的xml转换为View返回即可
+         * 4.设置滚动布局构建监听并实现其方法，将自定义的xml转换为View返回即可
          *
          */
         mTimetableView.source(mySubjects)

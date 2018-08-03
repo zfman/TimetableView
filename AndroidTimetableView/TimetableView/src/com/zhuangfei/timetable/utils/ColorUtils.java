@@ -9,9 +9,10 @@ import android.graphics.Color;
 public class ColorUtils {
 
     /**
-     * 合成指定颜色、指定透明度的颜色
+     * 合成指定颜色、指定不透明度的颜色，
+     * 0:完全透明，1：不透明
      * @param color
-     * @param alpha
+     * @param alpha 0:完全透明，1：不透明
      * @return
      */
     public static int alphaColor(int color,float alpha){

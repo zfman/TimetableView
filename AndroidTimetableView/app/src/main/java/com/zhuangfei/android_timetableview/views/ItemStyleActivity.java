@@ -71,9 +71,6 @@ public class ItemStyleActivity extends AppCompatActivity {
                     case R.id.top4:
                         buildItemText();
                         break;
-                    case R.id.top5:
-                        intercept();
-                        break;
                     case R.id.top6:
                         setCorner(0, 10, 0, 0);
                         break;
@@ -155,21 +152,6 @@ public class ItemStyleActivity extends AppCompatActivity {
                     }
                 })
                 .updateView();
-    }
-
-    /**
-     * 将名为"计算机组成原理"的课程拦截下来，该课程不会被构建
-     */
-    public void intercept() {
-        mTimetableView.callback(new OnItemBuildAdapter() {
-                    @Override
-                    public boolean interceptItemBuild(Schedule schedule) {
-                        if (schedule.getName().equals("计算机组成原理")) return true;
-                        return false;
-                    }
-                })
-                .updateView();
-        Toast.makeText(this,"已拦截《计算机组成原理》",Toast.LENGTH_SHORT).show();
     }
 
     /**

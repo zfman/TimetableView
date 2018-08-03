@@ -12,6 +12,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LeakCanary.install(this);
+        //内存泄漏检测
+//        LeakCanary.install(this);
     }
 }

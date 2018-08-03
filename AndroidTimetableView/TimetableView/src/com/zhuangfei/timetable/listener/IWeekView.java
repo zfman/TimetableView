@@ -12,9 +12,9 @@ public interface IWeekView {
     interface OnWeekItemClickedListener{
         /**
          * 当Item被点击时回调
-         * @param curWeek 选择的周次
+         * @param week 选择的周次
          */
-        void onWeekClicked(int curWeek);
+        void onWeekClicked(int week);
     }
 
     /**

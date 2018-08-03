@@ -18,22 +18,24 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.NewFeatureActivity"/>
-        <activity android:name=".views.BaseFuncActivity"/>
+        <activity android:name=".views.NewFeatureActivity" />
+        <activity android:name=".views.BaseFuncActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.AttrActivity"/>
-        <activity android:name=".views.NonViewActivity"/>
-        <activity android:name=".views.ElasticActivity"/>
-        <activity android:name=".views.ColorPoolActivity"/>
-        <activity android:name=".views.ItemStyleActivity"/>
-        <activity android:name=".views.DateActivity"/>
-        <activity android:name=".views.SlideActivity"/>
-        <activity android:name=".views.ExtrasActivity"/>
+        <activity android:name=".views.AttrActivity" />
+        <activity android:name=".views.NonViewActivity" />
+        <activity android:name=".views.ElasticActivity" />
+        <activity android:name=".views.ColorPoolActivity" />
+        <activity android:name=".views.ItemStyleActivity" />
+        <activity android:name=".views.DateActivity" />
+        <activity android:name=".views.SlideActivity" />
+        <activity android:name=".views.ExtrasActivity" />
+        <activity android:name=".views.FlaglayoutActivity"></activity>
     </application>
 
 </manifest>

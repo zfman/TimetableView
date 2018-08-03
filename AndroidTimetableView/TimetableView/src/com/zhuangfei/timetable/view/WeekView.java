@@ -55,7 +55,6 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
 
     //多少项
     private int itemCount = 20;
-    private boolean lazy=false;
 
     private IWeekView.OnWeekItemClickedListener onWeekItemClickedListener;
     private IWeekView.OnWeekLeftClickedListener onWeekLeftClickedListener;
@@ -111,11 +110,6 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
     public WeekView curWeek(int curWeek) {
         if(curWeek<1) curWeek=1;
         this.curWeek = curWeek;
-        return this;
-    }
-
-    public WeekView lazy(){
-        this.lazy=true;
         return this;
     }
 
@@ -187,7 +181,6 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
      */
     @Override
     public WeekView showView() {
-        if(lazy) return this;
         container.removeAllViews();
         layouts=new ArrayList<>();
         textViews=new ArrayList<>();
@@ -236,10 +229,6 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
      */
     @Override
     public WeekView updateView(){
-        if(lazy){
-            lazy=false;
-            showView();
-        }
         if(layouts==null||layouts.size()==0) return this;
         if(textViews==null||textViews.size()==0) return this;
 
@@ -283,10 +272,6 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
     public WeekView isShow(boolean isShow){
         if(isShow){
             root.setVisibility(VISIBLE);
-            if(lazy) {
-                lazy=false;
-                showView();
-            }
         }else{
             root.setVisibility(GONE);
         }

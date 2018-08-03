@@ -1,6 +1,7 @@
 package com.zhuangfei.timetable.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,22 +17,22 @@ public class Schedule implements Serializable{
 	/**
 	 * 课程名
 	 */
-	private String name;
+	private String name="";
 	
 	/**
 	 * 教室
 	 */
-	private String room;
+	private String room="";
 	
 	/**
 	 * 教师
 	 */
-	private String teacher;
+	private String teacher="";
 	
 	/**
 	 * 第几周至第几周上
 	 */
-	private List<Integer> weekList;
+	private List<Integer> weekList=new ArrayList<>();
 	
 	/**
 	 * 开始上课的节次
@@ -56,7 +57,7 @@ public class Schedule implements Serializable{
 	/**
 	 * 额外信息
 	 */
-	private Map<String,Object> extras;
+	private Map<String,Object> extras=new HashMap<>();
 	
 	public Schedule(String name, String room, String teacher,
 					List<Integer> weekList, int start, int step, int day,
@@ -73,7 +74,6 @@ public class Schedule implements Serializable{
 	}
 
 	public Map<String,Object> getExtras(){
-		if(extras==null) extras=new HashMap<>();
 		return extras;
 	}
 

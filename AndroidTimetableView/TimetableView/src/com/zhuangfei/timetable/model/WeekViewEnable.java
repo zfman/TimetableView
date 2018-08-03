@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 如果需要自定义周次选择栏，请实现该接口
+ * 如果需要自定义周次选择栏，请实现该接口,
+ * 它仅仅提供一个规范，可用可不用
  * Created by Liu ZhuangFei on 2018/7/28.
  */
 

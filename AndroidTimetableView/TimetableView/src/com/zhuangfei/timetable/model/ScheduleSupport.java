@@ -18,6 +18,8 @@ public class ScheduleSupport {
 
     //*****************
     // 日期相关方法
+    // getDateStringFromWeek()
+    // getWeekDate()
     //*****************
 
     /**
@@ -26,7 +28,7 @@ public class ScheduleSupport {
      *
      * @param targetWeek 需要算的周数
      * @param curWeek    当前周数
-     * @return 当周日期数组
+     * @return 当周日期集合，共8个元素，第一个为月份（高亮日期的月份），之后7个为周一至周日的日期
      */
     public static List<String> getDateStringFromWeek(int curWeek, int targetWeek) {
         Calendar calendar = Calendar.getInstance();
@@ -63,8 +65,6 @@ public class ScheduleSupport {
      * @return 8个元素的集合，第一个为月份，之后7个依次为周一-周日
      */
     public static List<String> getWeekDate() {
-        List<String> result = new ArrayList<>();
-
         Calendar calendar1 = Calendar.getInstance();
         calendar1.setFirstDayOfWeek(Calendar.MONDAY);
 
@@ -72,7 +72,6 @@ public class ScheduleSupport {
         if (1 == dayOfWeek) {
             calendar1.add(Calendar.DAY_OF_MONTH, -1);
         }
-
         int day = calendar1.get(Calendar.DAY_OF_WEEK);
         calendar1.add(Calendar.DATE, 0);
         calendar1.add(Calendar.DATE, calendar1.getFirstDayOfWeek() - day);
@@ -105,7 +104,6 @@ public class ScheduleSupport {
         while (tempStart.before(tempEnd)) {
             result.add(sdf.format(tempStart.getTime()));
             tempStart.add(Calendar.DAY_OF_YEAR, 1);
-
         }
         result.add(sdf.format(end));
         return result;
@@ -168,8 +166,7 @@ public class ScheduleSupport {
     }
 
     /**
-     * context.getResources().getDimensionPixelSize(dp);
-     *
+     * 内部使用的是:context.getResources().getDimensionPixelSize(dp);
      * @param context
      * @param dp
      * @return

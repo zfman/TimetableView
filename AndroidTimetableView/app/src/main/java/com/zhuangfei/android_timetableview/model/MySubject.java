@@ -20,7 +20,8 @@ public class MySubject implements ScheduleEnable {
 	 * 课程名
 	 */
 	private String name;
-	
+
+	//无用数据
 	private String time;
 	
 	/**

@@ -14,6 +14,5 @@
         app:cur_week="3"
         app:cur_term="大三上学期"
         app:show_notcurweek="false"
-        app:source="getSource"
         app:max_slide_item="10"/>
 </LinearLayout>

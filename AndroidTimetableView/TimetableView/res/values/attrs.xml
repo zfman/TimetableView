@@ -10,19 +10,6 @@
         <!--当前学期-->
         <attr name="cur_term" format="string"/>
 
-        <!--
-            指定一个方法名，该方法符合以下要求：
-            1.返回值为一个集合
-            2.集合中的每个对象都实现了ScheduleEnable接口
-            -->
-        <attr name="source" format="string"/>
-
-        <!--
-            指定一个方法名，该方法符合以下要求：
-            1.返回值为List<Schedule>
-            -->
-        <attr name="data" format="string"/>
-
         <!--课程项的上边距-->
         <attr name="mar_top" format="dimension"/>
 
@@ -43,10 +30,6 @@
 
         <!--是否显示非本周课程-->
         <attr name="show_notcurweek" format="boolean"/>
-        
-        <attr name="onWeekChanged" format="string"/>
-        
-        <attr name="onItemClicked" format="string"/>
     </declare-styleable>
     
     <declare-styleable name="PerWeekView">

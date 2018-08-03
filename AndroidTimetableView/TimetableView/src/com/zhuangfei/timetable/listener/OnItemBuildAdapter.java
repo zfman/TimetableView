@@ -19,13 +19,7 @@ public class OnItemBuildAdapter implements ISchedule.OnItemBuildListener {
         if(!isThisWeek){
             r="[非本周]"+r;
         }
-
         return r;
-    }
-
-    @Override
-    public boolean interceptItemBuild(Schedule schedule) {
-        return false;
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.zhuangfei.android_timetableview.views.ColorPoolActivity;
 import com.zhuangfei.android_timetableview.views.DateActivity;
 import com.zhuangfei.android_timetableview.views.ElasticActivity;
 import com.zhuangfei.android_timetableview.views.ExtrasActivity;
+import com.zhuangfei.android_timetableview.views.FlaglayoutActivity;
 import com.zhuangfei.android_timetableview.views.ItemStyleActivity;
 import com.zhuangfei.android_timetableview.views.NonViewActivity;
 import com.zhuangfei.android_timetableview.views.SlideActivity;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button7=findViewById(R.id.id_btn7);
         Button button8=findViewById(R.id.id_btn8);
         Button button9=findViewById(R.id.id_btn9);
+        Button button10=findViewById(R.id.id_btn10);
 
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button7.setOnClickListener(this);
         button8.setOnClickListener(this);
         button9.setOnClickListener(this);
+        button10.setOnClickListener(this);
     }
 
     public void toTarget(Class cla){
@@ -81,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.id_btn9:
                 toTarget(ExtrasActivity.class);
+                break;
+            case R.id.id_btn10:
+                toTarget(FlaglayoutActivity.class);
                 break;
 
         }
