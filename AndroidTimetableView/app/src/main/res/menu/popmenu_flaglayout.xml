@@ -9,4 +9,6 @@
 	    android:title="重置旗标布局背景"/>
 	<item android:id="@+id/top3"
 		android:title="取消旗标布局"/>
+	<item android:id="@+id/top4"
+		android:title="恢复旗标布局"/>
 </menu>

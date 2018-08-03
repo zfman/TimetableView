@@ -25,7 +25,7 @@ public class ScheduleColorPool{
 
     public ScheduleColorPool(Context context){
         this.context=context;
-        setUselessColor(Color.rgb(217,231,242));
+        setUselessColor(context.getResources().getColor(R.color.useless));
         reset();
     }
 

@@ -91,6 +91,9 @@ public class FlaglayoutActivity extends AppCompatActivity {
                     case R.id.top3:
                         cancelFlagBgcolor();
                         break;
+                    case R.id.top4:
+                        resetFlaglayout();
+                        break;
                     default:
                         break;
                 }
@@ -135,5 +138,12 @@ public class FlaglayoutActivity extends AppCompatActivity {
      */
     private void cancelFlagBgcolor() {
         mTimetableView.isShowFlaglayout(false).updateFlaglayout();
+    }
+
+    /**
+     * 显示旗标布局
+     */
+    private void resetFlaglayout() {
+        mTimetableView.isShowFlaglayout(true).updateFlaglayout();
     }
 }
