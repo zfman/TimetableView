@@ -1,55 +1,34 @@
 ﻿### TimetableView
-[TimetableView](https://github.com/zfman/TimetableView)是一款开源的Android课程表控件。
+> [TimetableView](https://github.com/zfman/TimetableView)是一款开源的Android课程表控件，你可以在 [ChangeLog](https://github.com/zfman/TimetableView/wiki/版本说明) 查看本控件的开发进展，作者联系方式`1193600556@qq.com`
 
-> 本分支`dev`为实时的开发进度，并不是当前发布的版本，已发布的最新版本为`v2.0.1`，详情请查看master分支。
+[TimetableView](https://github.com/zfman/TimetableView)是一款开源的、完善、高效的Android课程表控件。高效在哪？周次切换高效、样式文件极少（只需1个，`v1.x`需要36个只能实现12种样式）
 
-### 目前进度
+- 支持xml设置属性
+- 丰富的课程工具包
+- 支持多种自定义
+- 课程颜色管理
+- ScrollView可替换
+- 调用简洁、性能高效 `new`
+- 可设置背景以及透明度 `new`
+- 数据源可添加额外信息 `new`
+- 空白格子可点击，课程项可长按 `new`
 
-**已完成**
+<img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.x/v2img1.jpg" width="30%"/>
+<img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.x/v2img2.jpg" width="30%"/>
+<img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.x/v2img3.jpg" width="30%"/>
 
-- 背景设置
-- 日期栏、侧边栏、Item透明度设置
-- 默认的课程项样式调整
-- API调用更简洁
+## 最新文档
+> 你将了解到该控件用法的方方面面，点击`快速开始`按钮体验吧
 
-**未完成**
+- [快速开始](https://github.com/zfman/TimetableView/wiki/%E6%9C%80%E6%96%B0%E6%96%87%E6%A1%A3)
+- [Javadocs](http://www.liuzhuangfei.com/github/timetableview/docs/v2.0.2/)
+- [示例app下载](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.2.apk)
 
-- 日期栏透明需要完善细节
-- API、接口设计需要继续调整
+历史版本的文档可以在 [历史文档以及源码结构分析](https://github.com/zfman/TimetableView/wiki) 中找到
 
-**简单使用**
-```xml
-    <com.zhuangfei.timetable.TimetableView
-        android:id="@+id/id_tableview"
-        android:background="@drawable/bg3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-```
-就目前来说，它的调用方法是这样的：
-```java
-TimetableView mTableView=findViewById(R.id.id_tableview);
-```
-```java
-mTableView.config()
-                .curWeek(1)
-                .source(source)
-                .alpha(0.1f,0.1f,0.6f)
-                .callback(new ISchedule.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View v, List<Schedule> scheduleList) {
-                        Log.d(TAG, "onItemClick: "+scheduleList.get(0).getName());
-                    }
-                })
-                .callback(new ISchedule.OnWeekChangedListener() {
-                    @Override
-                    public void onWeekChanged(int curWeek) {
-                        Log.d(TAG, "onWeekChanged: "+curWeek);
-                    }
-                })
-                .toggle(mTableView)
-                .showView();
-```
-### 代码贡献规范
+## 代码贡献规范
+
+> 建议先在[源码结构分析](https://github.com/zfman/TimetableView/wiki)了解一下项目轮廓
 
 在贡献代码前需要先确认是否安装了Git以及Android Studio,请参考[廖雪峰的Git教程](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)、[Android Studio下载](https://developer.android.google.cn/studio/?utm_source=androiddevtools.cn&utm_medium=website)
 
@@ -65,15 +44,15 @@ mTableView.config()
 
 
 
-### 感谢贡献者
-> 感谢所有参与本项目帮助我一起完善这个项目的开发者~~
+## 感谢贡献者
+> 感谢所有参与本项目以及帮助我一起完善这个项目的开发者~~
 
 |用户 | Issues | pull request|
 | - | :-: | -: | 
 |[Mystery00](https://github.com/Mystery00)|[#6.WeekView数组越界](https://github.com/zfman/TimetableView/issues/6) |[修复#6，并添加新功能](https://github.com/zfman/TimetableView/pull/7)|
 
-### About Me
+## 关于我
 
 - [CSDN](https://blog.csdn.net/lzhuangfei)
 - [Github](https://github.com/zfman)
-- `QQ:1193600556`
+- `QQ:1193600556`：刘壮飞
