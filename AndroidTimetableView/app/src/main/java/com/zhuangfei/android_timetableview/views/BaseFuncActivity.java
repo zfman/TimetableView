@@ -20,7 +20,9 @@ import com.zhuangfei.timetable.TimetableView;
 import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.listener.IWeekView;
 import com.zhuangfei.timetable.listener.OnSlideBuildAdapter;
+import com.zhuangfei.timetable.listener.OnSpaceItemClickAdapter;
 import com.zhuangfei.timetable.model.Schedule;
+import com.zhuangfei.timetable.model.ScheduleSupport;
 import com.zhuangfei.timetable.view.WeekView;
 
 import java.util.List;
@@ -139,6 +141,26 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
                         Toast.makeText(BaseFuncActivity.this,
                                 "点击了旗标:周" + (day + 1) + ",第" + start + "节",
                                 Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .callback(new OnSpaceItemClickAdapter(){
+                    @Override
+                    public void onSpaceItemClick(int day, int start) {
+                        List<Schedule> list;
+                        if(mTimetableView.isShowNotCurWeek()){
+                            list= ScheduleSupport.getAllSubjectsWithDay(mTimetableView.dataSource(),day);
+                        }else{
+                            list= ScheduleSupport.getHaveSubjectsWithDay(mTimetableView.dataSource(),mTimetableView.curWeek(),day);
+                        }
+                        boolean isHave=false;
+                        for(Schedule item:list){
+                            if(start==item.getStart()||(start>=item.getStart()&&start<=(item.getStart()+item.getStep()-1))){
+                                isHave=true;
+                            }
+                        }
+                        if(!isHave){
+                            super.onSpaceItemClick(day, start);
+                        }
                     }
                 })
                 .showView();
