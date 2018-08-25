@@ -37,13 +37,9 @@ public class DateDelayActivity extends AppCompatActivity {
 
     //控件
     TimetableView mTimetableView;
-    WeekView mWeekView;
 
     TextView titleTextView;
     List<MySubject> mySubjects;
-
-    //记录切换的周次，不一定是当前周
-    int target = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,37 +57,20 @@ public class DateDelayActivity extends AppCompatActivity {
         //用于更正日期的显示
         int cur=mTimetableView.curWeek();
         mTimetableView.onDateBuildListener().onUpdateDate(cur,cur);
+
+        //更新文本
+        OnDateDelayAdapter adapter= (OnDateDelayAdapter) mTimetableView.onDateBuildListener();
+        long when=adapter.whenBeginSchool();
+        if(when>0){
+            titleTextView.setText("距离开学还有"+when+"天");
+        }
     }
 
     /**
      * 初始化课程控件
      */
     private void initTimetableView() {
-        //获取控件
-        mWeekView = findViewById(R.id.id_weekview);
         mTimetableView = findViewById(R.id.id_timetableView);
-
-        //设置周次选择属性
-        mWeekView.source(mySubjects)
-                .curWeek(1)
-                .callback(new IWeekView.OnWeekItemClickedListener() {
-                    @Override
-                    public void onWeekClicked(int week) {
-                        int cur = mTimetableView.curWeek();
-                        //更新切换后的日期，从当前周cur->切换的周week
-                        mTimetableView.onDateBuildListener()
-                                .onUpdateDate(cur, week);
-                        mTimetableView.changeWeekOnly(week);
-                    }
-                })
-                .callback(new IWeekView.OnWeekLeftClickedListener() {
-                    @Override
-                    public void onWeekLeftClicked() {
-                        onWeekLeftLayoutClicked();
-                    }
-                })
-                .isShow(false)//设置隐藏，默认显示
-                .showView();
 
         mTimetableView.source(mySubjects)
                 .curWeek(1)
@@ -100,7 +79,13 @@ public class DateDelayActivity extends AppCompatActivity {
                 .callback(new ISchedule.OnWeekChangedListener() {
                     @Override
                     public void onWeekChanged(int curWeek) {
-                        titleTextView.setText("第" + curWeek + "周");
+                        OnDateDelayAdapter adapter= (OnDateDelayAdapter) mTimetableView.onDateBuildListener();
+                        long when=adapter.whenBeginSchool();
+                        if(when>0){
+                            titleTextView.setText("距离开学还有"+when+"天");
+                        }else{
+                            titleTextView.setText("第" + curWeek + "周");
+                        }
                     }
                 })
                 .callback(getDateDelayAdapter())
@@ -129,38 +114,5 @@ public class DateDelayActivity extends AppCompatActivity {
         onDateDelayAdapter.setStartTime(startTime);
         onDateDelayAdapter.setDateList(dateList);
         return onDateDelayAdapter;
-    }
-
-    /**
-     * 周次选择布局的左侧被点击时回调<br/>
-     * 对话框修改当前周次
-     */
-    protected void onWeekLeftLayoutClicked() {
-        final String items[] = new String[20];
-        int itemCount = mWeekView.itemCount();
-        for (int i = 0; i < itemCount; i++) {
-            items[i] = "第" + (i + 1) + "周";
-        }
-        target = -1;
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("设置当前周");
-        builder.setSingleChoiceItems(items, mTimetableView.curWeek() - 1,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        target = i;
-                    }
-                });
-        builder.setPositiveButton("设置为当前周", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (target != -1) {
-                    mWeekView.curWeek(target + 1).updateView();
-                    mTimetableView.changeWeekForce(target + 1);
-                }
-            }
-        });
-        builder.setNegativeButton("取消", null);
-        builder.create().show();
     }
 }
