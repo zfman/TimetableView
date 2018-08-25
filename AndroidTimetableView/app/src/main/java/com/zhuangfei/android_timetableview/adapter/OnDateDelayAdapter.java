@@ -62,12 +62,8 @@ public class OnDateDelayAdapter extends OnDateBuildAapter {
     public void onUpdateDate(int curWeek,int targetWeek) {
         if (textViews == null || textViews.length < 8) return;
 
-
-        if(!TextUtils.isEmpty(startTimeStr)){
-            int calWeek= ScheduleSupport.timeTransfrom(startTimeStr);
-            if(calWeek>0){//开学
-                weekDates = ScheduleSupport.getDateStringFromWeek(curWeek,targetWeek);
-            }
+        if(whenBeginSchool()<=0){
+            weekDates = ScheduleSupport.getDateStringFromWeek(curWeek,targetWeek);
         }
 
         int month = Integer.parseInt(weekDates.get(0));
