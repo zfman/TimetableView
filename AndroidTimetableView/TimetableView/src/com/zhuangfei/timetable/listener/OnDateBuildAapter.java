@@ -54,14 +54,14 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     }
 
     @Override
-    public View[] getDateViews(LayoutInflater mInflate, float perWidth, int height) {
+    public View[] getDateViews(LayoutInflater mInflate, float monthWidth, float perWidth, int height) {
         View[] views = new View[8];
 
         //月份占1份的宽度
-        views[0] = onBuildMonthLayout(mInflate,(int)perWidth,height);
+        views[0] = onBuildMonthLayout(mInflate, (int) monthWidth,height);
 
         for (int i = 1; i < 8; i++) {
-            views[i]=onBuildDayLayout(mInflate,i,(int)(perWidth*1.5),height);
+            views[i]=onBuildDayLayout(mInflate,i,(int)perWidth,height);
         }
         return views;
     }

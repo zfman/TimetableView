@@ -62,6 +62,9 @@ public class TimetableView extends LinearLayout {
     private LinearLayout containerLayout;//根布局
     private LinearLayout dateLayout;//根布局、日期栏容器
 
+    //侧边栏宽度
+    private int monthWidth=50;
+
     //点击空白格子显示的布局:旗标布局
     private LinearLayout flagLayout;
     private int flagBgcolor=Color.rgb(220,230,239);//背景颜色
@@ -102,6 +105,34 @@ public class TimetableView extends LinearLayout {
     private ISchedule.OnSlideBuildListener onSlideBuildListener;//侧边栏构建监听
     private ISchedule.OnSpaceItemClickListener onSpaceItemClickListener;//空白格子点击监听
     private ISchedule.OnFlaglayoutClickListener onFlaglayoutClickListener;//旗标布局点击监听
+
+    /**
+     * 设置侧边栏宽度dp
+     * @param monthWidthDp
+     * @return
+     */
+    public TimetableView monthWidthDp(int monthWidthDp) {
+        this.monthWidth = ScreenUtils.dip2px(context,monthWidthDp);
+        return this;
+    }
+
+    /**
+     * 设置侧边栏宽度px
+     * @param monthWidthPx
+     * @return
+     */
+    public TimetableView monthWidthPx(int monthWidthPx) {
+        this.monthWidth = monthWidthPx;
+        return this;
+    }
+
+    /**
+     * 获取侧边栏宽度px
+     * @return
+     */
+    public int monthWidth() {
+        return this.monthWidth;
+    }
 
     /**
      * 课程项文本颜色
@@ -1107,10 +1138,13 @@ public class TimetableView extends LinearLayout {
             initPanel();
         }
 
+        LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(monthWidth(),LayoutParams.MATCH_PARENT);
+        weekPanel.setLayoutParams(lp);
+
         flagLayout.setBackgroundColor(flagBgcolor());
-        float perWidth = ScreenUtils.getWidthInPx(context) / 11.5f;
-        onSpaceItemClickListener().onInit(flagLayout, Math.round(perWidth),
-                Math.round(perWidth*1.5f),itemHeight(),marTop(),
+        float perWidth = (ScreenUtils.getWidthInPx(context) -monthWidth())/7;
+        onSpaceItemClickListener().onInit(flagLayout, monthWidth(),
+                Math.round(perWidth),itemHeight(),marTop(),
                 Math.round(marLeft()/2.0f));
 
         //更新日期
@@ -1143,12 +1177,12 @@ public class TimetableView extends LinearLayout {
      */
     public void updateDateView() {
         dateLayout.removeAllViews();
-        float perWidth = ScreenUtils.getWidthInPx(context) / 11.5f;
+        float perWidth = (ScreenUtils.getWidthInPx(context) -monthWidth())/7;
         int height = context.getResources().getDimensionPixelSize(R.dimen.headHeight);
 //		//日期栏
         ISchedule.OnDateBuildListener listener = onDateBuildListener();
         listener.onInit(dateLayout, dateAlpha());
-        View[] views = onDateBuildListener().getDateViews(inflater, perWidth, height);
+        View[] views = onDateBuildListener().getDateViews(inflater, monthWidth(),perWidth, height);
         for (View v : views) {
             if (v != null) {
                 dateLayout.addView(v);
