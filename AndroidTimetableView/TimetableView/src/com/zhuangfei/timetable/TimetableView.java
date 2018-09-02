@@ -52,21 +52,20 @@ public class TimetableView extends LinearLayout {
     private AbsOperater operater;
     private Context context;
 
-    // 当前周、学期
+    // 当前周、学期、课程数据源
     private int curWeek = 1;
     private String curTerm = "Term";
-
-    // 课程数据源
     private List<Schedule> dataSource = null;
+
+    //上边距、左边距、项高度
+    private int marTop, marLeft, itemHeight;
 
     //侧边栏宽度
     private int monthWidth;
 
+    //旗标布局背景颜色
     private int flagBgcolor = Color.rgb(220, 230, 239);//背景颜色
     private boolean isShowFlaglayout = true;
-
-    //上边距、左边距、项高度
-    private int marTop, marLeft, itemHeight;
 
     //本周、非本周的弧度
     private int thisWeekCorner;
@@ -88,6 +87,9 @@ public class TimetableView extends LinearLayout {
     private int itemTextColorWithThisWeek = Color.WHITE;//本周
     private int itemTextColorWithNotThis = Color.WHITE;//非本周
 
+    private boolean isHideWeekends=false;
+
+    //监听器
     private ISchedule.OnWeekChangedListener onWeekChangedListener;//周次改变监听
     private ISchedule.OnScrollViewBuildListener onScrollViewBuildListener;//替换滚动布局构建监听
     private ISchedule.OnDateBuildListener onDateBuildListener;//日期栏构建监听
@@ -97,6 +99,15 @@ public class TimetableView extends LinearLayout {
     private ISchedule.OnSlideBuildListener onSlideBuildListener;//侧边栏构建监听
     private ISchedule.OnSpaceItemClickListener onSpaceItemClickListener;//空白格子点击监听
     private ISchedule.OnFlaglayoutClickListener onFlaglayoutClickListener;//旗标布局点击监听
+
+    public TimetableView hideWeekends(boolean hideWeekends) {
+        isHideWeekends = hideWeekends;
+        return this;
+    }
+
+    public boolean hideWeekends() {
+        return isHideWeekends;
+    }
 
     public AbsOperater operater(){
         if(operater==null) operater=new SimpleOperater();

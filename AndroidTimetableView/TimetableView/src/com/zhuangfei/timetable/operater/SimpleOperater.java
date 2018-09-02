@@ -223,7 +223,7 @@ public class SimpleOperater extends AbsOperater{
 
         //遍历
         Schedule pre = data.get(0);
-        List<Schedule> filter = ScheduleSupport.fliterSchedule(data, curWeek);
+        List<Schedule> filter = ScheduleSupport.fliterSchedule(data, curWeek,mView.isShowNotCurWeek());
         layout.setTag(filter.size());
         for (int i = 0; i < filter.size(); i++) {
             final Schedule subject = filter.get(i);
