@@ -354,7 +354,8 @@ public class SimpleOperater extends AbsOperater{
         LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(mView.monthWidth(), LinearLayout.LayoutParams.MATCH_PARENT);
         weekPanel.setLayoutParams(lp);
         flagLayout.setBackgroundColor(mView.flagBgcolor());
-        float perWidth = (ScreenUtils.getWidthInPx(context) -mView.monthWidth())/7;
+        float perWidth=getPerWidth();
+
         mView.onSpaceItemClickListener().onInit(flagLayout, mView.monthWidth(),
                 Math.round(perWidth),mView.itemHeight(),mView.marTop(),
                 Math.round(mView.marLeft()/2.0f));
@@ -402,17 +403,22 @@ public class SimpleOperater extends AbsOperater{
         }
     }
 
-    /**
-     * 更新日期栏
-     */
-    public void updateDateView() {
-        dateLayout.removeAllViews();
+    protected float getPerWidth(){
         float perWidth = 0;
         if(mView.isShowWeekends()){
             perWidth=(ScreenUtils.getWidthInPx(context) -mView.monthWidth())/7;
         }else{
             perWidth=(ScreenUtils.getWidthInPx(context) -mView.monthWidth())/5;
         }
+        return perWidth;
+    }
+    /**
+     * 更新日期栏
+     */
+    public void updateDateView() {
+        dateLayout.removeAllViews();
+
+        float perWidth=getPerWidth();
 
         int height = context.getResources().getDimensionPixelSize(R.dimen.headHeight);
 //		//日期栏
@@ -433,6 +439,7 @@ public class SimpleOperater extends AbsOperater{
      */
     @Override
     public void updateSlideView() {
+
         newSlideView(weekPanel);
     }
 

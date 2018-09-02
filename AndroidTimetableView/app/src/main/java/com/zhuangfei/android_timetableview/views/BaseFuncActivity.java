@@ -107,15 +107,14 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
                 .showView();
 
         mTimetableView.source(mySubjects)
-                .curWeek(2)
+                .curWeek(1)
                 .curTerm("大三下学期")
                 .maxSlideItem(10)
                 .monthWidthDp(30)
-                .isShowWeekends(false)
                 //透明度
                 //日期栏0.1f、侧边栏0.1f，周次选择栏0.6f
                 //透明度范围为0->1，0为全透明，1为不透明
-                .alpha(0.3f, 0.1f, 0.6f)
+//                .alpha(0.1f, 0.1f, 0.6f)
                 .callback(new ISchedule.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, List<Schedule> scheduleList) {
@@ -144,26 +143,6 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
                         Toast.makeText(BaseFuncActivity.this,
                                 "点击了旗标:周" + (day + 1) + ",第" + start + "节",
                                 Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .callback(new OnSpaceItemClickAdapter(){
-                    @Override
-                    public void onSpaceItemClick(int day, int start) {
-                        List<Schedule> list;
-                        if(mTimetableView.isShowNotCurWeek()){
-                            list= ScheduleSupport.getAllSubjectsWithDay(mTimetableView.dataSource(),day);
-                        }else{
-                            list= ScheduleSupport.getHaveSubjectsWithDay(mTimetableView.dataSource(),mTimetableView.curWeek(),day);
-                        }
-                        boolean isHave=false;
-                        for(Schedule item:list){
-                            if(start==item.getStart()||(start>=item.getStart()&&start<=(item.getStart()+item.getStep()-1))){
-                                isHave=true;
-                            }
-                        }
-                        if(!isHave){
-                            super.onSpaceItemClick(day, start);
-                        }
                     }
                 })
                 .showView();
@@ -267,6 +246,18 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
                         break;
                     case R.id.top12:
                         hideWeekView();
+                        break;
+                    case R.id.top13:
+                        setMonthWidth();
+                        break;
+                    case R.id.top16:
+                        resetMonthWidth();
+                        break;
+                    case R.id.top14:
+                        hideWeekends();
+                        break;
+                    case R.id.top15:
+                        showWeekends();
                         break;
                     default:
                         break;
@@ -395,5 +386,33 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
      */
     protected void hideWeekView() {
         mWeekView.isShow(false);
+    }
+
+    /**
+     * 设置月份宽度
+     */
+    private void setMonthWidth() {
+        mTimetableView.monthWidthDp(50).updateView();
+    }
+
+    /**
+     * 设置月份宽度,默认40dp
+     */
+    private void resetMonthWidth() {
+        mTimetableView.monthWidthDp(40).updateView();
+    }
+
+    /**
+     * 隐藏周末
+     */
+    private void hideWeekends() {
+        mTimetableView.isShowWeekends(false).updateView();
+    }
+
+    /**
+     * 显示周末
+     */
+    private void showWeekends() {
+        mTimetableView.isShowWeekends(true).updateView();
     }
 }
