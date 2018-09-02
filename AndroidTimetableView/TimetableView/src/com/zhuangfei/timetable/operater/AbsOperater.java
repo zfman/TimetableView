@@ -11,17 +11,19 @@ import com.zhuangfei.timetable.TimetableView;
  * Created by Liu ZhuangFei on 2018/9/2.
  */
 public abstract class AbsOperater {
-    public abstract void init(Context context, AttributeSet attrs, TimetableView view);
+    public void init(Context context, AttributeSet attrs, TimetableView view){};
 
-    public abstract void showView();
+    public void showView(){};
 
-    public abstract void updateDateView();
+    public void updateDateView(){};
 
-    public abstract void updateSlideView();
+    public void updateSlideView(){};
 
-    public abstract void changeWeek(int week, boolean isCurWeek);
+    public void changeWeek(int week, boolean isCurWeek){};
 
-    public abstract LinearLayout getFlagLayout();
+    public LinearLayout getFlagLayout(){return null;};
 
-    public abstract LinearLayout getDateLayout();
+    public LinearLayout getDateLayout(){return null;};
+
+    public void setWeekendsVisiable(boolean isShow){};
 }

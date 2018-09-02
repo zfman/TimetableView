@@ -111,6 +111,7 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
                 .curTerm("大三下学期")
                 .maxSlideItem(10)
                 .monthWidthDp(30)
+                .isShowWeekends(false)
                 //透明度
                 //日期栏0.1f、侧边栏0.1f，周次选择栏0.6f
                 //透明度范围为0->1，0为全透明，1为不透明

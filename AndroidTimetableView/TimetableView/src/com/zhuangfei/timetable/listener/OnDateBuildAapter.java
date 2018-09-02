@@ -45,9 +45,9 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     @Override
     public void onInit(LinearLayout layout, float alpha) {
         this.alpha = alpha;
-        this.layout=layout;
+        this.layout = layout;
         //星期设置
-        dateArray=getStringArray();
+        dateArray = getStringArray();
         weekDates = ScheduleSupport.getWeekDate();
         int alphaColor = ColorUtils.alphaColor(background, alpha);
         if (layout != null) layout.setBackgroundColor(alphaColor);
@@ -56,9 +56,9 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     @Override
     public View[] getDateViews(LayoutInflater mInflate, float monthWidth, float perWidth, int height) {
         View[] views = new View[8];
-        views[0] = onBuildMonthLayout(mInflate, (int) monthWidth,height);
+        views[0] = onBuildMonthLayout(mInflate, (int) monthWidth, height);
         for (int i = 1; i < 8; i++) {
-            views[i]=onBuildDayLayout(mInflate,i,(int)perWidth,height);
+            views[i] = onBuildDayLayout(mInflate, i, (int) perWidth, height);
         }
         return views;
     }
@@ -84,16 +84,15 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     }
 
 
-
     @Override
-    public void onUpdateDate(int curWeek,int targetWeek) {
+    public void onUpdateDate(int curWeek, int targetWeek) {
         if (textViews == null || textViews.length < 8) return;
 
-        weekDates = ScheduleSupport.getDateStringFromWeek(curWeek,targetWeek);
+        weekDates = ScheduleSupport.getDateStringFromWeek(curWeek, targetWeek);
         int month = Integer.parseInt(weekDates.get(0));
         textViews[0].setText(month + "\n月");
         for (int i = 1; i < 8; i++) {
-            if(textViews[i]!=null){
+            if (textViews[i] != null) {
                 textViews[i].setText(weekDates.get(i) + "日");
             }
         }
@@ -122,7 +121,7 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
         return first;
     }
 
-    protected View onBuildDayLayout(LayoutInflater mInflate,int pos, int width, int height) {
+    protected View onBuildDayLayout(LayoutInflater mInflate, int pos, int width, int height) {
         View v = mInflate.inflate(R.layout.item_dateview, null, false);
         TextView dayTextView = v.findViewById(R.id.id_week_day);
         dayTextView.setText(dateArray[pos]);
@@ -139,20 +138,23 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
 
     /**
      * 返回一个长度为8的数组，第0个位置为null
+     *
      * @return
      */
-    public String[] getStringArray(){
-        return new String[]{null,"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
+    public String[] getStringArray() {
+        return new String[]{null, "周一", "周二", "周三", "周四", "周五", "周六", "周日"};
     }
 
-    protected void initDateBackground(){
+    protected void initDateBackground() {
         for (int i = 1; i < 8; i++) {
-            layouts[i].setBackgroundColor(Color.TRANSPARENT);
+            if (layouts[i] != null) layouts[i].setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
     protected void activeDateBackground(int weekDay) {
-        layouts[weekDay].setBackgroundColor(
-                ColorUtils.alphaColor(Color.parseColor("#BFF6F4"), alpha));
+        if (layouts.length > weekDay && layouts[weekDay] != null) {
+            layouts[weekDay].setBackgroundColor(
+                    ColorUtils.alphaColor(Color.parseColor("#BFF6F4"), alpha));
+        }
     }
 }

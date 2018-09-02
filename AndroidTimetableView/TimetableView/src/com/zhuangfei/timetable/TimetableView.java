@@ -87,7 +87,7 @@ public class TimetableView extends LinearLayout {
     private int itemTextColorWithThisWeek = Color.WHITE;//本周
     private int itemTextColorWithNotThis = Color.WHITE;//非本周
 
-    private boolean isHideWeekends=false;
+    private boolean isShowWeekends=true;
 
     //监听器
     private ISchedule.OnWeekChangedListener onWeekChangedListener;//周次改变监听
@@ -100,13 +100,18 @@ public class TimetableView extends LinearLayout {
     private ISchedule.OnSpaceItemClickListener onSpaceItemClickListener;//空白格子点击监听
     private ISchedule.OnFlaglayoutClickListener onFlaglayoutClickListener;//旗标布局点击监听
 
-    public TimetableView hideWeekends(boolean hideWeekends) {
-        isHideWeekends = hideWeekends;
+    /**
+     * 是否显示周末
+     * @param isShowWeekends
+     * @return
+     */
+    public TimetableView isShowWeekends(boolean isShowWeekends) {
+        this.isShowWeekends = isShowWeekends;
         return this;
     }
 
-    public boolean hideWeekends() {
-        return isHideWeekends;
+    public boolean isShowWeekends() {
+        return isShowWeekends;
     }
 
     public AbsOperater operater(){

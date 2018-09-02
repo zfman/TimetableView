@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -58,6 +59,7 @@ public class SimpleOperater extends AbsOperater{
         inflater.inflate(R.layout.timetable_layout, mView);
         containerLayout = mView.findViewById(R.id.id_container);
         dateLayout = mView.findViewById(R.id.id_datelayout);
+        mView.monthWidthDp(40);
         initAttr(attrs);
     }
 
@@ -351,12 +353,14 @@ public class SimpleOperater extends AbsOperater{
 
         LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(mView.monthWidth(), LinearLayout.LayoutParams.MATCH_PARENT);
         weekPanel.setLayoutParams(lp);
-
         flagLayout.setBackgroundColor(mView.flagBgcolor());
         float perWidth = (ScreenUtils.getWidthInPx(context) -mView.monthWidth())/7;
         mView.onSpaceItemClickListener().onInit(flagLayout, mView.monthWidth(),
                 Math.round(perWidth),mView.itemHeight(),mView.marTop(),
                 Math.round(mView.marLeft()/2.0f));
+
+
+        setWeekendsVisiable(mView.isShowWeekends());
 
         //更新日期
         updateDateView();
@@ -403,7 +407,13 @@ public class SimpleOperater extends AbsOperater{
      */
     public void updateDateView() {
         dateLayout.removeAllViews();
-        float perWidth = (ScreenUtils.getWidthInPx(context) -mView.monthWidth())/7;
+        float perWidth = 0;
+        if(mView.isShowWeekends()){
+            perWidth=(ScreenUtils.getWidthInPx(context) -mView.monthWidth())/7;
+        }else{
+            perWidth=(ScreenUtils.getWidthInPx(context) -mView.monthWidth())/5;
+        }
+
         int height = context.getResources().getDimensionPixelSize(R.dimen.headHeight);
 //		//日期栏
         ISchedule.OnDateBuildListener listener = mView.onDateBuildListener();
@@ -424,5 +434,22 @@ public class SimpleOperater extends AbsOperater{
     @Override
     public void updateSlideView() {
         newSlideView(weekPanel);
+    }
+
+    /**
+     * 设置周末的可见性
+     */
+    public void setWeekendsVisiable(boolean isShow) {
+        if(isShow){
+            if(panels!=null&&panels.length>6){
+                panels[5].setVisibility(View.VISIBLE);
+                panels[6].setVisibility(View.VISIBLE);
+            }
+        }else{
+            if(panels!=null&&panels.length>6){
+                panels[5].setVisibility(View.GONE);
+                panels[6].setVisibility(View.GONE);
+            }
+        }
     }
 }
