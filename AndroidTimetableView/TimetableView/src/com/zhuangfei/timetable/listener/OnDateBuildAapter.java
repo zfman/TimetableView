@@ -30,7 +30,7 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     protected TextView[] textViews = new TextView[8];
     protected LinearLayout[] layouts = new LinearLayout[8];
 
-    private int background = Color.parseColor("#F4F8F8");
+    protected int background = Color.parseColor("#F4F8F8");
     protected float alpha = 1;
 
     protected String[] dateArray;
@@ -56,10 +56,7 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     @Override
     public View[] getDateViews(LayoutInflater mInflate, float monthWidth, float perWidth, int height) {
         View[] views = new View[8];
-
-        //月份占1份的宽度
         views[0] = onBuildMonthLayout(mInflate, (int) monthWidth,height);
-
         for (int i = 1; i < 8; i++) {
             views[i]=onBuildDayLayout(mInflate,i,(int)perWidth,height);
         }
@@ -111,7 +108,7 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
      * @param height   默认高度
      * @return
      */
-    public View onBuildMonthLayout(LayoutInflater mInflate, int width, int height) {
+    protected View onBuildMonthLayout(LayoutInflater mInflate, int width, int height) {
         View first = mInflate.inflate(R.layout.item_dateview_first, null, false);
         //月份设置
         textViews[0] = first.findViewById(R.id.id_week_month);
@@ -125,7 +122,7 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
         return first;
     }
 
-    public View onBuildDayLayout(LayoutInflater mInflate,int pos, int width, int height) {
+    protected View onBuildDayLayout(LayoutInflater mInflate,int pos, int width, int height) {
         View v = mInflate.inflate(R.layout.item_dateview, null, false);
         TextView dayTextView = v.findViewById(R.id.id_week_day);
         dayTextView.setText(dateArray[pos]);
@@ -148,13 +145,13 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
         return new String[]{null,"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
     }
 
-    public void initDateBackground(){
+    protected void initDateBackground(){
         for (int i = 1; i < 8; i++) {
             layouts[i].setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
-    private void activeDateBackground(int weekDay) {
+    protected void activeDateBackground(int weekDay) {
         layouts[weekDay].setBackgroundColor(
                 ColorUtils.alphaColor(Color.parseColor("#BFF6F4"), alpha));
     }

@@ -12,7 +12,7 @@ import java.util.Map;
  * @author Administrator 刘壮飞
  *
  */
-public class Schedule implements Serializable{
+public class Schedule implements Serializable,Comparable<Schedule>{
 
 	/**
 	 * 课程名
@@ -154,4 +154,14 @@ public class Schedule implements Serializable{
 		super();
 	}
 
+	@Override
+	public int compareTo(Schedule o) {
+		if(getStart()<o.getStart()){
+			return -1;
+		}else if(getStart()==o.getStart()){
+			return 0;
+		}else{
+			return 1;
+		}
+	}
 }

@@ -18,15 +18,15 @@ import com.zhuangfei.timetable.utils.ColorUtils;
 public class OnSlideBuildAdapter implements ISchedule.OnSlideBuildListener {
 
     //时刻，每个元素保存每节课的开始时间
-    private String[] times;
+    protected String[] times;
 
     //节次文本的颜色、字号
-    private int textColor= Color.BLACK;
-    private float textSize=14;
+    protected int textColor= Color.BLACK;
+    protected float textSize=14;
 
     //时刻文本的颜色、字号
-    private float timeTextSize=12;
-    private int timeTextColor=Color.GRAY;
+    protected float timeTextSize=12;
+    protected int timeTextColor=Color.GRAY;
 
     //侧边栏背景色
     protected int background=Color.WHITE;
