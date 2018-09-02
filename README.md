@@ -1,4 +1,4 @@
-﻿### TimetableView
+### TimetableView
 > [TimetableView](https://github.com/zfman/TimetableView)是一款开源的Android课程表控件，你可以在 [ChangeLog](https://github.com/zfman/TimetableView/wiki/版本说明) 查看本控件的开发进展，作者联系方式`1193600556@qq.com`
 
 [TimetableView](https://github.com/zfman/TimetableView)是一款开源的、完善、高效的Android课程表控件。高效在哪？周次切换高效、样式文件极少（只需1个，`v1.x`需要36个只能实现12种样式）
