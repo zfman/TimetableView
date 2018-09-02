@@ -65,5 +65,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="旗标布局（空白格子点击）" />
+    <Button
+        android:id="@+id/id_btn11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="日期延迟显示（开学时间设置）" />
 
 </LinearLayout>

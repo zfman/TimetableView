@@ -1,18 +1,5 @@
 package com.zhuangfei.timetable.model;
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.zhuangfei.android_timetableview.sample.R;
-import com.zhuangfei.timetable.view.PerWeekView;
-import com.zhuangfei.timetable.view.WeekView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,7 +64,7 @@ public interface WeekViewEnable<T> {
      * 设置控件的可见性
      * @param isShow true:显示，false:隐藏
      */
-    WeekView isShow(boolean isShow);
+    T isShow(boolean isShow);
 
     /**
      * 判断该控件是否显示

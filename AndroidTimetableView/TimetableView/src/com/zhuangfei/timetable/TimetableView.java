@@ -1,19 +1,11 @@
 package com.zhuangfei.timetable;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.zhuangfei.android_timetableview.sample.R;
 import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.listener.OnDateBuildAapter;
 import com.zhuangfei.timetable.listener.OnFlaglayoutClickAdapter;
@@ -27,48 +19,53 @@ import com.zhuangfei.timetable.listener.OnWeekChangedAdapter;
 import com.zhuangfei.timetable.model.Schedule;
 import com.zhuangfei.timetable.model.ScheduleColorPool;
 import com.zhuangfei.timetable.model.ScheduleEnable;
+import com.zhuangfei.timetable.operater.AbsOperater;
 import com.zhuangfei.timetable.model.ScheduleSupport;
-import com.zhuangfei.timetable.utils.ColorUtils;
+import com.zhuangfei.timetable.operater.SimpleOperater;
 import com.zhuangfei.timetable.utils.ScreenUtils;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
- * 课程表控件
+ * 课程表控件，该类主要负责属性的设置，业务逻辑由{@link SimpleOperater}处理
+ * 虽然这个类代码很多，但是都是属性设置，除了属性设置的方法：
+ * {@link #showView()}
+ * {@link #changeWeek(int, boolean)}
+ * {@link #changeWeekOnly(int)}
+ * {@link #changeWeekForce(int)}
+ * {@link #updateView()}
+ * {@link #updateSlideView()}
+ * {@link #updateDateView()}
+ * {@link #updateView()}
  *
+ * 文档参考 https://github.com/zfman/TimetableView/wiki/%E6%9C%80%E6%96%B0%E6%96%87%E6%A1%A3
  * @author Administrator
+ * @see AbsOperater
+ * @see SimpleOperater
  */
 public class TimetableView extends LinearLayout {
 
     private static final String TAG = "TimetableView";
 
+    //业务逻辑
+    private AbsOperater operater;
     private Context context;
 
-    // 当前周、学期
+    // 当前周、学期、课程数据源
     private int curWeek = 1;
     private String curTerm = "Term";
-
-    // 课程数据源
     private List<Schedule> dataSource = null;
-
-    //布局转换器
-    private LayoutInflater inflater;
-    private LinearLayout weekPanel;//侧边栏
-    private List<Schedule>[] data = new ArrayList[7];//每天的课程
-    private LinearLayout[] panels = new LinearLayout[7];//每天的面板
-    private LinearLayout containerLayout;//根布局
-    private LinearLayout dateLayout;//根布局、日期栏容器
-
-    //点击空白格子显示的布局:旗标布局
-    private LinearLayout flagLayout;
-    private int flagBgcolor=Color.rgb(220,230,239);//背景颜色
-    private boolean isShowFlaglayout=true;
 
     //上边距、左边距、项高度
     private int marTop, marLeft, itemHeight;
+
+    //侧边栏宽度
+    private int monthWidth;
+
+    //旗标布局背景颜色
+    private int flagBgcolor = Color.rgb(220, 230, 239);//背景颜色
+    private boolean isShowFlaglayout = true;
 
     //本周、非本周的弧度
     private int thisWeekCorner;
@@ -86,13 +83,13 @@ public class TimetableView extends LinearLayout {
     //课程项、侧边栏、日期栏的透明度，1：不透明，0：透明
     private float itemAlpha = 1, slideAlpha = 1, dateAlpha = 1;
 
-    //保存点击的坐标
-    private float x, y;
-
     //课程项文本颜色
     private int itemTextColorWithThisWeek = Color.WHITE;//本周
     private int itemTextColorWithNotThis = Color.WHITE;//非本周
 
+    private boolean isShowWeekends=true;
+
+    //监听器
     private ISchedule.OnWeekChangedListener onWeekChangedListener;//周次改变监听
     private ISchedule.OnScrollViewBuildListener onScrollViewBuildListener;//替换滚动布局构建监听
     private ISchedule.OnDateBuildListener onDateBuildListener;//日期栏构建监听
@@ -102,6 +99,61 @@ public class TimetableView extends LinearLayout {
     private ISchedule.OnSlideBuildListener onSlideBuildListener;//侧边栏构建监听
     private ISchedule.OnSpaceItemClickListener onSpaceItemClickListener;//空白格子点击监听
     private ISchedule.OnFlaglayoutClickListener onFlaglayoutClickListener;//旗标布局点击监听
+
+    /**
+     * 是否显示周末
+     * @param isShowWeekends
+     * @return
+     */
+    public TimetableView isShowWeekends(boolean isShowWeekends) {
+        this.isShowWeekends = isShowWeekends;
+        return this;
+    }
+
+    public boolean isShowWeekends() {
+        return isShowWeekends;
+    }
+
+    public AbsOperater operater(){
+        if(operater==null) operater=new SimpleOperater();
+        return operater;
+    }
+
+    public TimetableView operater(AbsOperater operater) {
+        this.operater = operater;
+        return this;
+    }
+
+    /**
+     * 设置侧边栏宽度dp
+     *
+     * @param monthWidthDp
+     * @return
+     */
+    public TimetableView monthWidthDp(int monthWidthDp) {
+        this.monthWidth = ScreenUtils.dip2px(context, monthWidthDp);
+        return this;
+    }
+
+    /**
+     * 设置侧边栏宽度px
+     *
+     * @param monthWidthPx
+     * @return
+     */
+    public TimetableView monthWidthPx(int monthWidthPx) {
+        this.monthWidth = monthWidthPx;
+        return this;
+    }
+
+    /**
+     * 获取侧边栏宽度px
+     *
+     * @return
+     */
+    public int monthWidth() {
+        return this.monthWidth;
+    }
 
     /**
      * 课程项文本颜色
@@ -191,55 +243,61 @@ public class TimetableView extends LinearLayout {
 
     /**
      * 设置旗标布局背景颜色
+     *
      * @param color
      * @return
      */
-    public TimetableView flagBgcolor(int color){
-        this.flagBgcolor=color;
+    public TimetableView flagBgcolor(int color) {
+        this.flagBgcolor = color;
         return this;
     }
 
     /**
      * 重置旗标布局背景色
+     *
      * @return
      */
-    public TimetableView resetFlagBgcolor(){
-        flagBgcolor(Color.rgb(220,230,239));
+    public TimetableView resetFlagBgcolor() {
+        flagBgcolor(Color.rgb(220, 230, 239));
         return this;
     }
 
     /**
      * 获取是否显示旗标布局
+     *
      * @return
      */
-    public boolean isShowFlaglayout(){
+    public boolean isShowFlaglayout() {
         return isShowFlaglayout;
     }
 
     /**
      * 设置是否显示旗标布局
+     *
      * @param isShowFlaglayout
      * @return
      */
-    public TimetableView isShowFlaglayout(boolean isShowFlaglayout){
-        this.isShowFlaglayout=isShowFlaglayout;
+    public TimetableView isShowFlaglayout(boolean isShowFlaglayout) {
+        this.isShowFlaglayout = isShowFlaglayout;
         return this;
     }
 
     /**
      * 获取旗标布局背景颜色
+     *
      * @return
      */
-    public int flagBgcolor(){
+    public int flagBgcolor() {
         return flagBgcolor;
     }
 
     /**
      * 获取旗标布局
+     *
      * @return
      */
-    public LinearLayout flagLayout(){
-        return flagLayout;
+    public LinearLayout flagLayout() {
+        return operater().getFlagLayout();
     }
 
     /**
@@ -255,10 +313,11 @@ public class TimetableView extends LinearLayout {
 
     /**
      * 获取课程项长按监听器
+     *
      * @return
      */
     public ISchedule.OnItemLongClickListener onItemLongClickListener() {
-        if(onItemLongClickListener==null) onItemLongClickListener=new OnItemLongClickAdapter();
+        if (onItemLongClickListener == null) onItemLongClickListener = new OnItemLongClickAdapter();
         return onItemLongClickListener;
     }
 
@@ -382,15 +441,18 @@ public class TimetableView extends LinearLayout {
 
     /**
      * 获取空白格子点击监听器
+     *
      * @return
      */
     public ISchedule.OnSpaceItemClickListener onSpaceItemClickListener() {
-        if (onSpaceItemClickListener == null) onSpaceItemClickListener = new OnSpaceItemClickAdapter();
+        if (onSpaceItemClickListener == null)
+            onSpaceItemClickListener = new OnSpaceItemClickAdapter();
         return onSpaceItemClickListener;
     }
 
     /**
      * 设置旗标布局点击监听器
+     *
      * @param onFlaglayoutClickListener
      * @return
      */
@@ -401,10 +463,12 @@ public class TimetableView extends LinearLayout {
 
     /**
      * 获取旗标布局点击监听器
+     *
      * @return
      */
     public ISchedule.OnFlaglayoutClickListener onFlaglayoutClickListener() {
-        if (onFlaglayoutClickListener == null) onFlaglayoutClickListener = new OnFlaglayoutClickAdapter();
+        if (onFlaglayoutClickListener == null)
+            onFlaglayoutClickListener = new OnFlaglayoutClickAdapter();
         return onFlaglayoutClickListener;
     }
 
@@ -703,347 +767,7 @@ public class TimetableView extends LinearLayout {
     public TimetableView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        inflater = LayoutInflater.from(context);
-        inflater.inflate(R.layout.timetable_layout, this);
-        containerLayout = findViewById(R.id.id_container);
-        dateLayout = findViewById(R.id.id_datelayout);
-        initAttr(attrs);
-    }
-
-    /**
-     * 获取自定义属性
-     *
-     * @param attrs
-     */
-    private void initAttr(AttributeSet attrs) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TimetableView);
-        int curWeek = ta.getInteger(R.styleable.TimetableView_cur_week, 1);
-        String curTerm = ta.getString(R.styleable.TimetableView_cur_term);
-
-        int defMarTop = (int) context.getResources().getDimension(R.dimen.weekItemMarTop);
-        int defMarLeft = (int) context.getResources().getDimension(R.dimen.weekItemMarLeft);
-        int defItemHeight = (int) context.getResources().getDimension(R.dimen.weekItemHeight);
-
-        int marTop = (int) ta.getDimension(R.styleable.TimetableView_mar_top, defMarTop);
-        int marLeft = (int) ta.getDimension(R.styleable.TimetableView_mar_left, defMarLeft);
-        int itemHeight = (int) ta.getDimension(R.styleable.TimetableView_item_height, defItemHeight);
-        int thisWeekCorner = (int) ta.getDimension(R.styleable.TimetableView_thisweek_corner, 5);
-        int nonWeekCorner = (int) ta.getDimension(R.styleable.TimetableView_nonweek_corner, 5);
-        int maxSlideItem = ta.getInteger(R.styleable.TimetableView_max_slide_item, 12);
-        boolean isShowNotWeek = ta.getBoolean(R.styleable.TimetableView_show_notcurweek, true);
-
-        ta.recycle();
-
-        curWeek(curWeek)
-                .curTerm(curTerm)
-                .marTop(marTop)
-                .marLeft(marLeft)
-                .itemHeight(itemHeight)
-                .corner(thisWeekCorner, true)
-                .corner(nonWeekCorner, false)
-                .maxSlideItem(maxSlideItem)
-                .isShowNotCurWeek(isShowNotWeek);
-    }
-
-    /**
-     * 构建侧边栏
-     *
-     * @param slidelayout 侧边栏的容器
-     */
-    private void newSlideView(LinearLayout slidelayout) {
-        if (slidelayout == null) return;
-        slidelayout.removeAllViews();
-
-        ISchedule.OnSlideBuildListener listener = onSlideBuildListener();
-        listener.onInit(slidelayout, slideAlpha());
-        for (int i = 0; i < maxSlideItem(); i++) {
-            View view = listener.getView(i, inflater, itemHeight(), marTop());
-            slidelayout.addView(view);
-        }
-    }
-
-    /**
-     * 构建课程项
-     *
-     * @param data    某一天的数据集合
-     * @param subject 当前的课程数据
-     * @param pre     上一个课程数据
-     * @param i       构建的索引
-     * @param curWeek 当前周
-     * @return View
-     */
-    private View newItemView(final List<Schedule> data, final Schedule subject, Schedule pre, int i, int curWeek) {
-        //宽高
-        int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = itemHeight() * subject.getStep() + marTop() * (subject.getStep() - 1);
-
-        //边距
-        int left = marLeft() / 2, right = marLeft() / 2;
-        int top = (subject.getStart() - (pre.getStart() + pre.getStep()))
-                * (itemHeight() + marTop()) + marTop();
-
-        if (i != 0 && top < 0) return null;
-
-        // 设置Params
-        View view = inflater.inflate(R.layout.item_timetable, null, false);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, height);
-        if (i == 0) {
-            top = (subject.getStart() - 1) * (itemHeight() + marTop()) + marTop();
-        }
-        lp.setMargins(left, top, right, 0);
-
-        view.setBackgroundColor(Color.TRANSPARENT);
-        view.setTag(subject);
-        FrameLayout layout = view.findViewById(R.id.id_course_item_framelayout);
-        TextView textView = view.findViewById(R.id.id_course_item_course);
-        layout.setLayoutParams(lp);
-
-        boolean isThisWeek = ScheduleSupport.isThisWeek(subject, curWeek);
-        textView.setText(onItemBuildListener().getItemText(subject, isThisWeek));
-
-        GradientDrawable gd = new GradientDrawable();
-        if (isThisWeek) {
-            gd.setColor(colorPool().getColorAuto(subject.getColorRandom()));
-            gd.setCornerRadius(corner(true));
-        } else {
-            gd.setColor(colorPool().getUselessColor());
-            gd.setCornerRadius(corner(false));
-        }
-        textView.setBackgroundDrawable(gd);
-
-        textView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Schedule> result = ScheduleSupport.findSubjects(subject, data);
-                onItemClickListener().onItemClick(v, result);
-            }
-        });
-
-        textView.setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                onItemLongClickListener().onLongClick(view,subject.getDay(),subject.getStart());
-                return true;
-            }
-        });
-
-        return view;
-    }
-
-    /**
-     * 将数据data添加到layout的布局上
-     *
-     * @param layout  容器
-     * @param data    某一天的数据集合
-     * @param curWeek 当前周
-     */
-    private void addToLayout(LinearLayout layout, final List<Schedule> data, int curWeek) {
-        if (layout == null || data == null || data.size() < 1) return;
-        layout.removeAllViews();
-
-        //遍历
-        Schedule pre = data.get(0);
-        for (int i = 0; i < data.size(); i++) {
-            final Schedule subject = data.get(i);
-            boolean isIgnore = filterSubject(subject, pre, i, curWeek);
-            if (!isIgnore) {
-                View view = newItemView(data, subject, pre, i, curWeek);
-                if (view != null) {
-                    layout.addView(view);
-                    pre = subject;
-                }
-            }
-        }
-    }
-
-    /**
-     * 简单过滤课程
-     *
-     * @param subject
-     * @param pre
-     * @param index
-     * @param curWeek
-     * @return
-     */
-    private boolean filterSubject(Schedule subject, Schedule pre, int index, int curWeek) {
-
-        if (index != 0 && ScheduleSupport.isThisWeek(subject, curWeek)) {
-            if (ScheduleSupport.isThisWeek(pre, curWeek)) {
-                if (subject.getStart() == pre.getStart()) return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 更新课程项的视图
-     *
-     * @param courses
-     * @param view
-     * @param preView
-     * @param isChange
-     * @param j
-     * @param curWeek
-     * @return
-     */
-    private boolean updateItemView(final List<Schedule> courses, View view, View preView, boolean isChange, int j, int curWeek) {
-        FrameLayout layout = (FrameLayout) view.findViewById(R.id.id_course_item_framelayout);
-        Schedule tag = (Schedule) view.getTag();
-        Schedule subject = ScheduleSupport.findRealSubject(tag.getStart(), curWeek, courses);
-
-        boolean isThisWeek = ScheduleSupport.isThisWeek(subject, curWeek);
-        if (!isThisWeek && !isShowNotCurWeek()) {
-            view.setVisibility(View.INVISIBLE);
-        } else {
-            view.setVisibility(View.VISIBLE);
-        }
-
-        int height = itemHeight() * subject.getStep() +
-                marTop() * (subject.getStep() - 1);
-        int leftOrRight = marLeft() / 2;
-        int top = 0;
-
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, height);
-
-        if (isChange || tag.getStart() != subject.getStart() || tag.getStep() != subject.getStep()) {
-            if (j > 0) {
-                Schedule pre = (Schedule) preView.getTag();
-                top = (subject.getStart() - (pre.getStart() + pre.getStep())) * (itemHeight()
-                        + marTop()) + marTop();
-            } else {
-                top = (subject.getStart() - 1) * (itemHeight() + marTop()) + marTop();
-            }
-            lp.setMargins(leftOrRight, top, leftOrRight, 0);
-            layout.setLayoutParams(lp);
-            view.setTag(subject);
-            isChange = true;
-        }
-
-        if (top < 0) view.setVisibility(View.GONE);
-        TextView textView = (TextView) view.findViewById(R.id.id_course_item_course);
-        TextView countTextView = (TextView) view.findViewById(R.id.id_course_item_count);
-        textView.setText(onItemBuildListener().getItemText(subject, isThisWeek));
-
-        countTextView.setText("");
-        countTextView.setVisibility(View.GONE);
-
-        GradientDrawable gd = new GradientDrawable();
-        if (isThisWeek) {
-            textView.setTextColor(itemTextColorWithThisWeek());
-            gd.setColor(colorPool().getColorAutoWithAlpha(subject.getColorRandom(), itemAlpha()));
-            gd.setCornerRadius(corner(true));
-
-            int count = 0;
-            List<Schedule> result = ScheduleSupport.findSubjects(subject, courses);
-            for (Schedule bean : result) {
-                if (ScheduleSupport.isThisWeek(bean, curWeek)) {
-                    count++;
-                }
-            }
-            if (count > 1) {
-                countTextView.setVisibility(View.VISIBLE);
-                countTextView.setText(count + "");
-            }
-        } else {
-            textView.setTextColor(itemTextColorWithNotThis());
-            gd.setColor(colorPool().getUselessColorWithAlpha(itemAlpha()));
-            gd.setCornerRadius(corner(false));
-        }
-
-        textView.setBackgroundDrawable(gd);
-        onItemBuildListener().onItemUpdate(layout, textView, countTextView, subject, gd);
-        return isChange;
-    }
-
-
-    /**
-     * 周次切换
-     */
-    private void changeWeek(LinearLayout[] panels, List<Schedule>[] data, int curWeek) {
-        for (int i = 0; i < panels.length; i++) {
-            List<Schedule> courses = data[i];
-            boolean isChange = false;
-            for (int j = 0; j < panels[i].getChildCount(); j++) {
-                View view = panels[i].getChildAt(j);
-                View preView;
-                if (j > 0) preView = panels[i].getChildAt(j - 1);
-                else preView = null;
-                isChange = updateItemView(courses, view, preView, isChange, j, curWeek);
-            }
-        }
-    }
-
-    /**
-     * 点击panel时的事件响应
-     */
-    private void onPanelClicked(View view, float y) {
-        if(isShowFlaglayout()){
-            flagLayout.setVisibility(VISIBLE);
-        }else{
-            flagLayout.setVisibility(GONE);
-        }
-
-        //周几，0：周一，6：周日
-        int day = 0;
-
-        // 先找到点击的是周几的panel
-        for (int i = 0; i < panels.length; i++) {
-            if (view == panels[i]) {
-                day = i;
-                break;
-            }
-        }
-
-        if (day == -1)
-            return;
-
-        // 判断点击的是第几节课，1：第1节
-        final int start = (int) Math.ceil((y / (itemHeight + marTop)));
-        onSpaceItemClickListener().onSpaceItemClick(day,start);
-        final int finalDay = day;
-        flagLayout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onFlaglayoutClickListener().onFlaglayoutClick(finalDay,start);
-            }
-        });
-    }
-
-    /**
-     * 初始化panel并为panel设置事件监听
-     */
-    private void initPanel() {
-        for (int i = 0; i < panels.length; i++) {
-            panels[i] = findViewById(R.id.weekPanel_1 + i);
-            data[i] = new ArrayList<>();
-
-            /**
-             * 点击空白格子时才会触发这个事件
-             */
-            panels[i].setOnTouchListener(new OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View arg0, MotionEvent arg1) {
-                    switch (arg1.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            x = arg1.getX();
-                            y = arg1.getY();
-
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            float x2 = arg1.getX();
-                            float y2 = arg1.getY();
-                            if (x2 == x && y2 == y)
-                                onPanelClicked(arg0, arg1.getY());
-                            break;
-                        default:
-                            break;
-                    }
-                    return true;
-                }
-            });
-        }
+        operater().init(context,attrs,this);
     }
 
     /**
@@ -1059,16 +783,17 @@ public class TimetableView extends LinearLayout {
      * 隐藏旗标布局，立即生效
      */
     public TimetableView hideFlaglayout() {
-        flagLayout.setVisibility(GONE);
+        flagLayout().setVisibility(GONE);
         return this;
     }
 
     /**
      * 显示旗标布局，立即生效
+     *
      * @return
      */
     public TimetableView showFlaglayout() {
-        flagLayout.setVisibility(VISIBLE);
+        flagLayout().setVisibility(VISIBLE);
         return this;
     }
 
@@ -1079,7 +804,7 @@ public class TimetableView extends LinearLayout {
      * @return
      */
     public void hideDateView() {
-        dateLayout.setVisibility(View.GONE);
+        operater().getDateLayout().setVisibility(View.GONE);
     }
 
     /**
@@ -1088,81 +813,21 @@ public class TimetableView extends LinearLayout {
      * @return
      */
     public void showDateView() {
-        dateLayout.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * 绘制课程表
-     */
-    public void showView() {
-        if (dataSource() == null) return;
-
-        //实现ScrollView的替换,只有在初始化时替换一次
-        if (findViewById(R.id.id_scrollview) == null) {
-            View view = onScrollViewBuildListener().getScrollView(inflater);
-            containerLayout.addView(view);
-            //初始化
-            weekPanel = findViewById(R.id.weekPanel_0);
-            flagLayout=findViewById(R.id.id_flaglayout);
-            initPanel();
-        }
-
-        flagLayout.setBackgroundColor(flagBgcolor());
-        float perWidth = ScreenUtils.getWidthInPx(context) / 11.5f;
-        onSpaceItemClickListener().onInit(flagLayout, Math.round(perWidth),
-                Math.round(perWidth*1.5f),itemHeight(),marTop(),
-                Math.round(marLeft()/2.0f));
-
-        //更新日期
-        updateDateView();
-        updateSlideView();
-
-        //清空、拆分数据
-        for (int i = 0; i < 7; i++) {
-            data[i].clear();
-        }
-        List<Schedule> source = dataSource();
-        for (int i = 0; i < source.size(); i++) {
-            Schedule bean = source.get(i);
-            if (bean.getDay() != -1)
-                data[bean.getDay() - 1].add(bean);
-        }
-
-        //排序、填充课程
-        ScheduleSupport.sortList(data);
-        for (int i = 0; i < panels.length; i++) {
-            panels[i].removeAllViews();
-            addToLayout(panels[i], data[i], curWeek());
-        }
-        //周次切换，保证重叠时显示角标
-        changeWeek(curWeek(), false);
+        operater().getDateLayout().setVisibility(View.VISIBLE);
     }
 
     /**
      * 更新日期栏
      */
     public void updateDateView() {
-        dateLayout.removeAllViews();
-        float perWidth = ScreenUtils.getWidthInPx(context) / 11.5f;
-        int height = context.getResources().getDimensionPixelSize(R.dimen.headHeight);
-//		//日期栏
-        ISchedule.OnDateBuildListener listener = onDateBuildListener();
-        listener.onInit(dateLayout, dateAlpha());
-        View[] views = onDateBuildListener().getDateViews(inflater, perWidth, height);
-        for (View v : views) {
-            if (v != null) {
-                dateLayout.addView(v);
-            }
-        }
-        onDateBuildListener().onUpdateDate(curWeek(), curWeek());
-        onDateBuildListener().onHighLight();
+        operater().updateDateView();
     }
 
     /**
      * 侧边栏更新
      */
     public void updateSlideView() {
-        newSlideView(weekPanel);
+        operater().updateSlideView();
     }
 
     /**
@@ -1172,8 +837,7 @@ public class TimetableView extends LinearLayout {
      * @param isCurWeek 是否强制设置为本周
      */
     public void changeWeek(int week, boolean isCurWeek) {
-        if (isCurWeek) changeWeekForce(week);
-        else changeWeekOnly(week);
+        operater().changeWeek(week,isCurWeek);
     }
 
     /**
@@ -1182,8 +846,7 @@ public class TimetableView extends LinearLayout {
      * @param week
      */
     public void changeWeekOnly(int week) {
-        changeWeek(panels, data, week);
-        onWeekChangedListener().onWeekChanged(week);
+        operater().changeWeek(week,false);
     }
 
     /**
@@ -1192,15 +855,18 @@ public class TimetableView extends LinearLayout {
      * @param week
      */
     public void changeWeekForce(int week) {
-        changeWeek(panels, data, week);
-        curWeek(week);
+        operater().changeWeek(week,true);
     }
 
     /**
      * 更新旗标布局的背景色
      */
-    public void updateFlaglayout(){
-        flagLayout.setBackgroundColor(flagBgcolor());
-        if(!isShowFlaglayout()) hideFlaglayout();
+    public void updateFlaglayout() {
+        flagLayout().setBackgroundColor(flagBgcolor());
+        if (!isShowFlaglayout()) hideFlaglayout();
+    }
+
+    public void showView(){
+        operater().showView();
     }
 }

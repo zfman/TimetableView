@@ -15,6 +15,5 @@ public class OnItemClickAdapter implements ISchedule.OnItemClickListener {
     private static final String TAG = "OnItemClickAdapter";
     @Override
     public void onItemClick(View v, List<Schedule> scheduleList) {
-        Log.d(TAG, "onItemClick: ");
     }
 }

@@ -25,7 +25,6 @@ import java.util.List;
 /**
  * 周次选择栏自定义View.
  * 每一项均为PerWeekView<br/>
- * 懒加载机制：在使用时再绘制
  */
 
 public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{

@@ -20,7 +20,9 @@ import com.zhuangfei.timetable.TimetableView;
 import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.listener.IWeekView;
 import com.zhuangfei.timetable.listener.OnSlideBuildAdapter;
+import com.zhuangfei.timetable.listener.OnSpaceItemClickAdapter;
 import com.zhuangfei.timetable.model.Schedule;
+import com.zhuangfei.timetable.model.ScheduleSupport;
 import com.zhuangfei.timetable.view.WeekView;
 
 import java.util.List;
@@ -66,7 +68,8 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        mySubjects = SubjectRepertory.loadDefaultSubjects();
+        mySubjects = SubjectRepertory.loadDefaultSubjects2();
+        mySubjects.addAll(SubjectRepertory.loadDefaultSubjects());
         titleTextView = findViewById(R.id.id_title);
         layout = findViewById(R.id.id_layout);
         layout.setOnClickListener(this);
@@ -107,10 +110,11 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
                 .curWeek(1)
                 .curTerm("大三下学期")
                 .maxSlideItem(10)
+                .monthWidthDp(30)
                 //透明度
                 //日期栏0.1f、侧边栏0.1f，周次选择栏0.6f
                 //透明度范围为0->1，0为全透明，1为不透明
-                .alpha(0.3f, 0.1f, 0.6f)
+//                .alpha(0.1f, 0.1f, 0.6f)
                 .callback(new ISchedule.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, List<Schedule> scheduleList) {
@@ -243,6 +247,18 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
                     case R.id.top12:
                         hideWeekView();
                         break;
+                    case R.id.top13:
+                        setMonthWidth();
+                        break;
+                    case R.id.top16:
+                        resetMonthWidth();
+                        break;
+                    case R.id.top14:
+                        hideWeekends();
+                        break;
+                    case R.id.top15:
+                        showWeekends();
+                        break;
                     default:
                         break;
                 }
@@ -370,5 +386,33 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
      */
     protected void hideWeekView() {
         mWeekView.isShow(false);
+    }
+
+    /**
+     * 设置月份宽度
+     */
+    private void setMonthWidth() {
+        mTimetableView.monthWidthDp(50).updateView();
+    }
+
+    /**
+     * 设置月份宽度,默认40dp
+     */
+    private void resetMonthWidth() {
+        mTimetableView.monthWidthDp(40).updateView();
+    }
+
+    /**
+     * 隐藏周末
+     */
+    private void hideWeekends() {
+        mTimetableView.isShowWeekends(false).updateView();
+    }
+
+    /**
+     * 显示周末
+     */
+    private void showWeekends() {
+        mTimetableView.isShowWeekends(true).updateView();
     }
 }
