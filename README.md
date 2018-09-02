@@ -1,7 +1,7 @@
-﻿### TimetableView
+### TimetableView
 > [TimetableView](https://github.com/zfman/TimetableView)是一款开源的Android课程表控件，你可以在 [ChangeLog](https://github.com/zfman/TimetableView/wiki/版本说明) 查看本控件的开发进展，作者联系方式`1193600556@qq.com`
 
-[TimetableView](https://github.com/zfman/TimetableView)是一款开源的、完善、高效的Android课程表控件。高效在哪？周次切换高效、样式文件极少（只需1个，`v1.x`需要36个只能实现12种样式）
+[TimetableView](https://github.com/zfman/TimetableView)是一款开源的、完善、高效的Android课程表控件。
 
 - 支持xml设置属性
 - 丰富的课程工具包
@@ -12,16 +12,18 @@
 - 可设置背景以及透明度 `new`
 - 数据源可添加额外信息 `new`
 - 空白格子可点击，课程项可长按 `new`
+- 月份宽度可设置 `new`
+- 周末可设置隐藏 `new`
 
-<img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.x/v2img1.jpg" width="30%"/><img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.x/v2img2.jpg" width="30%"/><img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.x/v2img3.jpg" width="30%"/>
+<img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.0.3/img1.jpg" width="30%"/><img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.0.3/img2.jpg" width="30%"/><img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.x/v2img3.jpg" width="30%"/>
 
 ## 最新文档
 > 你将了解到该控件用法的方方面面，点击`快速开始`按钮体验吧
 
 - [快速开始](https://github.com/zfman/TimetableView/wiki/%E6%9C%80%E6%96%B0%E6%96%87%E6%A1%A3)
-- [Javadocs](http://www.liuzhuangfei.com/github/timetableview/docs/v2.0.2/)
-- [示例app下载](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.2.apk)
-- [完整案例-怪兽课表](https://github.com/zfman/hputimetable)
+- [Javadocs](http://www.liuzhuangfei.com/github/timetableview/docs/v2.0.3/)
+- [示例app下载](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.3.apk)
+- [变更历史](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
 
 历史版本的文档可以在 [历史文档以及源码结构分析](https://github.com/zfman/TimetableView/wiki) 中找到
 
