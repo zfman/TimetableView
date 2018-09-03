@@ -139,7 +139,7 @@ public class SimpleOperater extends AbsOperater{
      * @param curWeek 当前周
      * @return View
      */
-    private View newItemView(final List<Schedule> data, final Schedule subject, Schedule pre, int i, int curWeek) {
+    private View newItemView(final List<Schedule> originData, final List<Schedule> data, final Schedule subject, Schedule pre, int i, int curWeek) {
         //宽高
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
         int height = mView.itemHeight() * subject.getStep() + mView.marTop() * (subject.getStep() - 1);
@@ -179,7 +179,14 @@ public class SimpleOperater extends AbsOperater{
             gd.setColor(mView.colorPool().getColorAutoWithAlpha(subject.getColorRandom(), mView.itemAlpha()));
             gd.setCornerRadius(mView.corner(true));
 
-            int count = (int) subject.getExtras().get("zfman_count");
+            List<Schedule> clist = ScheduleSupport.findSubjects(subject, originData);
+            int count =0;
+            if(clist!=null){
+                for(int k=0;k<clist.size();k++){
+                    Schedule p=clist.get(k);
+                    if(p!=null&&ScheduleSupport.isThisWeek(p,curWeek)) count++;
+                }
+            }
             if (count > 1) {
                 countTextView.setVisibility(View.VISIBLE);
                 countTextView.setText(count + "");
@@ -196,7 +203,7 @@ public class SimpleOperater extends AbsOperater{
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Schedule> result = ScheduleSupport.findSubjects(subject, data);
+                List<Schedule> result = ScheduleSupport.findSubjects(subject, originData);
                 mView.onItemClickListener().onItemClick(v, result);
             }
         });
@@ -229,7 +236,7 @@ public class SimpleOperater extends AbsOperater{
         layout.setTag(filter.size());
         for (int i = 0; i < filter.size(); i++) {
             final Schedule subject = filter.get(i);
-            View view = newItemView(filter, subject, pre, i, curWeek);
+            View view = newItemView(data,filter, subject, pre, i, curWeek);
             if (view != null) {
                 layout.addView(view);
                 pre = subject;
