@@ -180,6 +180,9 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
      */
     @Override
     public WeekView showView() {
+        if(curWeek<1) curWeek(1);
+        if(curWeek>itemCount()) curWeek=itemCount;
+
         container.removeAllViews();
         layouts=new ArrayList<>();
         textViews=new ArrayList<>();

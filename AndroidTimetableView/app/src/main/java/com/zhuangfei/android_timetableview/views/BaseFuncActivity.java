@@ -199,7 +199,7 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
     protected void display(List<Schedule> beans) {
         String str = "";
         for (Schedule bean : beans) {
-            str += bean.getName() + "、";
+            str += bean.getName() + ","+bean.getWeekList().toString()+","+bean.getStart()+","+bean.getStep()+"\n";
         }
         Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
     }

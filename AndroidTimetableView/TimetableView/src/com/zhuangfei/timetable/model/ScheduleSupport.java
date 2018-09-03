@@ -263,38 +263,13 @@ public class ScheduleSupport {
      */
     public static List<Schedule> findSubjects(Schedule subject, List<Schedule> data) {
         List<Schedule> result = new ArrayList<>();
+        if(subject==null||data==null) return result;
         for (int i = 0; i < data.size(); i++) {
             Schedule bean = data.get(i);
             if (bean.getStart() >= subject.getStart() && bean.getStart() < (subject.getStart() + subject.getStep()))
                 result.add(data.get(i));
-
         }
         return result;
-    }
-
-    /**
-     * 返回index处的课程，注意他的真实位置可能并不是index
-     *
-     * @param curWeek
-     * @return
-     */
-    public static Schedule findRealSubject(int start, int curWeek, List<Schedule> scheduleList) {
-        List<Schedule> list = new ArrayList<>();
-        for (int i = 0; i < scheduleList.size(); i++) {
-            Schedule subject = scheduleList.get(i);
-            if (subject.getStart() == start) {
-                list.add(subject);
-            }
-        }
-
-        for (int i = 0; i < list.size(); i++) {
-            Schedule temp = list.get(i);
-            if (isThisWeek(temp, curWeek)) {
-                return temp;
-            }
-        }
-        if (list.size() > 0) return list.get(0);
-        return null;
     }
 
     /**
@@ -303,8 +278,6 @@ public class ScheduleSupport {
      * @param data
      */
     public static void sortList(List<Schedule>[] data) {
-        int min;
-        Schedule tmp;
         for (int i = 0; i < data.length; i++)
             sortList(data[i]);
     }
@@ -345,29 +318,11 @@ public class ScheduleSupport {
      * @return
      */
     public static List<Schedule> fliterSchedule(List<Schedule> data, int curWeek, boolean isShowNotCurWeek) {
-        List<Schedule> filterData = new ArrayList<>();
-        if (data == null) return filterData;
-
-        if (isShowNotCurWeek) filterData = data;
-        else {
-            for (Schedule schedule : data) {
-                if (ScheduleSupport.isThisWeek(schedule, curWeek)) {
-                    filterData.add(schedule);
-                }
-            }
-        }
+        if (data == null) return new ArrayList<>();
         Set<Schedule> result = new HashSet<>();
-        for (int i = 0; i < filterData.size(); i++) {
-            Schedule s = filterData.get(i);
-            if (s != null) {
-                s.putExtras("zfman_count", 0);
-            }
-        }
-
         if (data.size() >= 1) {
             result.add(data.get(0));
         }
-
         for (int i = 1; i < data.size(); i++) {
             Schedule s = data.get(i);
             for (int j = 0; j < i; j++) {
@@ -377,11 +332,6 @@ public class ScheduleSupport {
                         if (ScheduleSupport.isThisWeek(s, curWeek)) {
                             result.remove(s2);
                             result.add(s);
-                        }
-                    } else {
-                        if (ScheduleSupport.isThisWeek(s, curWeek)) {
-                            s.putExtras("zfman_count", (int) (s.getExtras().get("zfman_count")) + 1);
-                            s2.putExtras("zfman_count", (int) (s2.getExtras().get("zfman_count")) + 1);
                         }
                     }
                 } else {
