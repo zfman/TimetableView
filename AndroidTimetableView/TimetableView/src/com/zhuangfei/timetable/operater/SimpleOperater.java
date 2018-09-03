@@ -231,9 +231,11 @@ public class SimpleOperater extends AbsOperater{
         layout.removeAllViews();
 
         //遍历
-        Schedule pre = data.get(0);
         List<Schedule> filter = ScheduleSupport.fliterSchedule(data, curWeek,mView.isShowNotCurWeek());
-        layout.setTag(filter.size());
+        Schedule pre=null;
+        if(filter.size()>0){
+            pre = filter.get(0);
+        }
         for (int i = 0; i < filter.size(); i++) {
             final Schedule subject = filter.get(i);
             View view = newItemView(data,filter, subject, pre, i, curWeek);
@@ -358,6 +360,7 @@ public class SimpleOperater extends AbsOperater{
             initPanel();
         }
 
+        mView.hideFlaglayout();
         LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(mView.monthWidth(), LinearLayout.LayoutParams.MATCH_PARENT);
         weekPanel.setLayoutParams(lp);
         flagLayout.setBackgroundColor(mView.flagBgcolor());
