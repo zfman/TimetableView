@@ -320,24 +320,34 @@ public class ScheduleSupport {
     public static List<Schedule> fliterSchedule(List<Schedule> data, int curWeek, boolean isShowNotCurWeek) {
         if (data == null) return new ArrayList<>();
         Set<Schedule> result = new HashSet<>();
-        if (data.size() >= 1) {
+
+        if(!isShowNotCurWeek){
+            List<Schedule> filter=new ArrayList<>();
+            for(int i=0;i<data.size();i++){
+                Schedule s=data.get(i);
+                if(ScheduleSupport.isThisWeek(s,curWeek)) filter.add(s);
+            }
+            data=filter;
+        }
+        if(data.size()>=1){
             result.add(data.get(0));
         }
         for (int i = 1; i < data.size(); i++) {
             Schedule s = data.get(i);
+            boolean is=true;
             for (int j = 0; j < i; j++) {
                 Schedule s2 = data.get(j);
-                if (s.getStart() <= (s2.getStart() + s2.getStep() - 1)) {
-                    if (!ScheduleSupport.isThisWeek(s2, curWeek)) {
-                        if (ScheduleSupport.isThisWeek(s, curWeek)) {
-                            result.remove(s2);
-                            result.add(s);
-                        }
+                if(s.getStart()>=s2.getStart()&&s.getStart()<=(s2.getStart()+s2.getStep()-1)){
+                    is=false;
+                    if(isThisWeek(s2,curWeek)){
+                        break;
+                    }else if(isThisWeek(s,curWeek)){
+                        result.remove(s2);
+                        result.add(s);
                     }
-                } else {
-                    result.add(s);
                 }
             }
+            if(is) result.add(s);
         }
         List<Schedule> list = new ArrayList<>(result);
         sortList(list);
