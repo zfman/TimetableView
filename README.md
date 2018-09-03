@@ -24,6 +24,7 @@
 - [Javadocs](http://www.liuzhuangfei.com/github/timetableview/docs/v2.0.4/)
 - [示例app下载](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.4.apk)
 - [变更历史](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
+- [完整案例-怪兽课表](https://github.com/zfman/hputimetable)
 
 历史版本的文档可以在 [历史文档以及源码结构分析](https://github.com/zfman/TimetableView/wiki) 中找到
 
