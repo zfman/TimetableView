@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhuangfei.android_timetableview.R;
+import com.zhuangfei.android_timetableview.custom.CustomOperater;
 import com.zhuangfei.android_timetableview.model.MySubject;
 import com.zhuangfei.android_timetableview.model.SubjectRepertory;
 import com.zhuangfei.timetable.TimetableView;
@@ -253,6 +254,9 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
                     case R.id.top16:
                         resetMonthWidth();
                         break;
+                    case R.id.top17:
+                        setWidthWeights();
+                        break;
                     case R.id.top14:
                         hideWeekends();
                         break;
@@ -414,5 +418,14 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
      */
     private void showWeekends() {
         mTimetableView.isShowWeekends(true).updateView();
+    }
+
+    /**
+     * 设置列宽
+     */
+    private void setWidthWeights() {
+        CustomOperater done=new CustomOperater();
+        done.setWidthWeights(new int[]{1,1,3,1,1,1,1});
+        mTimetableView.operater(done).updateView();
     }
 }

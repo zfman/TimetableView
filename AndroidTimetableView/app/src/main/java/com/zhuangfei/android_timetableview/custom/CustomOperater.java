@@ -1,11 +1,10 @@
-package com.zhuangfei.timetable.operater;
+package com.zhuangfei.android_timetableview.custom;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,38 +17,41 @@ import com.zhuangfei.timetable.TimetableView;
 import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.model.Schedule;
 import com.zhuangfei.timetable.model.ScheduleSupport;
+import com.zhuangfei.timetable.operater.AbsOperater;
+import com.zhuangfei.timetable.operater.SimpleOperater;
 import com.zhuangfei.timetable.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 课表业务操作者，TimetableView中只涉及属性的设置，方法的具体实现在这里.
- * 常用的方法也就四个，如下
+ * 自定义的课表业务操作者，以实现列宽设置。
  *
- * @see SimpleOperater#changeWeek(int, boolean)
- * @see SimpleOperater#showView()
- * @see SimpleOperater#updateDateView()
- * @see SimpleOperater#updateSlideView()
+ * 由于初期设计问题，属性都被设计为了private，所以为自定义带来了不便，
+ * 在之后的版本中将对变量的访问限制改为protect.
  *
+ * 修改的地方主要有{@link #showView()}
+ *
+ * @version 2.0.5
  * Created by Liu ZhuangFei on 2018/9/1.
  */
-public class SimpleOperater extends AbsOperater{
+public class CustomOperater extends AbsOperater{
 
-    protected TimetableView mView;
-    protected Context context;
+    private TimetableView mView;
+    private Context context;
 
     //保存点击的坐标
-    protected float x, y;
+    private float x, y;
+    private int[] weights;//宽度权重
 
     //布局转换器
-    protected LayoutInflater inflater;
-    protected LinearLayout weekPanel;//侧边栏
-    protected List<Schedule>[] data = new ArrayList[7];//每天的课程
-    protected LinearLayout[] panels = new LinearLayout[7];//每天的面板
-    protected LinearLayout containerLayout;//根布局
-    protected LinearLayout dateLayout;//根布局、日期栏容器
-    protected LinearLayout flagLayout;//旗标布局
+    private LayoutInflater inflater;
+    private LinearLayout weekPanel;//侧边栏
+    private List<Schedule>[] data = new ArrayList[7];//每天的课程
+    private LinearLayout[] panels = new LinearLayout[7];//每天的面板
+    private LinearLayout containerLayout;//根布局
+    private LinearLayout dateLayout;//根布局、日期栏容器
+    private LinearLayout flagLayout;//旗标布局
 
     @Override
     public void init(Context context, AttributeSet attrs, TimetableView view) {
@@ -60,6 +62,10 @@ public class SimpleOperater extends AbsOperater{
         containerLayout = mView.findViewById(R.id.id_container);
         dateLayout = mView.findViewById(R.id.id_datelayout);
         mView.monthWidthDp(40);
+        weights=new int[7];
+        for(int i=0;i<weights.length;i++){
+            weights[i]=1;
+        }
         initAttr(attrs);
     }
 
@@ -69,7 +75,6 @@ public class SimpleOperater extends AbsOperater{
      * @param attrs
      */
     protected void initAttr(AttributeSet attrs) {
-        if(attrs==null) return;
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TimetableView);
         int curWeek = ta.getInteger(R.styleable.TimetableView_cur_week, 1);
         String curTerm = ta.getString(R.styleable.TimetableView_cur_term);
@@ -345,9 +350,13 @@ public class SimpleOperater extends AbsOperater{
     }
 
     /**
-     * 实现ScrollView的替换,只有在初始化时替换一次
+     * 绘制课程表
      */
-    public void replaceScrollView(){
+    @Override
+    public void showView() {
+        if (mView.dataSource() == null) return;
+
+        //实现ScrollView的替换,只有在初始化时替换一次
         if (mView.findViewById(R.id.id_scrollview) == null) {
             View view = mView.onScrollViewBuildListener().getScrollView(inflater);
             containerLayout.addView(view);
@@ -356,26 +365,27 @@ public class SimpleOperater extends AbsOperater{
             flagLayout=mView.findViewById(R.id.id_flaglayout);
             initPanel();
         }
-    }
 
-    /**
-     * 设置旗标布局的配置
-     */
-    public void applyFlagLayoutConf(){
         mView.hideFlaglayout();
         LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(mView.monthWidth(), LinearLayout.LayoutParams.MATCH_PARENT);
         weekPanel.setLayoutParams(lp);
         flagLayout.setBackgroundColor(mView.flagBgcolor());
         float perWidth=getPerWidth();
+
         mView.onSpaceItemClickListener().onInit(flagLayout, mView.monthWidth(),
                 Math.round(perWidth),mView.itemHeight(),mView.marTop(),
                 Math.round(mView.marLeft()/2.0f));
-    }
 
-    /**
-     * 开始装填数据
-     */
-    public void startTodo(){
+
+        for(int i=0;i<panels.length;i++){
+            panels[i].setWeightSum(weights[i]);
+        }
+        setWeekendsVisiable(mView.isShowWeekends());
+
+        //更新日期
+        updateDateView();
+        updateSlideView();
+
         //清空、拆分数据
         for (int i = 0; i < 7; i++) {
             data[i].clear();
@@ -395,27 +405,9 @@ public class SimpleOperater extends AbsOperater{
         }
     }
 
-    /**
-     * 设置宽度
-     */
-    public void applyWidthConfig(){
-        setWeekendsVisiable(mView.isShowWeekends());
-    }
-
-    /**
-     * 绘制课程表
-     */
-    @Override
-    public void showView() {
-        if (mView.dataSource() == null) return;
-        replaceScrollView();
-        applyFlagLayoutConf();
-        applyWidthConfig();
-
-        //更新日期
-        updateDateView();
-        updateSlideView();
-        startTodo();
+    public void setWidthWeights(int[] weights){
+        if(weights==null||weights.length<7) return;
+        this.weights=weights;
     }
 
     /**
