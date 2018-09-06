@@ -36,6 +36,7 @@
         <activity android:name=".views.ExtrasActivity" />
         <activity android:name=".views.FlaglayoutActivity" />
         <activity android:name=".views.DateDelayActivity"></activity>
+        <activity android:name=".views.CustomWidthActivity"></activity>
     </application>
 
 </manifest>

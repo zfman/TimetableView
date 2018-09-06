@@ -35,21 +35,22 @@ import java.util.List;
  * Created by Liu ZhuangFei on 2018/9/1.
  */
 public class SimpleOperater extends AbsOperater{
+    private static final String TAG = "SimpleOperater";
 
-    private TimetableView mView;
-    private Context context;
+    protected TimetableView mView;
+    protected Context context;
 
     //保存点击的坐标
-    private float x, y;
+    protected float x, y;
 
     //布局转换器
-    private LayoutInflater inflater;
-    private LinearLayout weekPanel;//侧边栏
-    private List<Schedule>[] data = new ArrayList[7];//每天的课程
-    private LinearLayout[] panels = new LinearLayout[7];//每天的面板
-    private LinearLayout containerLayout;//根布局
-    private LinearLayout dateLayout;//根布局、日期栏容器
-    private LinearLayout flagLayout;//旗标布局
+    protected LayoutInflater inflater;
+    protected LinearLayout weekPanel;//侧边栏
+    protected List<Schedule>[] data = new ArrayList[7];//每天的课程
+    protected LinearLayout[] panels = new LinearLayout[7];//每天的面板
+    protected LinearLayout containerLayout;//根布局
+    protected LinearLayout dateLayout;//根布局、日期栏容器
+    protected LinearLayout flagLayout;//旗标布局
 
     @Override
     public void init(Context context, AttributeSet attrs, TimetableView view) {
@@ -69,6 +70,7 @@ public class SimpleOperater extends AbsOperater{
      * @param attrs
      */
     protected void initAttr(AttributeSet attrs) {
+        if(attrs==null) return;
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TimetableView);
         int curWeek = ta.getInteger(R.styleable.TimetableView_cur_week, 1);
         String curTerm = ta.getString(R.styleable.TimetableView_cur_term);
@@ -104,7 +106,7 @@ public class SimpleOperater extends AbsOperater{
     }
 
     /**
-     * 获取旗标布局
+     * 获取旗标布局,需要在showView方法执行后执行
      * @return
      */
     @Override
@@ -344,13 +346,9 @@ public class SimpleOperater extends AbsOperater{
     }
 
     /**
-     * 绘制课程表
+     * 实现ScrollView的替换,只有在初始化时替换一次
      */
-    @Override
-    public void showView() {
-        if (mView.dataSource() == null) return;
-
-        //实现ScrollView的替换,只有在初始化时替换一次
+    public void replaceScrollView(){
         if (mView.findViewById(R.id.id_scrollview) == null) {
             View view = mView.onScrollViewBuildListener().getScrollView(inflater);
             containerLayout.addView(view);
@@ -359,24 +357,26 @@ public class SimpleOperater extends AbsOperater{
             flagLayout=mView.findViewById(R.id.id_flaglayout);
             initPanel();
         }
+    }
 
+    /**
+     * 设置旗标布局的配置
+     */
+    public void applyFlagLayoutConf(){
         mView.hideFlaglayout();
         LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(mView.monthWidth(), LinearLayout.LayoutParams.MATCH_PARENT);
         weekPanel.setLayoutParams(lp);
         flagLayout.setBackgroundColor(mView.flagBgcolor());
         float perWidth=getPerWidth();
-
         mView.onSpaceItemClickListener().onInit(flagLayout, mView.monthWidth(),
                 Math.round(perWidth),mView.itemHeight(),mView.marTop(),
                 Math.round(mView.marLeft()/2.0f));
+    }
 
-
-        setWeekendsVisiable(mView.isShowWeekends());
-
-        //更新日期
-        updateDateView();
-        updateSlideView();
-
+    /**
+     * 开始装填数据
+     */
+    public void startTodo(){
         //清空、拆分数据
         for (int i = 0; i < 7; i++) {
             data[i].clear();
@@ -394,6 +394,30 @@ public class SimpleOperater extends AbsOperater{
             panels[i].removeAllViews();
             addToLayout(panels[i], data[i], mView.curWeek());
         }
+    }
+
+    /**
+     * 设置宽度
+     */
+    public void applyWidthConfig(){
+        setWeekendsVisiable(mView.isShowWeekends());
+    }
+
+    /**
+     * 绘制课程表
+     */
+    @Override
+    public void showView() {
+        if (mView==null||mView.dataSource() == null) return;
+        replaceScrollView();
+        Log.d(TAG, "showView: "+flagLayout);
+        applyFlagLayoutConf();
+        applyWidthConfig();
+
+        //更新日期
+        updateDateView();
+        updateSlideView();
+        startTodo();
     }
 
     /**
