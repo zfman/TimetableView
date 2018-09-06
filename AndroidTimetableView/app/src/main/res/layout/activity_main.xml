@@ -32,6 +32,12 @@
         android:text="课程项样式" />
 
     <Button
+        android:id="@+id/id_btn12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义宽度" />
+
+    <Button
         android:id="@+id/id_btn5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

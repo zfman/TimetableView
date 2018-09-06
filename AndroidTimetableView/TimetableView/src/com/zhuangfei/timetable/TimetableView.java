@@ -3,6 +3,7 @@ package com.zhuangfei.timetable;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -46,11 +47,12 @@ import java.util.List;
  */
 public class TimetableView extends LinearLayout {
 
-    private static final String TAG = "TimetableView";
+    protected static final String TAG = "TimetableView";
 
     //业务逻辑
     private AbsOperater operater;
     private Context context;
+    protected AttributeSet attrs;
 
     // 当前周、学期、课程数据源
     private int curWeek = 1;
@@ -120,6 +122,7 @@ public class TimetableView extends LinearLayout {
     }
 
     public TimetableView operater(AbsOperater operater) {
+        operater.init(context,attrs,this);
         this.operater = operater;
         return this;
     }
@@ -360,6 +363,7 @@ public class TimetableView extends LinearLayout {
      */
     public TimetableView callback(ISchedule.OnWeekChangedListener onWeekChangedListener) {
         this.onWeekChangedListener = onWeekChangedListener;
+        onWeekChangedListener.onWeekChanged(curWeek);
         return this;
     }
 
@@ -767,6 +771,7 @@ public class TimetableView extends LinearLayout {
     public TimetableView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+        this.attrs=attrs;
         operater().init(context,attrs,this);
     }
 

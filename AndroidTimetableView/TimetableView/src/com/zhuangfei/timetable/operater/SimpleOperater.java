@@ -35,6 +35,7 @@ import java.util.List;
  * Created by Liu ZhuangFei on 2018/9/1.
  */
 public class SimpleOperater extends AbsOperater{
+    private static final String TAG = "SimpleOperater";
 
     protected TimetableView mView;
     protected Context context;
@@ -105,7 +106,7 @@ public class SimpleOperater extends AbsOperater{
     }
 
     /**
-     * 获取旗标布局
+     * 获取旗标布局,需要在showView方法执行后执行
      * @return
      */
     @Override
@@ -407,8 +408,9 @@ public class SimpleOperater extends AbsOperater{
      */
     @Override
     public void showView() {
-        if (mView.dataSource() == null) return;
+        if (mView==null||mView.dataSource() == null) return;
         replaceScrollView();
+        Log.d(TAG, "showView: "+flagLayout);
         applyFlagLayoutConf();
         applyWidthConfig();
 

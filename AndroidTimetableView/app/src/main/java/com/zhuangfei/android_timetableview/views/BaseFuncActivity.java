@@ -254,9 +254,6 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
                     case R.id.top16:
                         resetMonthWidth();
                         break;
-                    case R.id.top17:
-                        setWidthWeights();
-                        break;
                     case R.id.top14:
                         hideWeekends();
                         break;
@@ -418,14 +415,5 @@ public class BaseFuncActivity extends AppCompatActivity implements View.OnClickL
      */
     private void showWeekends() {
         mTimetableView.isShowWeekends(true).updateView();
-    }
-
-    /**
-     * 设置列宽
-     */
-    private void setWidthWeights() {
-        CustomOperater done=new CustomOperater();
-        done.setWidthWeights(new int[]{1,1,3,1,1,1,1});
-        mTimetableView.operater(done).updateView();
     }
 }

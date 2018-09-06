@@ -5,8 +5,6 @@
 	android:title="月份宽度增大"/>
 	<item android:id="@+id/top16"
 		android:title="月份宽度恢复"/>
-	<item android:id="@+id/top17"
-		android:title="设置列宽"/>
 	<item android:id="@+id/top14"
 		android:title="隐藏周末"/>
 	<item android:id="@+id/top15"
