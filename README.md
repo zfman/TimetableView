@@ -14,6 +14,7 @@
 - 空白格子可点击，课程项可长按 `new`
 - 月份宽度可设置 `new`
 - 周末可设置隐藏 `new`
+- 课表具体逻辑可自定义 `new`
 
 <img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.0.3/img1.jpg" width="30%"/><img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.0.3/img2.jpg" width="30%"/><img src="https://raw.githubusercontent.com/zfman/TimetableView/master/images/v2.x/v2img3.jpg" width="30%"/>
 
@@ -22,7 +23,7 @@
 
 - [快速开始](https://github.com/zfman/TimetableView/wiki/%E6%9C%80%E6%96%B0%E6%96%87%E6%A1%A3)
 - [Javadocs](http://www.liuzhuangfei.com/github/timetableview/docs/v2.0.4/)
-- [示例app下载](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.5.apk)
+- [示例app下载](https://raw.githubusercontent.com/zfman/TimetableView/master/apks/v2.0.6.apk)
 - [变更历史](https://github.com/zfman/TimetableView/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
 - [完整案例-怪兽课表](https://github.com/zfman/hputimetable)
 
