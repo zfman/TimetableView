@@ -199,6 +199,6 @@ public interface ISchedule {
     }
 
     interface OnConfigHandleListener{
-        void onParseConfig(String key, Object value, TimetableView mView);
+        void onParseConfig(String key, String value, TimetableView mView);
     }
 }

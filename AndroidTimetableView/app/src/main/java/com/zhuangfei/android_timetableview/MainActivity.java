@@ -16,6 +16,7 @@ import com.zhuangfei.android_timetableview.views.ElasticActivity;
 import com.zhuangfei.android_timetableview.views.ExtrasActivity;
 import com.zhuangfei.android_timetableview.views.FlaglayoutActivity;
 import com.zhuangfei.android_timetableview.views.ItemStyleActivity;
+import com.zhuangfei.android_timetableview.views.LocalConfigActivity;
 import com.zhuangfei.android_timetableview.views.NonViewActivity;
 import com.zhuangfei.android_timetableview.views.SlideActivity;
 
@@ -95,7 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 toTarget(FlaglayoutActivity.class);
                 break;
             case R.id.id_btn11:
-                toTarget(DateDelayActivity.class);
+//                toTarget(DateDelayActivity.class);
+                toTarget(LocalConfigActivity.class);
                 break;
             case R.id.id_btn12:
                 toTarget(CustomWidthActivity.class);

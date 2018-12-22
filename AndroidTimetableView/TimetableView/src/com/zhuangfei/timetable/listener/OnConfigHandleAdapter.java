@@ -8,7 +8,7 @@ import com.zhuangfei.timetable.TimetableView;
 public class OnConfigHandleAdapter implements ISchedule.OnConfigHandleListener {
 
     @Override
-    public void onParseConfig(String key, Object value, TimetableView mView) {
+    public void onParseConfig(String key, String value, TimetableView mView) {
 
     }
 }
