@@ -61,6 +61,9 @@ public class TimetableView extends LinearLayout {
     private String curTerm = "Term";
     private List<Schedule> dataSource = null;
 
+    //默认的本地配置名称
+    private String configName="default_schedule_config";
+
     //上边距、左边距、项高度
     private int marTop, marLeft, itemHeight;
 
@@ -889,8 +892,12 @@ public class TimetableView extends LinearLayout {
         operater().showView();
     }
 
-    public TimetableView config(String configFileName){
-
+    public TimetableView configName(String configName){
+        this.configName=configName;
         return this;
+    }
+
+    public String configName(){
+        return this.configName;
     }
 }

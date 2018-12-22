@@ -67,6 +67,7 @@ public class SimpleOperater extends AbsOperater{
         dateLayout = mView.findViewById(R.id.id_datelayout);
         mView.monthWidthDp(40);
         initAttr(attrs);
+        scheduleConfig=new ScheduleConfig(context);
     }
 
     /**
@@ -444,6 +445,7 @@ public class SimpleOperater extends AbsOperater{
         if(mView.onConfigHandleListener()!=scheduleConfig.getOnConfigHandleListener()){
             scheduleConfig.setOnConfigHandleListener(mView.onConfigHandleListener());
         }
+        scheduleConfig.setConfigName(mView.configName());
         scheduleConfig.use(mView);
     }
 

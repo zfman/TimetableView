@@ -22,10 +22,22 @@ public class ScheduleConfig {
     private SharedPreferences mConfigPreferences;
     private SharedPreferences.Editor mEditor;
     private Map<String,String> mConfigMap;
-    public ScheduleConfig(Context context,String configName){
-        mConfigPreferences=context.getSharedPreferences(configName,Context.MODE_PRIVATE);
-        mEditor=mConfigPreferences.edit();
+    private Context context;
+    private String configName="default_schedule_config";
+
+    public ScheduleConfig(Context context){
+        this.context=context;
         mConfigMap=new HashMap<>();
+    }
+
+    public ScheduleConfig setConfigName(String name){
+        if(configName==null||name==null) return this;
+        if(mConfigPreferences==null||!configName.equals(name)){
+            configName=name;
+            mConfigPreferences=context.getSharedPreferences(configName,Context.MODE_PRIVATE);
+            mEditor=mConfigPreferences.edit();
+        }
+        return this;
     }
 
     public ScheduleConfig setOnConfigHandleListener(ISchedule.OnConfigHandleListener mOnConfigHandleListener) {
@@ -38,12 +50,13 @@ public class ScheduleConfig {
     }
 
     public ScheduleConfig  put(String key, String value){
-        if(value==null) return this;
+        if(mConfigMap==null||value==null) return this;
         mConfigMap.put(key,value);
         return this;
     }
 
     public String get(String key){
+        if(mConfigMap==null) return null;
         return mConfigMap.get(key);
     }
 
@@ -64,6 +77,7 @@ public class ScheduleConfig {
         }
         Set<String> finalSet=mConfigPreferences.getStringSet("scheduleconfig_set",new HashSet<String>());
         finalSet.addAll(set);
+        mConfigMap.clear();
         mEditor.putStringSet("scheduleconfig_set",finalSet);
         mEditor.commit();
     }
