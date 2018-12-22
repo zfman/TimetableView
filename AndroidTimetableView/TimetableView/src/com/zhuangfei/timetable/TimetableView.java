@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.zhuangfei.timetable.listener.ISchedule;
+import com.zhuangfei.timetable.listener.OnConfigHandleAdapter;
 import com.zhuangfei.timetable.listener.OnDateBuildAapter;
 import com.zhuangfei.timetable.listener.OnFlaglayoutClickAdapter;
 import com.zhuangfei.timetable.listener.OnItemBuildAdapter;
@@ -25,6 +26,7 @@ import com.zhuangfei.timetable.model.ScheduleSupport;
 import com.zhuangfei.timetable.operater.SimpleOperater;
 import com.zhuangfei.timetable.utils.ScreenUtils;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +103,18 @@ public class TimetableView extends LinearLayout {
     private ISchedule.OnSlideBuildListener onSlideBuildListener;//侧边栏构建监听
     private ISchedule.OnSpaceItemClickListener onSpaceItemClickListener;//空白格子点击监听
     private ISchedule.OnFlaglayoutClickListener onFlaglayoutClickListener;//旗标布局点击监听
+    private ISchedule.OnConfigHandleListener onConfigHandleListener;
+
+
+    public TimetableView callback(ISchedule.OnConfigHandleListener onConfigHandleListener) {
+        this.onConfigHandleListener = onConfigHandleListener;
+        return this;
+    }
+
+    public ISchedule.OnConfigHandleListener onConfigHandleListener() {
+        if(onConfigHandleListener==null) onConfigHandleListener=new OnConfigHandleAdapter();
+        return onConfigHandleListener;
+    }
 
     /**
      * 是否显示周末
@@ -873,5 +887,10 @@ public class TimetableView extends LinearLayout {
 
     public void showView(){
         operater().showView();
+    }
+
+    public TimetableView config(String configFileName){
+
+        return this;
     }
 }

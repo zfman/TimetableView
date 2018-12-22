@@ -17,6 +17,7 @@ import com.zhuangfei.android_timetableview.sample.R;
 import com.zhuangfei.timetable.TimetableView;
 import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.model.Schedule;
+import com.zhuangfei.timetable.model.ScheduleConfig;
 import com.zhuangfei.timetable.model.ScheduleSupport;
 import com.zhuangfei.timetable.utils.ScreenUtils;
 
@@ -51,6 +52,8 @@ public class SimpleOperater extends AbsOperater{
     protected LinearLayout containerLayout;//根布局
     protected LinearLayout dateLayout;//根布局、日期栏容器
     protected LinearLayout flagLayout;//旗标布局
+
+    protected ScheduleConfig scheduleConfig;
 
     @Override
     public void init(Context context, AttributeSet attrs, TimetableView view) {
@@ -409,6 +412,7 @@ public class SimpleOperater extends AbsOperater{
     @Override
     public void showView() {
         if (mView==null||mView.dataSource() == null) return;
+        checkConfig();
         replaceScrollView();
         Log.d(TAG, "showView: "+flagLayout);
         applyFlagLayoutConf();
@@ -418,6 +422,17 @@ public class SimpleOperater extends AbsOperater{
         updateDateView();
         updateSlideView();
         startTodo();
+    }
+
+    /**
+     * 本地配置的加载
+     */
+    private void checkConfig() {
+        if(mView==null||mView.onConfigHandleListener()==null) return;
+        if(mView.onConfigHandleListener()!=scheduleConfig.getOnConfigHandleListener()){
+            scheduleConfig.setOnConfigHandleListener(mView.onConfigHandleListener());
+        }
+        scheduleConfig.use(mView);
     }
 
     /**
@@ -473,7 +488,6 @@ public class SimpleOperater extends AbsOperater{
      */
     @Override
     public void updateSlideView() {
-
         newSlideView(weekPanel);
     }
 

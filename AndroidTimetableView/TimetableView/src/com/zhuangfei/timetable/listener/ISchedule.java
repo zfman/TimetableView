@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zhuangfei.timetable.TimetableView;
 import com.zhuangfei.timetable.model.Schedule;
 
 import java.util.List;
@@ -195,5 +196,9 @@ public interface ISchedule {
          * 更新日期时回调
          */
         void onUpdateDate(int curWeek,int targetWeek);
+    }
+
+    interface OnConfigHandleListener{
+        void onParseConfig(String key, Object value, TimetableView mView);
     }
 }
