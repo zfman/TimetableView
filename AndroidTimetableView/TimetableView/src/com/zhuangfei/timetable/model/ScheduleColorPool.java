@@ -23,10 +23,32 @@ public class ScheduleColorPool{
     //课程不在本周时的背景色
     private int uselessColor;
 
+    private Map<String,Integer> colorMap;
+    private boolean ignoreUserlessColor=false;
+
     public ScheduleColorPool(Context context){
         this.context=context;
         setUselessColor(context.getResources().getColor(R.color.useless));
+        colorMap=new HashMap<>();
         reset();
+    }
+
+    public Map<String, Integer> getColorMap() {
+        if(colorMap==null) return new HashMap<>();
+        return colorMap;
+    }
+
+    public void setColorMap(Map<String, Integer> colorMap) {
+        this.colorMap = colorMap;
+    }
+
+    public boolean isIgnoreUserlessColor() {
+        return ignoreUserlessColor;
+    }
+
+    public ScheduleColorPool setIgnoreUserlessColor(boolean ignoreUserlessColor) {
+        this.ignoreUserlessColor = ignoreUserlessColor;
+        return this;
     }
 
     //使用集合维护颜色池

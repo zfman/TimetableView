@@ -19,10 +19,12 @@ import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.model.Schedule;
 import com.zhuangfei.timetable.model.ScheduleConfig;
 import com.zhuangfei.timetable.model.ScheduleSupport;
+import com.zhuangfei.timetable.utils.ColorUtils;
 import com.zhuangfei.timetable.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 课表业务操作者，TimetableView中只涉及属性的设置，方法的具体实现在这里.
@@ -181,7 +183,12 @@ public class SimpleOperater extends AbsOperater{
         GradientDrawable gd = new GradientDrawable();
         if (isThisWeek) {
             textView.setTextColor(mView.itemTextColorWithThisWeek());
-            gd.setColor(mView.colorPool().getColorAutoWithAlpha(subject.getColorRandom(), mView.itemAlpha()));
+            Map<String,Integer> colorMap=mView.colorPool().getColorMap();
+            if(!colorMap.isEmpty()&&colorMap.containsKey(subject.getName())){
+                gd.setColor(ColorUtils.alphaColor(colorMap.get(subject.getName()),mView.itemAlpha()));
+            }else{
+                gd.setColor(mView.colorPool().getColorAutoWithAlpha(subject.getColorRandom(), mView.itemAlpha()));
+            }
             gd.setCornerRadius(mView.corner(true));
 
             List<Schedule> clist = ScheduleSupport.findSubjects(subject, originData);
@@ -198,7 +205,12 @@ public class SimpleOperater extends AbsOperater{
             }
         } else {
             textView.setTextColor(mView.itemTextColorWithNotThis());
-            gd.setColor(mView.colorPool().getUselessColorWithAlpha(mView.itemAlpha()));
+            Map<String,Integer> colorMap=mView.colorPool().getColorMap();
+            if(!colorMap.isEmpty()&&mView.colorPool().isIgnoreUserlessColor()&&colorMap.containsKey(subject.getName())){
+                gd.setColor(ColorUtils.alphaColor(colorMap.get(subject.getName()),mView.itemAlpha()));
+            }else{
+                gd.setColor(mView.colorPool().getUselessColorWithAlpha(mView.itemAlpha()));
+            }
             gd.setCornerRadius(mView.corner(false));
         }
 
