@@ -106,7 +106,7 @@ public class LocalConfigActivity extends AppCompatActivity implements View.OnCli
      */
     public void showPopmenu() {
         PopupMenu popup = new PopupMenu(this, moreButton);
-        popup.getMenuInflater().inflate(R.menu.popmenu_base_func, popup.getMenu());
+        popup.getMenuInflater().inflate(R.menu.popmenu_local_config, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
@@ -158,7 +158,7 @@ public class LocalConfigActivity extends AppCompatActivity implements View.OnCli
      */
     protected void loadLocalConfig() {
         mScheduleConfig.put(OnMyConfigHandleAdapter.CONFIG_SHOW_WEEKENDS,OnMyConfigHandleAdapter.VALUE_FALSE)
-                .put(OnMyConfigHandleAdapter.CONFIG_SHOW_NOT_CUR_WEEK,OnMyConfigHandleAdapter.VALUE_FALSE)
+                .put(OnMyConfigHandleAdapter.CONFIG_SHOW_NOT_CUR_WEEK,OnMyConfigHandleAdapter.VALUE_TRUE)
                 .put(OnMyConfigHandleAdapter.CONFIG_USERLESSS_COLOR,"#000000")
                 .commit();
         mTimetableView.updateView();
@@ -170,7 +170,7 @@ public class LocalConfigActivity extends AppCompatActivity implements View.OnCli
      */
     protected void clearLocalConfig() {
         mScheduleConfig.clear();
-        mTimetableView.updateView();
+        Toast.makeText(this,"清除成功，下次进入生效!",Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -200,6 +200,7 @@ public class LocalConfigActivity extends AppCompatActivity implements View.OnCli
             builder.create().show();
         }else{
             mScheduleConfig.load(configSet);
+            Toast.makeText(this,"配置已生效",Toast.LENGTH_SHORT).show();
         }
         mTimetableView.updateView();
     }

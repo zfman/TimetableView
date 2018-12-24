@@ -93,7 +93,7 @@ public class ScheduleConfig {
 
     public void clear(){
         mConfigMap.clear();
-        mEditor.remove("scheduleconfig_set");
+        mEditor.clear();
         mEditor.commit();
     }
 
