@@ -13,7 +13,9 @@ import com.zhuangfei.android_timetableview.model.MySubject;
 import com.zhuangfei.android_timetableview.model.SubjectRepertory;
 import com.zhuangfei.timetable.TimetableView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 颜色池示例，展示颜色池的相关用法
@@ -70,6 +72,9 @@ public class ColorPoolActivity extends AppCompatActivity {
                     case R.id.top3:
                         addColor(Color.BLUE,Color.YELLOW,Color.CYAN);
                         break;
+                    case R.id.top4:
+                        forColor();
+                        break;
                     default:
                         break;
                 }
@@ -104,6 +109,17 @@ public class ColorPoolActivity extends AppCompatActivity {
      */
     public void addColor(int... colors){
         mTimetableView.colorPool().add(colors);
+        mTimetableView.updateView();
+    }
+
+    /**
+     * 指定课程的颜色，未指定的课程自动分配
+     */
+    public void forColor(){
+        Map<String,Integer> colorMap=new HashMap<>();
+        colorMap.put("数字图像处理",Color.RED);
+        colorMap.put("算法分析与设计",Color.BLUE);
+        mTimetableView.colorPool().setIgnoreUserlessColor(false).setColorMap(colorMap);
         mTimetableView.updateView();
     }
 }

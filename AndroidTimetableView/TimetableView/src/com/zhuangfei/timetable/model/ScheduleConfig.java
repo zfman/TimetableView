@@ -49,6 +49,12 @@ public class ScheduleConfig {
         return mOnConfigHandleListener;
     }
 
+    /**
+     * 将配置提交到缓存，需要使用commit()将其保存到本地
+     * @param key
+     * @param value
+     * @return
+     */
     public ScheduleConfig  put(String key, String value){
         if(mConfigMap==null||value==null) return this;
         mConfigMap.put(key,value);
@@ -69,6 +75,9 @@ public class ScheduleConfig {
         return mConfigMap;
     }
 
+    /**
+     * 将缓存中的修改提交到本地
+     */
     public void commit(){
         Set<String> set=new HashSet<>();
         for(Map.Entry<String,String> entry:mConfigMap.entrySet()){
@@ -82,6 +91,37 @@ public class ScheduleConfig {
         mEditor.commit();
     }
 
+    public void clear(){
+        mConfigMap.clear();
+        mEditor.remove("scheduleconfig_set");
+        mEditor.commit();
+    }
+
+    /**
+     * 获取本地配置文件中的数据
+     * @return set集合，每个元素都是一个配置，格式：key=value
+     */
+    public Set<String> export(){
+        Set<String> finalSet=mConfigPreferences.getStringSet("scheduleconfig_set",new HashSet<String>());
+        return finalSet;
+    }
+
+    /**
+     * 将集合配置保存到本地
+     * @param data
+     */
+    public void load(Set<String> data){
+        Set<String> finalSet=mConfigPreferences.getStringSet("scheduleconfig_set",new HashSet<String>());
+        finalSet.addAll(data);
+        mConfigMap.clear();
+        mEditor.putStringSet("scheduleconfig_set",finalSet);
+        mEditor.commit();
+    }
+
+    /**
+     * 设置TimetableView的属性，使配置生效
+     * @param view
+     */
     public void use(TimetableView view){
         if(getConfigMap()==null||getOnConfigHandleListener()==null) return;
         Set<String> keySet=mConfigPreferences.getStringSet("scheduleconfig_set",new HashSet<String>());

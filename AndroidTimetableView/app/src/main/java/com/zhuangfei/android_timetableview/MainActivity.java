@@ -18,6 +18,7 @@ import com.zhuangfei.android_timetableview.views.FlaglayoutActivity;
 import com.zhuangfei.android_timetableview.views.ItemStyleActivity;
 import com.zhuangfei.android_timetableview.views.LocalConfigActivity;
 import com.zhuangfei.android_timetableview.views.NonViewActivity;
+import com.zhuangfei.android_timetableview.views.SimpleActivity;
 import com.zhuangfei.android_timetableview.views.SlideActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
+        Button button0=findViewById(R.id.id_btn0);
         Button button1=findViewById(R.id.id_btn1);
         Button button2=findViewById(R.id.id_btn2);
         Button button3=findViewById(R.id.id_btn3);
@@ -42,7 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button10=findViewById(R.id.id_btn10);
         Button button11=findViewById(R.id.id_btn11);
         Button button12=findViewById(R.id.id_btn12);
+        Button button13=findViewById(R.id.id_btn12);
 
+        button0.setOnClickListener(this);
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button10.setOnClickListener(this);
         button11.setOnClickListener(this);
         button12.setOnClickListener(this);
+        button13.setOnClickListener(this);
     }
 
     public void toTarget(Class cla){
@@ -65,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.id_btn0:
+                toTarget(SimpleActivity.class);
+                break;
             case R.id.id_btn1:
                 toTarget(BaseFuncActivity.class);
                 break;
@@ -96,11 +104,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 toTarget(FlaglayoutActivity.class);
                 break;
             case R.id.id_btn11:
-//                toTarget(DateDelayActivity.class);
-                toTarget(LocalConfigActivity.class);
+                toTarget(DateDelayActivity.class);
                 break;
             case R.id.id_btn12:
                 toTarget(CustomWidthActivity.class);
+                break;
+            case R.id.id_btn13:
+                toTarget(LocalConfigActivity.class);
                 break;
 
         }

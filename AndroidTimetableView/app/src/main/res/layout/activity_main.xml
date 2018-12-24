@@ -8,6 +8,12 @@
     android:padding="15dp">
 
     <Button
+        android:id="@+id/id_btn0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="简单的案例" />
+
+    <Button
         android:id="@+id/id_btn1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,5 +82,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="日期延迟显示（开学时间设置）" />
+
+    <Button
+        android:id="@+id/id_btn13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="课表设置项（本地配置加载、导出）" />
 
 </LinearLayout>

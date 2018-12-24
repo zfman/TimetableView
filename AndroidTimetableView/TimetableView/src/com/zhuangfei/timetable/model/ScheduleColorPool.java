@@ -24,6 +24,9 @@ public class ScheduleColorPool{
     private int uselessColor;
 
     private Map<String,Integer> colorMap;
+
+    //false：非本周课程使用uselessColor渲染
+    //true：非本周课程使用colorMap渲染
     private boolean ignoreUserlessColor=false;
 
     public ScheduleColorPool(Context context){
@@ -38,8 +41,9 @@ public class ScheduleColorPool{
         return colorMap;
     }
 
-    public void setColorMap(Map<String, Integer> colorMap) {
+    public ScheduleColorPool setColorMap(Map<String, Integer> colorMap) {
         this.colorMap = colorMap;
+        return this;
     }
 
     public boolean isIgnoreUserlessColor() {

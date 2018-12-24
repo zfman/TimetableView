@@ -38,6 +38,7 @@
         <activity android:name=".views.DateDelayActivity"></activity>
         <activity android:name=".views.CustomWidthActivity"></activity>
         <activity android:name=".views.LocalConfigActivity"></activity>
+        <activity android:name=".views.SimpleActivity"></activity>
     </application>
 
 </manifest>

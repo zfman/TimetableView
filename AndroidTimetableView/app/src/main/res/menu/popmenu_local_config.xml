@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    
 	<item android:id="@+id/top1"
-	    android:title="指定三种颜色"/>
+	    android:title="加载本地配置"/>
 	<item android:id="@+id/top2"
-	    android:title="默认颜色池"/>
+		android:title="清除本地配置"/>
 	<item android:id="@+id/top3"
-	    android:title="扩充颜色池"/>
+		android:title="导出配置至文本"/>
 	<item android:id="@+id/top4"
-		android:title="指定课程颜色"/>
+		android:title="加载配置文本"/>
 </menu>
