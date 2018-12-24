@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="15dp">
+    android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <Button
         android:id="@+id/id_btn0"
         android:layout_width="match_parent"
@@ -88,5 +90,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="课表设置项（本地配置加载、导出）" />
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

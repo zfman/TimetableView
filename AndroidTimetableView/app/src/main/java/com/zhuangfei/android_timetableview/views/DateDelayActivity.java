@@ -76,19 +76,21 @@ public class DateDelayActivity extends AppCompatActivity {
                 .curWeek(1)
                 .curTerm("大三下学期")
                 .maxSlideItem(10)
+                .callback(getDateDelayAdapter())//这行要放在下行的前边
                 .callback(new ISchedule.OnWeekChangedListener() {
                     @Override
                     public void onWeekChanged(int curWeek) {
-                        OnDateDelayAdapter adapter= (OnDateDelayAdapter) mTimetableView.onDateBuildListener();
-                        long when=adapter.whenBeginSchool();
-                        if(when>0){
-                            titleTextView.setText("距离开学还有"+when+"天");
-                        }else{
-                            titleTextView.setText("第" + curWeek + "周");
+                        if(mTimetableView.onDateBuildListener() instanceof  OnDateDelayAdapter){
+                            OnDateDelayAdapter adapter= (OnDateDelayAdapter) mTimetableView.onDateBuildListener();
+                            long when=adapter.whenBeginSchool();
+                            if(when>0){
+                                titleTextView.setText("距离开学还有"+when+"天");
+                            }else{
+                                titleTextView.setText("第" + curWeek + "周");
+                            }
                         }
                     }
                 })
-                .callback(getDateDelayAdapter())
                 .showView();
     }
 

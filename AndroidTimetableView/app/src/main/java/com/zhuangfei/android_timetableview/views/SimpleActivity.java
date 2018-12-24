@@ -64,12 +64,17 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
                 .setMessage("模拟请求网络中..")
                 .setTitle("Tips").create();
         alertDialog.show();
-        new Timer().schedule(new TimerTask() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 handler.sendEmptyMessage(0x123);
             }
-        },1500);
+        }).start();
     }
 
     Handler handler=new Handler(){
