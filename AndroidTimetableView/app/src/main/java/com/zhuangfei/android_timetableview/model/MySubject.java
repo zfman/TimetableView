@@ -13,6 +13,7 @@ import java.util.List;
 public class MySubject implements ScheduleEnable {
 
 	public static final String EXTRAS_ID="extras_id";
+	public static final String EXTRAS_AD_URL="extras_ad_url";
 
 	private int id=0;
 
@@ -60,6 +61,16 @@ public class MySubject implements ScheduleEnable {
 	 *  一个随机数，用于对应课程的颜色
 	 */
 	private int colorRandom = 0;
+
+	private String url;
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getUrl() {
+		return url;
+	}
 
 	public MySubject() {
 		// TODO Auto-generated constructor stub
@@ -171,6 +182,7 @@ public class MySubject implements ScheduleEnable {
 		schedule.setWeekList(getWeekList());
 		schedule.setColorRandom(2);
 		schedule.putExtras(EXTRAS_ID,getId());
+		schedule.putExtras(EXTRAS_AD_URL,getUrl());
 		return schedule;
 	}
 

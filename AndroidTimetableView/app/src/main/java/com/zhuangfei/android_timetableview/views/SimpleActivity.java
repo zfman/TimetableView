@@ -1,35 +1,37 @@
 package com.zhuangfei.android_timetableview.views;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zhuangfei.android_timetableview.R;
 import com.zhuangfei.android_timetableview.model.MySubject;
 import com.zhuangfei.android_timetableview.model.SubjectRepertory;
 import com.zhuangfei.timetable.TimetableView;
 import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.listener.IWeekView;
-import com.zhuangfei.timetable.listener.OnSlideBuildAdapter;
+import com.zhuangfei.timetable.listener.OnItemBuildAdapter;
 import com.zhuangfei.timetable.model.Schedule;
 import com.zhuangfei.timetable.view.WeekView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class SimpleActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final String AD_URL="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545749786636&di=fd5483be8b08b2e1f0485e772dadace4&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F5f9fae85770bb289f790e08d778516d128f0492a114a8-TNyOSi_fw658";
     //控件
     TimetableView mTimetableView;
     WeekView mWeekView;
@@ -83,6 +85,18 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
             super.handleMessage(msg);
             if(alertDialog!=null) alertDialog.hide();
             mySubjects = SubjectRepertory.loadDefaultSubjects();
+            //增加广告
+            MySubject adSubject=new MySubject();
+            adSubject.setName("【广告】");
+            adSubject.setStart(1);
+            adSubject.setStep(2);
+            adSubject.setDay(7);
+            List<Integer> list= new ArrayList<>();
+            for(int i=1;i<=20;i++) list.add(i);
+            adSubject.setWeekList(list);
+            adSubject.setUrl(AD_URL);
+            mySubjects.add(adSubject);
+
             mWeekView.source(mySubjects).showView();
             mTimetableView.source(mySubjects).showView();
         }
@@ -136,6 +150,30 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onWeekChanged(int curWeek) {
                         titleTextView.setText("第" + curWeek + "周");
+                    }
+                })
+                .callback(new OnItemBuildAdapter(){
+                    @Override
+                    public void onItemUpdate(FrameLayout layout, TextView textView, TextView countTextView, Schedule schedule, GradientDrawable gd) {
+                        super.onItemUpdate(layout, textView, countTextView, schedule, gd);
+                        if(schedule.getName().equals("【广告】")){
+                            layout.removeAllViews();
+                            ImageView imageView=new ImageView(SimpleActivity.this);
+                            imageView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                            layout.addView(imageView);
+                            String url= (String) schedule.getExtras().get(MySubject.EXTRAS_AD_URL);
+
+                            Glide.with(SimpleActivity.this)
+                                    .load(url)
+                                    .into(imageView);
+
+                            imageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Toast.makeText(SimpleActivity.this,"进入广告网页链接",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
                 })
                 .showView();

@@ -7,7 +7,6 @@
     android:orientation="vertical">
 
     <include layout="@layout/header_base_func"/>
-
     <com.zhuangfei.timetable.view.WeekView
         android:id="@+id/id_weekview"
         android:layout_width="match_parent"
