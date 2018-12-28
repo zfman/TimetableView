@@ -40,6 +40,7 @@
         <activity android:name=".views.CustomWidthActivity"></activity>
         <activity android:name=".views.LocalConfigActivity"></activity>
         <activity android:name=".views.SimpleActivity"></activity>
+        <activity android:name=".template.wakeup.WakeupActivity"></activity>
     </application>
 
 </manifest>
