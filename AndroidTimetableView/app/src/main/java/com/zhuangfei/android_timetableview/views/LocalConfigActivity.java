@@ -28,16 +28,14 @@ import com.zhuangfei.timetable.view.WeekView;
 import java.util.List;
 import java.util.Set;
 
-public class LocalConfigActivity extends AppCompatActivity implements View.OnClickListener {
+public class LocalConfigActivity extends AppCompatActivity{
 
     private static final String TAG = "BaseFuncActivity";
 
     //控件
     TimetableView mTimetableView;
-    WeekView mWeekView;
 
     Button moreButton;
-    LinearLayout layout;
     TextView titleTextView;
     List<MySubject> mySubjects;
 
@@ -64,8 +62,6 @@ public class LocalConfigActivity extends AppCompatActivity implements View.OnCli
         mySubjects = SubjectRepertory.loadDefaultSubjects2();
         mySubjects.addAll(SubjectRepertory.loadDefaultSubjects());
         titleTextView = findViewById(R.id.id_title);
-        layout = findViewById(R.id.id_layout);
-        layout.setOnClickListener(this);
 
         initTimetableView();
     }
@@ -130,27 +126,6 @@ public class LocalConfigActivity extends AppCompatActivity implements View.OnCli
         });
 
         popup.show();
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.id_layout:
-                //如果周次选择已经显示了，那么将它隐藏，更新课程、日期
-                //否则，显示
-                if (mWeekView.isShowing()) {
-                    mWeekView.isShow(false);
-                    titleTextView.setTextColor(getResources().getColor(R.color.app_course_textcolor_blue));
-                    int cur = mTimetableView.curWeek();
-                    mTimetableView.onDateBuildListener()
-                            .onUpdateDate(cur, cur);
-                    mTimetableView.changeWeekOnly(cur);
-                } else {
-                    mWeekView.isShow(true);
-                    titleTextView.setTextColor(getResources().getColor(R.color.app_red));
-                }
-                break;
-        }
     }
 
     /**
