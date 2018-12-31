@@ -13,9 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhuangfei.android_timetableview.R;
+import com.zhuangfei.android_timetableview.language.OnEnglishDateBuildAdapter;
+import com.zhuangfei.android_timetableview.language.OnEnglishItemBuildAdapter;
 import com.zhuangfei.android_timetableview.model.MySubject;
 import com.zhuangfei.android_timetableview.model.SubjectRepertory;
 import com.zhuangfei.timetable.TimetableView;
+import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.listener.OnItemBuildAdapter;
 import com.zhuangfei.timetable.model.Schedule;
 
@@ -79,6 +82,12 @@ public class ItemStyleActivity extends AppCompatActivity {
                         break;
                     case R.id.top8:
                         modifyOverlayStyle();
+                        break;
+                    case R.id.top9:
+                        changeEnglishLanguage();
+                        break;
+                    case R.id.top10:
+                        changeChineseLanguage();
                         break;
                     default:
                         break;
@@ -180,5 +189,23 @@ public class ItemStyleActivity extends AppCompatActivity {
                     }
                 });
         mTimetableView.updateView();
+    }
+
+    /**
+     * 切换为英文
+     */
+    public void changeEnglishLanguage(){
+        mTimetableView.callback(new OnEnglishDateBuildAdapter())
+                .callback(new OnEnglishItemBuildAdapter())
+                .updateView();
+    }
+
+    /**
+     * 切换为中文
+     */
+    public void changeChineseLanguage(){
+        mTimetableView.callback((ISchedule.OnDateBuildListener) null)
+                .callback((ISchedule.OnItemBuildListener) null)
+                .updateView();
     }
 }
