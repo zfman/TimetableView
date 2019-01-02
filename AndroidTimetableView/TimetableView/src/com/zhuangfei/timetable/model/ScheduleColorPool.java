@@ -36,20 +36,39 @@ public class ScheduleColorPool{
         reset();
     }
 
-    public Map<String, Integer> getColorMap() {
+    /**
+     * 获取颜色的映射Map
+     * @return Map<String, Integer>
+     */
+    public Map<String,Integer> getColorMap() {
         if(colorMap==null) return new HashMap<>();
         return colorMap;
     }
 
+    /**
+     * 设置colorMap
+     * @param colorMap Map<String, Integer>
+     * @return ScheduleColorPool
+     */
     public ScheduleColorPool setColorMap(Map<String, Integer> colorMap) {
         this.colorMap = colorMap;
         return this;
     }
 
+    /**
+     * 获取渲染时是否忽略非本周颜色
+     * @return boolean
+     */
     public boolean isIgnoreUserlessColor() {
         return ignoreUserlessColor;
     }
 
+    /**
+     * 设置渲染时是否忽略非本周颜色
+     * false：非本周课程使用uselessColor渲染
+     * true：非本周课程使用colorMap渲染
+     * @return ScheduleColorPool
+     */
     public ScheduleColorPool setIgnoreUserlessColor(boolean ignoreUserlessColor) {
         this.ignoreUserlessColor = ignoreUserlessColor;
         return this;
@@ -68,7 +87,7 @@ public class ScheduleColorPool{
 
     /**
      * 获取非本周课程颜色
-     * @return
+     * @return int
      */
     public int getUselessColorWithAlpha(float alpha) {
         return ColorUtils.alphaColor(uselessColor,alpha);
@@ -77,7 +96,7 @@ public class ScheduleColorPool{
     /**
      * 设置非本周课程颜色
      * @param uselessColor 非本周课程的颜色
-     * @return
+     * @return ScheduleColorPool
      */
     public ScheduleColorPool setUselessColor(int uselessColor) {
         this.uselessColor = uselessColor;
@@ -86,7 +105,7 @@ public class ScheduleColorPool{
 
     /**
      * 得到颜色池的实例，即List集合
-     * @return
+     * @return List<Integer>
      */
     public List<Integer> getPoolInstance() {
         if(colorPool==null) colorPool=new ArrayList<>();
@@ -97,7 +116,7 @@ public class ScheduleColorPool{
      * 从颜色池中取指定透明度的颜色
      * @param random
      * @param alpha
-     * @return
+     * @return int
      */
     public int getColorAutoWithAlpha(int random,float alpha){
         if(random<0) return getColorAuto(-random);
@@ -107,7 +126,7 @@ public class ScheduleColorPool{
     /**
      * 根据索引获取颜色，索引越界默认返回 Color.GRAY
      * @param i 索引
-     * @return
+     * @return int
      */
     public int getColor(int i){
         if(i<0||i>=size()) return Color.GRAY;
@@ -119,7 +138,7 @@ public class ScheduleColorPool{
      * 如果i<0，转换为正数,
      * 否则：重新计算索引j=i mod size
      * @param i 索引
-     * @return 颜色
+     * @return int颜色
      */
     public int getColorAuto(int i){
         if(i<0) return getColorAuto(-i);
@@ -129,7 +148,7 @@ public class ScheduleColorPool{
     /**
      * 将指定集合中的颜色加入到颜色池中
      * @param ownColorPool 集合
-     * @return
+     * @return ScheduleColorPool
      */
     public ScheduleColorPool addAll(Collection<? extends Integer> ownColorPool){
         getPoolInstance().addAll(ownColorPool);
@@ -138,7 +157,7 @@ public class ScheduleColorPool{
 
     /**
      * 颜色池的大小
-     * @return
+     * @return int
      */
     public int size(){
         if(getPoolInstance()==null) return 0;
@@ -147,7 +166,7 @@ public class ScheduleColorPool{
 
     /**
      * 清空颜色池，清空默认颜色
-     * @return
+     * @return ScheduleColorPool
      */
     public ScheduleColorPool clear(){
         getPoolInstance().clear();
@@ -157,7 +176,7 @@ public class ScheduleColorPool{
     /**
      * 在颜色池中添加一些自定义的颜色
      * @param colorIds 多个颜色
-     * @return
+     * @return ScheduleColorPool
      */
     public ScheduleColorPool add(int... colorIds){
         if(colorIds!=null){
@@ -170,7 +189,7 @@ public class ScheduleColorPool{
 
     /**
      * 重置，先在池子里添加一些默认的课程项颜色
-     * @return
+     * @return ScheduleColorPool
      */
     public ScheduleColorPool reset(){
         int[] colors=new int[]{

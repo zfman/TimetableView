@@ -15,7 +15,6 @@ import java.util.Set;
 
 /**
  * 本地配置
- * Created by Liu ZhuangFei on 2018/12/21.
  */
 public class ScheduleConfig {
     private ISchedule.OnConfigHandleListener mOnConfigHandleListener;
@@ -30,6 +29,11 @@ public class ScheduleConfig {
         mConfigMap=new HashMap<>();
     }
 
+    /**
+     * 设置本地配置的名称
+     * @param name 配置名称
+     * @return ScheduleConfig
+     */
     public ScheduleConfig setConfigName(String name){
         if(configName==null||name==null) return this;
         if(mConfigPreferences==null||!configName.equals(name)){
@@ -40,20 +44,29 @@ public class ScheduleConfig {
         return this;
     }
 
+    /**
+     * 设置配置处理器
+     * @param mOnConfigHandleListener 配置处理器
+     * @return ScheduleConfig
+     */
     public ScheduleConfig setOnConfigHandleListener(ISchedule.OnConfigHandleListener mOnConfigHandleListener) {
         this.mOnConfigHandleListener = mOnConfigHandleListener;
         return this;
     }
 
+    /**
+     * 获取配置处理器
+     * @return ISchedule.OnConfigHandleListener
+     */
     public ISchedule.OnConfigHandleListener getOnConfigHandleListener() {
         return mOnConfigHandleListener;
     }
 
     /**
      * 将配置提交到缓存，需要使用commit()将其保存到本地
-     * @param key
-     * @param value
-     * @return
+     * @param key 属性名
+     * @param value 属性值
+     * @return ScheduleConfig
      */
     public ScheduleConfig  put(String key, String value){
         if(mConfigMap==null||value==null) return this;
@@ -61,17 +74,31 @@ public class ScheduleConfig {
         return this;
     }
 
+    /**
+     * 从缓存中取出属性key的值
+     * @param key 属性名
+     * @return String
+     */
     public String get(String key){
         if(mConfigMap==null) return null;
         return mConfigMap.get(key);
     }
 
+    /**
+     * 将指定的Map作为缓存
+     * @param mConfigMap Map<String, String>
+     * @return ScheduleConfig
+     */
     public ScheduleConfig setConfigMap(Map<String, String> mConfigMap) {
         this.mConfigMap = mConfigMap;
         return this;
     }
 
-    public Map<String, String> getConfigMap() {
+    /**
+     * 获取缓存的属性Map
+     * @return
+     */
+    public Map<String,String> getConfigMap() {
         return mConfigMap;
     }
 
@@ -91,6 +118,9 @@ public class ScheduleConfig {
         mEditor.commit();
     }
 
+    /**
+     * 清除缓存和本地属性配置
+     */
     public void clear(){
         mConfigMap.clear();
         mEditor.clear();
@@ -98,7 +128,7 @@ public class ScheduleConfig {
     }
 
     /**
-     * 获取本地配置文件中的数据
+     * 导出本地配置文件中的数据
      * @return set集合，每个元素都是一个配置，格式：key=value
      */
     public Set<String> export(){
@@ -107,7 +137,7 @@ public class ScheduleConfig {
     }
 
     /**
-     * 将集合配置保存到本地
+     * 将集合配置导入到本地
      * @param data
      */
     public void load(Set<String> data){
@@ -120,7 +150,7 @@ public class ScheduleConfig {
 
     /**
      * 设置TimetableView的属性，使配置生效
-     * @param view
+     * @param view TimetableView
      */
     public void use(TimetableView view){
         if(getConfigMap()==null||getOnConfigHandleListener()==null) return;
